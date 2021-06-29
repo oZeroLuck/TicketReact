@@ -1,0 +1,47 @@
+.center-me {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+}
+
+.carousel {
+    background-color: #639eda;
+}
+
+.carousel .carousel-control-prev {
+    background-color: gray;
+    z-index: 100;
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    left: 5%
+}
+
+.carousel .carousel-control-next {
+    background-color: gray;
+    z-index: 100;
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    right: 5%
+}
+
+.zoom {
+    transition: trasform 1s;
+}
+
+.zoom:hover {
+    transform: scale(1.005);
+}
+
+.row .col {
+    padding: 0.05%;
+}
