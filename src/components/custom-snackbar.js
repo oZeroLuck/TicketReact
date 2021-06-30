@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import './components.css'
 import {Alert, Fade} from "react-bootstrap";
 
