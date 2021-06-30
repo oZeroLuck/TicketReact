@@ -3,8 +3,9 @@ import React from "react";
 import {CustomNavbar} from "../components/custom-navbar";
 import {CustomSnackbar} from "../components/custom-snackbar";
 import {Carousel, Col, Container, Row} from "react-bootstrap";
-import Button from "react-bootstrap/Button";
 import "../components/components.css"
+import "./pages.css"
+import {images} from "./temp-images";
 
 class Homepage extends React.Component {
     constructor(props) {
@@ -12,7 +13,7 @@ class Homepage extends React.Component {
         this.state = {
             showSnack: false,
         };
-        this.images = [[[1, 2, 3, 4, 5], [6, 7, 8, 9, 10]], [[11, 12, 13, 14, 15], [16, 17, 18, 19, 20]]];
+        this.images = images;
         this.setSnack = this.setSnack.bind(this);
     }
 
@@ -29,33 +30,31 @@ class Homepage extends React.Component {
 
     render() {
         return (
-            <div key="Homepage">
+            <div>
+            <div key="Homepage" className="vertical-center-absolute">
                 <CustomNavbar/>
                 <Carousel>
-                    {this.images.map(carouselItem => {
-                        return (
+                    {this.images.map((carouselItem) => {
+                        return(
                             <Carousel.Item>
-                                {carouselItem.map(firstRow => {
-                                    return (
-                                        <Row>
-                                            {firstRow.map(row => {
-                                                return (
-                                                    <Col>
-                                                        <img key={row}
-                                                             alt={"Image n" + row}
-                                                             className="d-block w-100 zoom"
-                                                             src="https://images.pexels.com/photos/20787/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350"
-                                                             onClick={() => this.setSnack('Nice click on img n: ' + row)}
-                                                        />
-                                                    </Col>
-                                                )
-                                            })}
-                                        </Row>
-                                    )
-                                })}
+                                <Row>
+                                    {carouselItem.map((event) => {
+                                        return(
+                                            <Col key={event.id}>
+                                                <img src={event.link}
+                                                     className="d-block w-100 zoom"
+                                                     alt={event.desc}
+                                                     title={event.desc}
+                                                     onClick={() => this.setSnack("You have clicked: " + event.id)}
+                                                />
+                                            </Col>
+                                        )
+                                    })}
+                                </Row>
                             </Carousel.Item>
                         )
-                    })}
+                        }
+                    )}
                 </Carousel>
                 <Container fluid>
                     {/*<Get url="http://localhost:8080/users">
@@ -79,6 +78,7 @@ class Homepage extends React.Component {
                     </Get>*/}
                 </Container>
                 <br/>
+            </div>
                 <CustomSnackbar show={this.state.showSnack}
                                 message={this.state.message}
                                 close={() => this.emptyMessage()}/>
