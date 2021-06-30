@@ -1,8 +1,8 @@
 import './App.css';
 import {BrowserRouter, Route, Switch, Redirect} from "react-router-dom";
 import {Homepage} from "./pages/homepage";
-import {Films} from "./pages/film-list";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {EventPage} from "./pages/event-page";
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
                     <Redirect to="/homepage"/>
                 </Route>
                   <Route path="/homepage" component={Homepage}/>
-                  <Route path="/film" component={Films}/>
+                  <Route path="/event/:type/:id" component={EventPage}/>
               </Switch>
           </BrowserRouter>
       </div>
