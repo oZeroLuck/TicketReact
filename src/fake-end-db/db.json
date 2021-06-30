@@ -6,5 +6,87 @@
     {
       "id": 2, "firstName": "Lia", "lastName": "Eliseo"
     }
+  ],
+  "featured": [
+    [
+      {
+        "id": 1,
+        "type": "film",
+        "link": "https://www.filmposters.com/images/posters/2363.jpg",
+        "desc": "description 1"
+      },
+      {
+        "id": 2,
+        "type": "film",
+        "link": "https://www.filmposters.com/images/posters/12447.jpg",
+        "desc": "description 2"
+      },
+      {
+        "id": 3,
+        "type": "film",
+        "link": "https://www.filmposters.com/images/posters/7144.jpg",
+        "desc": "description 3"
+      },
+      {
+        "id": 4,
+        "type": "film",
+        "link": "https://www.filmposters.com/images/posters/19272.jpg",
+        "desc": "description 4"
+      },
+      {
+        "id": 5,
+        "type": "film",
+        "link": "https://www.filmposters.com/images/posters/21101.jpg",
+        "desc": "description 5"
+      }
+    ],
+    [
+      {
+        "id": 6,
+        "type": "film",
+        "link": "https://www.filmposters.com/images/posters/21908.jpg",
+        "desc": "description 6"
+      },
+      {
+        "id": 7,
+        "type": "film",
+        "link": "https://www.filmposters.com/images/posters/7299.jpg",
+        "desc": "description 7"
+      },
+      {
+        "id": 8,
+        "type": "film",
+        "link": "https://www.filmposters.com/images/posters/7716.jpg",
+        "desc": "description 8"
+      },
+      {
+        "id": 9,
+        "type": "film",
+        "link": "https://www.filmposters.com/images/posters/595.jpg",
+        "desc": "description 9"
+      },
+      {
+        "id": 10,
+        "type": "film",
+        "link": "https://www.filmposters.com/images/posters/10400.jpg",
+        "desc": "description 10"
+      }
+    ]
+  ],
+  "film": [
+    {
+      "id": 1,
+      "title": "Some title 1",
+      "type": "film",
+      "link": "https://www.filmposters.com/images/posters/2363.jpg",
+      "desc": "description 1"
+    },
+    {
+      "id": 2,
+      "title": "Some title 2",
+      "type": "film",
+      "link": "https://www.filmposters.com/images/posters/12447.jpg",
+      "desc": "description 2"
+    }
   ]
 }
