@@ -2,10 +2,9 @@ import React from "react";
 import {LoadingSpinner} from "../components/loading-spinner";
 import {EventApi} from "../services/event-api";
 import {Col, Container, Row} from "react-bootstrap";
-import {CustomButton} from "../components/custom-button/custom-button";
-import {AddToCartBtn} from "../components/custom-button/btn-cfg";
 import {CustomNavbar} from "../components/custom-navbar";
 import "./pages.css"
+import {TicketList} from "../components/ticket-list";
 
 class EventPage extends React.Component {
     constructor(props) {
@@ -36,32 +35,36 @@ class EventPage extends React.Component {
         return (
             <div className={"bg-transparent"}>
                 <CustomNavbar/>
-                <br/>
                 <Container fluid>
-                    <Row className={"justify-content-center"}>
-                        <h1>{this.state.event.title}</h1>
-                    </Row>
-                    <Row>
-                        <Col className={"align-content-center"}>
-                            <img src={this.state.event.link}
-                                 alt={this.state.event.id}
-                                 />
-                        </Col>
-                        <Col>
+                    <Row style={{backgroundColor: "black"}}>
+                        <Container>
                             <Row>
-                                <p>Some text placeholder</p>
+                                <Col className={"align-content-md-center"}>
+                                    <img
+                                         src={this.state.event.link}
+                                         alt={this.state.event.id}
+                                         style={{padding: 20}}
+                                         />
+                                </Col>
+                                <Col className={"white-text"}
+                                     style={{padding: 40}}
+                                >
+                                    <Row>
+                                        <h1>{this.state.event.title}</h1>
+                                    </Row>
+                                    <br/>
+                                    <Row>
+                                        <p>{this.state.event.desc}</p>
+                                    </Row>
+                                </Col>
                             </Row>
-                            <Row>
-                                <p>{this.state.event.desc}</p>
-                            </Row>
-                        </Col>
+                        </Container>
                     </Row>
-                    <Row>
-                        <p>Some form here</p>
-                        <div className={"d-flex flex-row-reverse"}>
-                            <CustomButton buttoncfg={AddToCartBtn} onPress={() => console.log("Add to cart works!")}/>
-                        </div>
-                    </Row>
+                </Container>
+                <CustomNavbar/>
+                <br/>
+                <Container>
+                    <TicketList/>
                 </Container>
             </div>
         )
