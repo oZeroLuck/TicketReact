@@ -1,7 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import Form from "react-bootstrap/Form";
-import {Container, Nav, Navbar, NavDropdown} from "react-bootstrap";
+import {Container, Dropdown, Nav, Navbar, NavDropdown} from "react-bootstrap";
 import {HomeBtn, CarBtn, LogoutBtn, LoginBtn, SignUpBtn} from "./custom-button/btn-cfg";
 import {CustomButton} from "./custom-button/custom-button";
 
@@ -34,16 +34,18 @@ class CustomNavbar extends React.Component {
                 <Navbar.Toggle aria-controls="navbar" />
                 <Navbar.Collapse id="navbar">
                     <Nav className="mr-auto">
-                        <Link to="/reserved/home">
+                        <Link to="/homepage">
                             <Nav.Item className="mr-2">
                                 <CustomButton buttoncfg={HomeBtn}/>
                             </Nav.Item>
                         </Link>
-                        <Link to="/reserved/carPark">
-                            <Nav.Item>
-                                <CustomButton buttoncfg={CarBtn}/>
-                            </Nav.Item>
-                        </Link>
+                        <Dropdown>
+                            <Dropdown.Toggle variant="warning">Events</Dropdown.Toggle>
+                            <Dropdown.Menu>
+                                <Dropdown.Header>Categories</Dropdown.Header>
+                                <Dropdown.Item as={Link} to="/film">Action</Dropdown.Item>
+                            </Dropdown.Menu>
+                        </Dropdown>
                     </Nav>
                     <Nav className="flex flex-row-reverse">
                         <NavDropdown className={"mr-3"} id="navDrop" title="Reserved Area">
@@ -61,13 +63,11 @@ class CustomNavbar extends React.Component {
                                     <Container>
                                         <strong>Login</strong>
                                         <Form className={"mb-2"}>
-                                            <Form.Control controlId="email"
-                                                          className={"mb-2 mt-2"}
+                                            <Form.Control className={"mb-2 mt-2"}
                                                           type="text"
                                                           placeholder="E-Mail"
                                             />
-                                            <Form.Control controlId="password"
-                                                          className={"mb-1"}
+                                            <Form.Control className={"mb-1"}
                                                           type="password"
                                                           placeholder="Password"
                                             />
