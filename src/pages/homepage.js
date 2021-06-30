@@ -44,7 +44,7 @@ class Homepage extends React.Component {
             return <LoadingSpinner/>
         }
         return (
-            <div>
+            <div className={"homepage"}>
             <div key="Homepage" className="vertical-center-absolute">
                 <CustomNavbar/>
                 <Carousel>
