@@ -1,0 +1,32 @@
+TODO LIST!
+- Create datasets for these classes:
+    1) Tickets
+    2) Users
+    3) Cart
+    4) Orders
+
+  Make the correct DTO assumptions!
+
+- Change NavBar component to be fully customizable with a cfg object;
+
+- Create the register page;
+
+- Create the admin page;
+
+- Import the custom table;
+
+- Change the carousel fetch and transform view method;
+
+- Add event type check for better performances;
+
+- Add profile page;
+
+- Add payment page;
+
+- Add login checks;
+
+------ * Extra * ------
+
+- Create the 404 page;
+
+- Make custom css classes;
