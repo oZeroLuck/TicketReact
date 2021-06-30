@@ -1,20 +1,31 @@
-import {Get} from "react-axios";
 import React from "react";
 import {CustomNavbar} from "../components/custom-navbar";
 import {CustomSnackbar} from "../components/custom-snackbar";
-import {Carousel, Col, Container, Row} from "react-bootstrap";
+import {Carousel, Col, Row} from "react-bootstrap";
 import "../components/components.css"
 import "./pages.css"
-import {images} from "./temp-images";
+import axios from "axios";
+import {LoadingSpinner} from "../components/loading-spinner";
+import {Link} from "react-router-dom";
 
 class Homepage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             showSnack: false,
+            images: null,
+            loading: true
         };
-        this.images = images;
         this.setSnack = this.setSnack.bind(this);
+    }
+
+    componentDidMount() {
+        axios.get('http://localhost:8080/featured').then(result => {
+            this.setState({
+                loading: false,
+                images: result.data
+            }, () => console.log(this.state.images))
+        })
     }
 
     setSnack(message) {
@@ -29,24 +40,29 @@ class Homepage extends React.Component {
     }
 
     render() {
+        if (this.state.loading) {
+            return <LoadingSpinner/>
+        }
         return (
             <div>
             <div key="Homepage" className="vertical-center-absolute">
                 <CustomNavbar/>
                 <Carousel>
-                    {this.images.map((carouselItem) => {
+                    {this.state.images.map((carouselItem) => {
                         return(
                             <Carousel.Item>
                                 <Row>
                                     {carouselItem.map((event) => {
                                         return(
                                             <Col key={event.id}>
-                                                <img src={event.link}
-                                                     className="d-block w-100 zoom"
-                                                     alt={event.desc}
-                                                     title={event.desc}
-                                                     onClick={() => this.setSnack("You have clicked: " + event.id)}
-                                                />
+                                                <Link to={"/event/" + event.type + "/" + event.id}>
+                                                    <img src={event.link}
+                                                         className="d-block w-100 zoom"
+                                                         alt={event.desc}
+                                                         title={event.desc}
+                                                         onClick={() => this.setSnack("You have clicked: " + event.id)}
+                                                    />
+                                                </Link>
                                             </Col>
                                         )
                                     })}
@@ -56,27 +72,6 @@ class Homepage extends React.Component {
                         }
                     )}
                 </Carousel>
-                <Container fluid>
-                    {/*<Get url="http://localhost:8080/users">
-                        {(error, response, isLoading, makeRequest) => {
-                            if (error) {
-                                return (<div>Something bad happened: {error.message}
-                                    <button onClick={() => makeRequest({params: {reload: true}})}>Retry</button>
-                                </div>)
-                            } else if (isLoading) {
-                                return (<div>Loading...</div>)
-                            } else if (response !== null) {
-                                return (<div>{response.data.map(user => (
-                                    <div key={user.id}>{user.firstName}</div>
-                                ))}
-                                    <p>Hello</p>
-                                    <button onClick={() => makeRequest({params: {refresh: true}})}>Refresh</button>
-                                </div>)
-                            }
-                            return (<div>Default message before request is made.</div>)
-                        }}
-                    </Get>*/}
-                </Container>
                 <br/>
             </div>
                 <CustomSnackbar show={this.state.showSnack}
