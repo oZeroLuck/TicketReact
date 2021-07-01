@@ -88,5 +88,14 @@
       "link": "https://www.filmposters.com/images/posters/12447.jpg",
       "desc": "description 2"
     }
+  ],
+  "cart": [
+    {
+      "id": 1,
+      "userId": 1,
+      "tickets": [
+        1, 2, 3, 4
+      ]
+    }
   ]
 }
