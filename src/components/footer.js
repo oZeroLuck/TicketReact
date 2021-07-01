@@ -1,8 +1,12 @@
+import {Container, Row} from "react-bootstrap";
+
 function Footer() {
     return (
-        <footer style={{backgroundColor: "black", color: "white"}}>
+        <Container fluid={"xl"}>
+        <Row style={{backgroundColor: "#343a40", color: "white"}}>
             <p>Text text text</p>
-        </footer>
+        </Row>
+        </Container>
     )
 }
 
