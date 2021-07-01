@@ -41,15 +41,17 @@
     top: 50%;
     -webkit-transform: translateY(-50%);
     transform: translateY(-50%);
-    right: 5%
+    right: 5%;
 }
 
 .zoom {
     transition: trasform 1s;
+    opacity: 92.5%;
 }
 
 .zoom:hover {
     transform: scale(1.005);
+    opacity: 100%;
 }
 
 .row .col {
