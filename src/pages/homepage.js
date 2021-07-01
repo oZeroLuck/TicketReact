@@ -7,16 +7,20 @@ import "./pages.css"
 import axios from "axios";
 import {LoadingSpinner} from "../components/loading-spinner";
 import {Link} from "react-router-dom";
+import {RegisterPage} from "./register-page";
 
 class Homepage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             showSnack: false,
+            message: "",
+            showRegister: false,
             images: null,
             loading: true
         };
         this.setSnack = this.setSnack.bind(this);
+        this.setModal = this.setSnack.bind(this);
     }
 
     componentDidMount() {
@@ -28,7 +32,21 @@ class Homepage extends React.Component {
         })
     }
 
+    testFunction() {
+        console.log("This is test function")
+    }
+
+    setRegister() {
+        console.log("Called setModal")
+        this.setState((previous) => {
+            return (
+                {showRegister: !previous.showRegister}
+            )
+        })
+    }
+
     setSnack(message) {
+        console.log("Snack intensifies")
         this.setState({showSnack: true, message: message},
             () => {setTimeout(() => {
                 this.setState({showSnack: false} )
@@ -45,16 +63,17 @@ class Homepage extends React.Component {
         }
         return (
             <div className={"homepage"}>
+                <RegisterPage show={this.state.showRegister} close={() => this.setRegister()}/>
             <div key="Homepage" className="vertical-center-absolute">
-                <CustomNavbar/>
+                <CustomNavbar callBack={() => this.setRegister()}/>
                 <Carousel>
                     {this.state.images.map((carouselItem) => {
-                        return(
+                        return (
                             <Carousel.Item>
                                 <Row>
                                     {carouselItem.map((event) => {
-                                        return(
-                                            <Col key={event.id}>
+                                        return (
+                                            <Col key={event.id + event.type}>
                                                 <Link to={"/event/" + event.type + "/" + event.id}>
                                                     <img src={event.link}
                                                          className="d-block w-100 zoom"
