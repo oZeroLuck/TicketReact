@@ -10,7 +10,7 @@ class CustomButton extends React.Component {
         return (
             <Button variant={this.props.buttoncfg.customCssClass}
                 onClick={this.props.onPress}>
-                {this.props.buttoncfg ?
+                {this.props.buttoncfg.icon ?
                     <FontAwesomeIcon icon={this.props.buttoncfg.icon}/> :
                     null
                 }
