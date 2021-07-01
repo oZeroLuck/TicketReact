@@ -5,6 +5,8 @@ import {Col, Container, Row} from "react-bootstrap";
 import {CustomNavbar} from "../components/custom-navbar";
 import "./pages.css"
 import {TicketList} from "../components/ticket-list";
+import {ErrorPage} from "./error-page";
+import {CustomSnackbar} from "../components/custom-snackbar";
 
 class EventPage extends React.Component {
     constructor(props) {
@@ -12,8 +14,12 @@ class EventPage extends React.Component {
         this.eventApi = new EventApi();
         this.state = {
             event: null,
-            loading: true
+            loading: true,
+            error: null,
+            showSnack: false,
+            snackMessage: null
         }
+        this.setSnack = this.setSnack.bind(this)
     }
 
     componentDidMount() {
@@ -22,13 +28,42 @@ class EventPage extends React.Component {
                 event: result.data,
                 loading: false
             })
-        )
+        ).catch(error => {
+            this.setState({loading: false, error: error.response.status})
+        })
+    }
+
+    setSnack(childData) {
+        console.log("Event-page setSnack!")
+        console.log(childData)
+        const message = "Ticket id: " + childData.id + "\nTicket seat: " + childData.seat
+        this.setState(prev => ({
+            showSnack: !prev.showSnack, snackMessage: message
+        }), () => {
+            console.log(this.state.showSnack)
+            setTimeout(() => this.setState(prev => ({
+                showSnack: !prev.showSnack
+            }), () => console.log(this.state.showSnack)), 3000)
+        })
+    }
+
+    flushSnackMessage() {
+        this.setState({snackMessage: null})
     }
 
     render() {
         if (this.state.loading) {
             return(
                 <LoadingSpinner/>
+            )
+        }
+
+        if (this.state.error) {
+            return (
+                <div key={"error"}>
+                    <CustomNavbar/>
+                    <ErrorPage errCode={this.state.error}/>
+                </div>
             )
         }
 
@@ -64,8 +99,11 @@ class EventPage extends React.Component {
                 <CustomNavbar/>
                 <br/>
                 <Container>
-                    <TicketList/>
+                    <TicketList route={this.props.location} onButtonPress={this.setSnack}/>
                 </Container>
+                <CustomSnackbar show={this.state.showSnack}
+                                message={this.state.snackMessage}
+                                close={this.flushSnackMessage}/>
             </div>
         )
     }
