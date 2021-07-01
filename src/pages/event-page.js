@@ -33,7 +33,7 @@ class EventPage extends React.Component {
         }
 
         return (
-            <div className={"bg-transparent"}>
+            <div style={{backgroundColor: "#c9c9c9"}}>
                 <CustomNavbar/>
                 <Container fluid>
                     <Row style={{backgroundColor: "black"}}>

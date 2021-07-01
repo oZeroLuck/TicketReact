@@ -1,8 +1,9 @@
 import React from 'react'
-import {Card, Col, Row} from "react-bootstrap";
+import {Card, CardGroup} from "react-bootstrap";
 import {CustomButton} from "./custom-button/custom-button";
 import {AddToCartBtn} from "./custom-button/btn-cfg";
-import Form from "react-bootstrap/Form";
+import Form from "react-bootstrap/Form"
+import "./components.css"
 
 class TicketList extends React.Component {
 
@@ -11,23 +12,27 @@ class TicketList extends React.Component {
         this.tickets = [1, 2, 3, 4, 5]
     }
 
+    handleClick() {
+        console.log("You've added something")
+    }
+
     render() {
         return (
-            <div>
+            <div key={"ticket-list"}>
                 {this.tickets.map(ticket => (
-                    <Card className={"mt-5 mb-5"}>
-                        <Card.Body>
-                            <Row>
-                                <Col md={10}>
-                                    <Card.Title>
-                                        <h2>I'm random title</h2>
-                                    </Card.Title>
-                                    <Card.Text>
-                                        {"I'm text " + ticket + "Testing longass desc .................................................................................................................................................................."}
-                                    </Card.Text>
-                                </Col>
-                                <Col>
-                                    <Row>
+                    <CardGroup>
+                                <Card className={"mt-5 mb-5"} style={{flexGrow: "2"}}>
+                                    <Card.Body>
+                                        <Card.Title>
+                                            <h2>I'm random title</h2>
+                                        </Card.Title>
+                                        <Card.Text>
+                                            {"I'm text " + ticket + "Testing longass desc .................................................................................................................................................................."}
+                                        </Card.Text>
+                                    </Card.Body>
+                                </Card>
+                                <Card className={"mt-5 mb-5"}>
+                                    <Card.Body>
                                         <Form>
                                             <Form.Group>
                                                 <Form.Label>Pick a seat</Form.Label>
@@ -38,14 +43,10 @@ class TicketList extends React.Component {
                                                 </Form.Control>
                                             </Form.Group>
                                         </Form>
-                                    </Row>
-                                    <Row>
-                                        <CustomButton buttoncfg={AddToCartBtn}/>
-                                    </Row>
-                                </Col>
-                            </Row>
-                        </Card.Body>
-                    </Card>
+                                        <CustomButton buttoncfg={AddToCartBtn} onPress={() => this.handleClick()}/>
+                                    </Card.Body>
+                                </Card>
+                    </CardGroup>
                 ))}
             </div>
         )
