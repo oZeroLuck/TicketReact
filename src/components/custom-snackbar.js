@@ -13,9 +13,13 @@ function CustomSnackbar(props) {
         }
     }
 
+    function logger() {
+        console.log("I'm displaying this message: " + props.message)
+    }
+
         return (
-            <Fade in={props.show} onExited={() => props.close}>
-                <div className={"center-me"}>
+            <Fade in={props.show} onEntering={() => logger()} onExited={() => props.close}>
+                <div className={"anchor-me"}>
                     <Alert show={props.show} variant={chooseType()}>
                         <p>
                             {props.message}
