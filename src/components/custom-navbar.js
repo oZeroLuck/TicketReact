@@ -2,7 +2,7 @@ import React from "react";
 import {Link} from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import {Container, Dropdown, Nav, Navbar, NavDropdown} from "react-bootstrap";
-import {HomeBtn, CarBtn, LogoutBtn, LoginBtn, SignUpBtn} from "./custom-button/btn-cfg";
+import {HomeBtn, CarBtn, LogoutBtn, LoginBtn, SignUpBtn, ShoppingCartBtn} from "./custom-button/btn-cfg";
 import {CustomButton} from "./custom-button/custom-button";
 
 class CustomNavbar extends React.Component {
@@ -91,6 +91,11 @@ class CustomNavbar extends React.Component {
                                 </div>
                             }
                         </NavDropdown>
+                        <Link to={"/myCart"}>
+                            <Nav.Item>
+                                <CustomButton buttoncfg={ShoppingCartBtn}/>
+                            </Nav.Item>
+                        </Link>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
