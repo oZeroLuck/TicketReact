@@ -1,7 +1,7 @@
 import React from "react";
 import {CustomNavbar} from "../components/custom-navbar";
 import {CustomSnackbar} from "../components/custom-snackbar";
-import {Carousel, Col, Row} from "react-bootstrap";
+import {Card, Carousel, Col, Row} from "react-bootstrap";
 import "../components/components.css"
 import "./pages.css"
 import axios from "axios";
@@ -63,9 +63,12 @@ class Homepage extends React.Component {
         }
         return (
             <div className={"homepage"}>
-                <RegisterPage show={this.state.showRegister} close={() => this.setRegister()}/>
-            <div key="Homepage" className="vertical-center-absolute">
                 <CustomNavbar callBack={() => this.setRegister()}/>
+                <RegisterPage show={this.state.showRegister} close={() => this.setRegister()}/>
+                    <Row className={"justify-content-center pt-2 pb-2"} style={{backgroundColor: "#ffc107"}}>
+                        <h1>Welcome</h1>
+                    </Row>
+            <Row key="Homepage">
                 <Carousel>
                     {this.state.images.map((carouselItem) => {
                         return (
@@ -74,13 +77,22 @@ class Homepage extends React.Component {
                                     {carouselItem.map((event) => {
                                         return (
                                             <Col key={event.id + event.type}>
-                                                <Link to={"/event/" + event.type + "/" + event.id}>
-                                                    <img src={event.link}
-                                                         className="d-block w-100 zoom"
-                                                         alt={event.desc}
-                                                         title={event.desc}
-                                                         onClick={() => this.setSnack("You have clicked: " + event.id)}
-                                                    />
+                                                <Link to={"/event/" + event.type + "/" + event.id}
+                                                      style={{color: "black", textDecoration: "none"}}
+                                                >
+                                                    <Card className={"zoom"}
+                                                          onClick={() => this.setSnack("You have clicked: " + event.id)}>
+                                                        <Card.Img variant={"top"} as={"img"}
+                                                                  src={event.link}
+                                                                  alt={event.desc}
+                                                                  title={event.desc}
+                                                        />
+                                                        <Card.Body>
+                                                            <Card.Text>
+                                                                {event.desc}
+                                                            </Card.Text>
+                                                        </Card.Body>
+                                                    </Card>
                                                 </Link>
                                             </Col>
                                         )
@@ -92,7 +104,7 @@ class Homepage extends React.Component {
                     )}
                 </Carousel>
                 <br/>
-            </div>
+            </Row>
                 <CustomSnackbar show={this.state.showSnack}
                                 message={this.state.message}
                                 close={() => this.emptyMessage()}/>
