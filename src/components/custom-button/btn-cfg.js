@@ -103,6 +103,12 @@ const AddToCartBtn = {
     icon: faCartPlus
 }
 
+const RegisterBtn = {
+    customCssClass : 'success',
+    text: 'Register',
+    icon: null
+}
+
 export {
     SaveBtn,
     EditBtn,
@@ -118,7 +124,8 @@ export {
     ReservedAreaBtn,
     LogoutBtn,
     SignUpBtn,
-    AddToCartBtn
+    AddToCartBtn,
+    RegisterBtn
 }
 /*
 const {
