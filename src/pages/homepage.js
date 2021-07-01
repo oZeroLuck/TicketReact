@@ -1,7 +1,7 @@
 import React from "react";
 import {CustomNavbar} from "../components/custom-navbar";
 import {CustomSnackbar} from "../components/custom-snackbar";
-import {Card, Carousel, Col, Row} from "react-bootstrap";
+import {Card, Carousel, Col, Container, Row} from "react-bootstrap";
 import "../components/components.css"
 import "./pages.css"
 import axios from "axios";
@@ -20,7 +20,7 @@ class Homepage extends React.Component {
             loading: true
         };
         this.setSnack = this.setSnack.bind(this);
-        this.setModal = this.setSnack.bind(this);
+        this.setRegister = this.setRegister.bind(this);
     }
 
     componentDidMount() {
@@ -32,6 +32,7 @@ class Homepage extends React.Component {
         })
     }
 
+    // Use this function to test a component hook functionality
     testFunction() {
         console.log("This is test function")
     }
@@ -62,52 +63,61 @@ class Homepage extends React.Component {
             return <LoadingSpinner/>
         }
         return (
-            <div className={"homepage"}>
+            <div>
                 <CustomNavbar callBack={() => this.setRegister()}/>
-                <RegisterPage show={this.state.showRegister} close={() => this.setRegister()}/>
-                    <Row className={"justify-content-center pt-2 pb-2"} style={{backgroundColor: "#ffc107"}}>
-                        <h1>Welcome</h1>
+                <Container fluid key="Homepage">
+                    <RegisterPage show={this.state.showRegister} close={() => this.setRegister()}/>
+                        <Row className={"justify-content-center pt-2 pb-2"} style={{backgroundColor: "#ffc107"}}>
+                            <h1>Welcome</h1>
+                        </Row>
+                    <Row className={"p-3"}>
+                        <p>Buy your tickets to your favourite event at the lowest price!</p>
                     </Row>
-            <Row key="Homepage">
-                <Carousel>
-                    {this.state.images.map((carouselItem) => {
-                        return (
-                            <Carousel.Item>
-                                <Row>
-                                    {carouselItem.map((event) => {
-                                        return (
-                                            <Col key={event.id + event.type}>
-                                                <Link to={"/event/" + event.type + "/" + event.id}
-                                                      style={{color: "black", textDecoration: "none"}}
-                                                >
-                                                    <Card className={"zoom"}
-                                                          onClick={() => this.setSnack("You have clicked: " + event.id)}>
-                                                        <Card.Img variant={"top"} as={"img"}
-                                                                  src={event.link}
-                                                                  alt={event.desc}
-                                                                  title={event.desc}
-                                                        />
-                                                        <Card.Body>
-                                                            <Card.Text>
-                                                                {event.desc}
-                                                            </Card.Text>
-                                                        </Card.Body>
-                                                    </Card>
-                                                </Link>
-                                            </Col>
-                                        )
-                                    })}
-                                </Row>
-                            </Carousel.Item>
-                        )
-                        }
-                    )}
-                </Carousel>
-                <br/>
-            </Row>
-                <CustomSnackbar show={this.state.showSnack}
-                                message={this.state.message}
-                                close={() => this.emptyMessage()}/>
+                    <Row style={{backgroundColor: "#ffc107"}} className={"p-2"}>
+                        <h3>Check our featured events!</h3>
+                    </Row>
+                    <Row style={{backgroundColor: "#ffc107"}}>
+                        <Carousel indicators={false}>
+                            {this.state.images.map((carouselItem) => {
+                                return (
+                                    <Carousel.Item>
+                                        <Row>
+                                            {carouselItem.map((event) => {
+                                                return (
+                                                    <Col key={event.id + event.type}>
+                                                        <Link to={"/event/" + event.type + "/" + event.id}
+                                                              style={{color: "black", textDecoration: "none"}}
+                                                        >
+                                                            <Card className={"zoom"} style={{height: "100%"}}
+                                                                  onClick={() => this.setSnack("You have clicked: " + event.id)}>
+                                                                <Card.Img variant={"top"} as={"img"}
+                                                                          src={event.link}
+                                                                          alt={event.desc}
+                                                                          title={event.desc}
+                                                                />
+                                                                <Card.Body>
+                                                                    <Card.Text>
+                                                                        {event.desc}
+                                                                    </Card.Text>
+                                                                </Card.Body>
+                                                            </Card>
+                                                        </Link>
+                                                    </Col>
+                                                )
+                                            })}
+                                        </Row>
+                                    </Carousel.Item>
+                                )
+                                }
+                            )}
+                        </Carousel>
+                        <br/>
+                    </Row>
+                    <Row style={{height: "2rem", backgroundColor: "#ffc107"}}/>
+                    <CustomSnackbar show={this.state.showSnack}
+                                    message={this.state.message}
+                                    close={() => this.emptyMessage()}/>
+                </Container>
             </div>
         );
     }
