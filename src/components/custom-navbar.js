@@ -27,6 +27,11 @@ class CustomNavbar extends React.Component {
         })
     };
 
+    handlePressed() {
+        console.log('Pressed Register')
+        this.props.callBack()
+    }
+
     render() {
         return (
             <Navbar bg="dark" variant="dark" expand="md">
@@ -80,7 +85,7 @@ class CustomNavbar extends React.Component {
                                     <Container>
                                         <p>Don't have an account?</p>
                                         <div className={"d-flex flex-row-reverse"}>
-                                            <CustomButton buttoncfg={SignUpBtn}/>
+                                            <CustomButton buttoncfg={SignUpBtn} onPress={() => this.handlePressed()}/>
                                         </div>
                                     </Container>
                                 </div>
