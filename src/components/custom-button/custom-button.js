@@ -6,7 +6,6 @@ import './custom-button.css';
 class CustomButton extends React.Component {
 
     render() {
-        console.log("Hi, I'm rendering this button: " + this.props.buttoncfg.text)
         return (
             <Button variant={this.props.buttoncfg.customCssClass}
                 onClick={this.props.onPress}>
@@ -14,7 +13,10 @@ class CustomButton extends React.Component {
                     <FontAwesomeIcon icon={this.props.buttoncfg.icon}/> :
                     null
                 }
-                {this.props.buttoncfg.text}
+                {this.props.buttoncfg.text ?
+                    this.props.buttoncfg.text :
+                    null
+                }
             </Button>
         );
     }
