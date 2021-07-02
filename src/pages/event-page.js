@@ -4,7 +4,7 @@ import {EventApi} from "../services/event-api";
 import {Col, Container, Row} from "react-bootstrap";
 import {CustomNavbar} from "../components/custom-navbar";
 import "./pages.css"
-import {TicketList} from "../components/ticket-list";
+import {TicketList} from "../components/ticket-list/ticket-list";
 import {ErrorPage} from "./error-page";
 import {CustomSnackbar} from "../components/custom-snackbar";
 

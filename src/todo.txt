@@ -9,13 +9,13 @@ TODO LIST!
 
 - Change NavBar component to be fully customizable with a cfg object;
 
-- Create the register page;
+- Create the register page; Done!
 
 - Create the admin page;
 
 - Import the custom table;
 
-- Change the carousel fetch and transform view method;
+- Change the carousel fetch and transform view method; Done!
 
 - Add event type check for better performances;
 
@@ -27,6 +27,6 @@ TODO LIST!
 
 ------ * Extra * ------
 
-- Create the 404 page;
+- Create the 404 page; Done!
 
 - Make custom css classes;

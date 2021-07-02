@@ -57,3 +57,9 @@
 .row .col {
     padding: 0.05%;
 }
+
+.total {
+    position: sticky!important;
+    right: 30%;
+    top: 30%;
+}

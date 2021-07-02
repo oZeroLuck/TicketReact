@@ -3,7 +3,7 @@ import {TicketApi} from "../services/ticket-api";
 import {Button, Card, Col, Container, Row} from "react-bootstrap";
 import {LoadingSpinner} from "../components/loading-spinner";
 import {CustomNavbar} from "../components/custom-navbar";
-import {TicketList} from "../components/ticket-list";
+import {TicketList} from "../components/ticket-list/ticket-list";
 
 class MyCartPage extends React.Component {
     constructor(props) {
@@ -30,28 +30,30 @@ class MyCartPage extends React.Component {
                 <Container fluid>
                     {this.state.loading ?
                         <LoadingSpinner/> :
-                        <Row>
-                            <Col sm={8}>
-                                <TicketList route={this.props.location}/>
-                            </Col>
-                            <Col className={"mt-sm-5"}>
-                                <Card>
-                                    <Card.Header>
-                                        <Card.Title>Receipt (PH)</Card.Title>
-                                    </Card.Header>
-                                    <Card.Body>
-                                        <p>Price</p>
-                                        <br/>
-                                        <p>Price</p>
-                                        <br/>
-                                        <hr/>
-                                    </Card.Body>
-                                    <Card.Footer>
-                                        <Button variant={"success"}>Pay</Button>
-                                    </Card.Footer>
-                                </Card>
-                            </Col>
-                        </Row>
+                        <Container fluid>
+                            <Row>
+                                <Col sm={8}>
+                                    <TicketList route={this.props.location} data={this.state.cart}/>
+                                </Col>
+                                <Col className={"mt-sm-5 pl-4"} style={{backgroundColor: "#c9c9c9"}}>
+                                    <Card className={"total mt-3"}>
+                                        <Card.Header>
+                                            <Card.Title>Receipt (PH)</Card.Title>
+                                        </Card.Header>
+                                        <Card.Body>
+                                            <p>Price</p>
+                                            <br/>
+                                            <p>Price</p>
+                                            <br/>
+                                            <hr/>
+                                        </Card.Body>
+                                        <Card.Footer>
+                                            <Button variant={"success"}>Pay</Button>
+                                        </Card.Footer>
+                                    </Card>
+                                </Col>
+                            </Row>
+                        </Container>
                     }
                 </Container>
             </div>

@@ -1,9 +1,9 @@
 import React from 'react'
 import {Card, CardGroup} from "react-bootstrap";
-import {CustomButton} from "./custom-button/custom-button";
-import {AddToCartBtn, DeleteBtn} from "./custom-button/btn-cfg";
+import {CustomButton} from "../custom-button/custom-button";
+import {AddToCartBtn, DeleteBtn} from "../custom-button/btn-cfg";
 import Form from "react-bootstrap/Form"
-import "./components.css"
+import "../components.css"
 
 class TicketList extends React.Component {
 
@@ -13,13 +13,24 @@ class TicketList extends React.Component {
         this.state = {
             selectedSeat: "Front",
             button: null,
-            loading: true
+            loading: true,
+            tickets: props.data
         }
     }
 
     componentDidMount() {
+        console.log("Tickets obj")
+        console.log(this.state.tickets)
+        console.log("Cart id")
+        console.log(this.state.tickets.id)
+        console.log("Cart user id")
+        console.log(this.state.tickets.userId)
         if (this.props.route.pathname === "/myCart") {
-            this.setState({button: DeleteBtn, loading: false})
+            this.setState(
+                {
+                    button: DeleteBtn,
+                    loading: false
+                })
         } else {
             this.setState({button: AddToCartBtn, loading: false})
         }
@@ -42,7 +53,7 @@ class TicketList extends React.Component {
         }
         return (
             <div key={"ticket-list"}>
-                {this.tickets.map(ticket => (
+                {this.state.tickets.map(ticket => (
                     <CardGroup>
                                 <Card className={"mt-5 mb-5"} style={{flexGrow: "2"}}>
                                     <Card.Body>
