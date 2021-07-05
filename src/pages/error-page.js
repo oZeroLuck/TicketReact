@@ -12,10 +12,13 @@ function ErrorPage(props) {
                     <h1 style={{fontSize: "xxx-large"}}>Oh No</h1>
                 </Row>
                 <Row className={"justify-content-center"}>
-                    <h1>{"It seems that you've encountered a " + props.errCode + " error!"} </h1>
+                    <h1>It seems that you've encountered a problem!</h1>
+                </Row>
+                <Row className={"justify-content-center mb-3"}>
+                    <h1>{props.errCode}</h1>
                 </Row>
                 <Row className={"justify-content-center"}>
-                    <p>You might want to refresh the page to try again</p>
+                    <p style={{textAlign: "center"}}>You might want to refresh the page to try again</p>
                 </Row>
                 <Row className={"justify-content-center"}>
                     <p>Maybe contact the site admin?</p>

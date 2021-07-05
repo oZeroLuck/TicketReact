@@ -19,12 +19,6 @@ class TicketList extends React.Component {
     }
 
     componentDidMount() {
-        console.log("Tickets obj")
-        console.log(this.state.tickets)
-        console.log("Cart id")
-        console.log(this.state.tickets.id)
-        console.log("Cart user id")
-        console.log(this.state.tickets.userId)
         if (this.props.route.pathname === "/myCart") {
             this.setState(
                 {
@@ -53,7 +47,7 @@ class TicketList extends React.Component {
         }
         return (
             <div key={"ticket-list"}>
-                {this.state.tickets.map(ticket => (
+                {this.tickets.map(ticket => (
                     <CardGroup>
                                 <Card className={"mt-5 mb-5"} style={{flexGrow: "2"}}>
                                     <Card.Body>

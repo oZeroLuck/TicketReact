@@ -1,27 +1,37 @@
 import React from 'react'
-import {TicketApi} from "../services/ticket-api";
+import {TicketService} from "../services/ticket-service";
 import {Button, Card, Col, Container, Row} from "react-bootstrap";
 import {LoadingSpinner} from "../components/loading-spinner";
 import {CustomNavbar} from "../components/custom-navbar";
 import {TicketList} from "../components/ticket-list/ticket-list";
+import {ErrorPage} from "./error-page";
 
 class MyCartPage extends React.Component {
     constructor(props) {
         super(props);
-        this.ticketApi = new TicketApi()
+        this.ticketApi = new TicketService()
         this.state = {
             cart: null,
-            loading: true
+            loading: true,
+            error: false,
+            errorMsg: null
         }
+        this.cart = [1, 2, 3, 4]
     }
 
     componentDidMount() {
-        this.ticketApi.getCart(1).then(result =>
-            this.setState({cart: result.data, loading: false}, () => console.log(result.data))
-        )
+        this.ticketApi.getCart(1)
+            .then(result =>
+                this.setState({cart: result.data, loading: false}, () => console.log(result.data)))
+            .catch(error =>
+                this.setState({error: true, errorMsg: error.message}))
     }
 
     render() {
+
+        if(this.state.error) {
+            return <ErrorPage errCode={this.state.errorMsg}/>
+        }
 
         return(
             <div>
@@ -33,7 +43,7 @@ class MyCartPage extends React.Component {
                         <Container fluid>
                             <Row>
                                 <Col sm={8}>
-                                    <TicketList route={this.props.location} data={this.state.cart}/>
+                                    <TicketList route={this.props.location} data={this.cart}/>
                                 </Col>
                                 <Col className={"mt-sm-5 pl-4"} style={{backgroundColor: "#c9c9c9"}}>
                                     <Card className={"total mt-3"}>

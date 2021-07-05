@@ -15,6 +15,8 @@ class RegisterPage extends React.Component {
             toastType: null,
             toastMessage: null
         }
+
+        this.handleClose = this.handleClose.bind(this)
     }
 
     handleEmailInput(input) {

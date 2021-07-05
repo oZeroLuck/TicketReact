@@ -1,35 +1,26 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import Form from "react-bootstrap/Form";
 import {Container, Dropdown, Nav, Navbar, NavDropdown} from "react-bootstrap";
-import {HomeBtn, CarBtn, LogoutBtn, LoginBtn, SignUpBtn, ShoppingCartBtn} from "./custom-button/btn-cfg";
+import {HomeBtn, LogoutBtn, ShoppingCartBtn, SignUpBtn} from "./custom-button/btn-cfg";
 import {CustomButton} from "./custom-button/custom-button";
+import {ReservedArea} from "../pages/reserved-area";
+import {RegisterPage} from "../pages/register-page";
 
 class CustomNavbar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLogged: false
+            loginEmail: "",
+            loginPassword: "",
+            showRegister: false
         }
+        this.handleRegister = this.handleRegister.bind(this)
     }
 
-    login() {
-        console.log('Login Works')
-        this.setState({
-            isLogged: true
-        })
-    }
-
-    logout() {
-        console.log('Logout Works')
-        this.setState({
-            isLogged: false
-        })
-    };
-
-    handlePressed() {
-        console.log('Pressed Register')
-        this.props.callBack()
+    handleRegister() {
+        this.setState(prev => ({
+            showRegister: !prev.showRegister
+        }))
     }
 
     render() {
@@ -54,42 +45,16 @@ class CustomNavbar extends React.Component {
                     </Nav>
                     <Nav className="flex flex-row-reverse">
                         <NavDropdown className={"mr-3"} id="navDrop" title="Reserved Area">
-                            {this.state.isLogged ?
                                 <div>
-                                    <Link to="/reserved/profile">
-                                        <NavDropdown.Item>Profile</NavDropdown.Item>
-                                    </Link>
-                                    <NavDropdown.Item>
-                                        <CustomButton buttoncfg={LogoutBtn} onPress={() => this.logout()}/>
-                                    </NavDropdown.Item>
-                                </div>
-                            :
-                                <div>
-                                    <Container>
-                                        <strong>Login</strong>
-                                        <Form className={"mb-2"}>
-                                            <Form.Control className={"mb-2 mt-2"}
-                                                          type="text"
-                                                          placeholder="E-Mail"
-                                            />
-                                            <Form.Control className={"mb-1"}
-                                                          type="password"
-                                                          placeholder="Password"
-                                            />
-                                            <div className={"d-flex flex-row-reverse"}>
-                                                <CustomButton buttoncfg={LoginBtn} onPress={() => this.login()}/>
-                                            </div>
-                                        </Form>
-                                    </Container>
+                                    <ReservedArea/>
                                     <hr/>
                                     <Container>
                                         <p>Don't have an account?</p>
                                         <div className={"d-flex flex-row-reverse"}>
-                                            <CustomButton buttoncfg={SignUpBtn} onPress={() => this.handlePressed()}/>
+                                            <CustomButton buttoncfg={SignUpBtn} onPress={() => this.handleRegister()}/>
                                         </div>
                                     </Container>
                                 </div>
-                            }
                         </NavDropdown>
                         <Link to={"/myCart"}>
                             <Nav.Item>
@@ -98,9 +63,50 @@ class CustomNavbar extends React.Component {
                         </Link>
                     </Nav>
                 </Navbar.Collapse>
+                <RegisterPage show={this.state.showRegister} close={this.handleRegister}/>
             </Navbar>
         );
     }
 }
 
 export {CustomNavbar}
+
+/*
+    constructor(props) {
+        super(props);
+        this.state = {
+            isLogged: false
+        }
+        this.userService = new UserService()
+        this.setRegister = this.setRegister.bind(this)
+        this.login = this.login.bind(this)
+    }
+
+    componentDidMount() {
+        console.log(window.sessionStorage.getItem("user"))
+        if(window.sessionStorage.getItem("user") !== null) {
+            this.setState({isLogged: true})
+        }
+    }
+
+    login(userInfo) {
+        this.userService.login(userInfo).then(response => {console.log(response)})
+    }
+
+    setRegister() {
+        console.log("Called setModal")
+        this.setState((previous) => {
+            return (
+                {showRegister: !previous.showRegister}
+            )
+        })
+    }
+
+    fakeLogin(input) {
+        window.sessionStorage.setItem("user", input)
+        this.setState(prev => ({
+            isLogged: !prev.isLogged
+        }))
+        console.log(window.sessionStorage.getItem("user"))
+    }
+ */

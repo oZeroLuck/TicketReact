@@ -1,6 +1,6 @@
 import React from "react";
 import {LoadingSpinner} from "../components/loading-spinner";
-import {EventApi} from "../services/event-api";
+import {EventService} from "../services/event-service";
 import {Col, Container, Row} from "react-bootstrap";
 import {CustomNavbar} from "../components/custom-navbar";
 import "./pages.css"
@@ -11,7 +11,7 @@ import {CustomSnackbar} from "../components/custom-snackbar";
 class EventPage extends React.Component {
     constructor(props) {
         super(props);
-        this.eventApi = new EventApi();
+        this.eventApi = new EventService();
         this.state = {
             event: null,
             loading: true,
@@ -29,7 +29,7 @@ class EventPage extends React.Component {
                 loading: false
             })
         ).catch(error => {
-            this.setState({loading: false, error: error.response.status})
+            this.setState({loading: false, error: error.message})
         })
     }
 
@@ -59,12 +59,7 @@ class EventPage extends React.Component {
         }
 
         if (this.state.error) {
-            return (
-                <div key={"error"}>
-                    <CustomNavbar/>
-                    <ErrorPage errCode={this.state.error}/>
-                </div>
-            )
+            return <ErrorPage errCode={this.state.error}/>
         }
 
         return (

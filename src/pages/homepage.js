@@ -1,5 +1,4 @@
 import React from "react";
-import {CustomNavbar} from "../components/custom-navbar";
 import {CustomSnackbar} from "../components/custom-snackbar";
 import {Card, Carousel, Col, Container, Row} from "react-bootstrap";
 import "../components/components.css"
@@ -8,6 +7,7 @@ import axios from "axios";
 import {LoadingSpinner} from "../components/loading-spinner";
 import {Link} from "react-router-dom";
 import {RegisterPage} from "./register-page";
+import {ErrorPage} from "./error-page";
 
 class Homepage extends React.Component {
     constructor(props) {
@@ -17,33 +17,40 @@ class Homepage extends React.Component {
             message: "",
             showRegister: false,
             images: null,
-            loading: true
+            loading: true,
+            error: false,
+            errorMsg: null,
+            isLogged: false,
+            currentUser: null
         };
         this.setSnack = this.setSnack.bind(this);
-        this.setRegister = this.setRegister.bind(this);
     }
 
     componentDidMount() {
-        axios.get('http://localhost:8080/featured').then(result => {
+        const currentUser = window.sessionStorage.getItem("currentUser")
+        console.log("Current user on homepage")
+        console.log(currentUser)
+        if(currentUser !== null) {
+            this.setState({isLogged: true, currentUser: JSON.parse(currentUser)},
+                () => console.log(this.state.currentUser))
+        }
+        axios.get('http://localhost:8080/featured', {timeout: 10000}).then(result => {
             this.setState({
                 loading: false,
                 images: result.data
             }, () => console.log(this.state.images))
+        }).catch(error => {
+            this.setState({
+                loading: false,
+                error: true,
+                errorMsg: error.message
+            })
         })
     }
 
     // Use this function to test a component hook functionality
     testFunction() {
         console.log("This is test function")
-    }
-
-    setRegister() {
-        console.log("Called setModal")
-        this.setState((previous) => {
-            return (
-                {showRegister: !previous.showRegister}
-            )
-        })
     }
 
     setSnack(message) {
@@ -62,13 +69,23 @@ class Homepage extends React.Component {
         if (this.state.loading) {
             return <LoadingSpinner/>
         }
+        if (this.state.error) {
+            return (
+                <div>
+                    <Container fluid={"lg"}>
+                        <ErrorPage errCode={this.state.errorMsg}/>
+                    </Container>
+                </div>
+            )
+        }
         return (
             <div>
-                <CustomNavbar callBack={() => this.setRegister()}/>
                 <Container fluid key="Homepage">
                     <RegisterPage show={this.state.showRegister} close={() => this.setRegister()}/>
                         <Row className={"justify-content-center pt-2 pb-2"} style={{backgroundColor: "#ffc107"}}>
-                            <h1>Welcome</h1>
+                            {this.state.isLogged ? <h1>Welcome {this.state.currentUser.firstName}</h1> :
+                                <h1>Welcome</h1>
+                            }
                         </Row>
                     <Row className={"p-3"}>
                         <p>Buy your tickets to your favourite event at the lowest price!</p>
