@@ -1,26 +1,21 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import {Container, Dropdown, Nav, Navbar, NavDropdown} from "react-bootstrap";
-import {HomeBtn, LoginBtn, LogoutBtn, ProfileBtn, ShoppingCartBtn, SignUpBtn} from "./custom-button/btn-cfg";
+import {Dropdown, Nav, Navbar} from "react-bootstrap";
+import {HomeBtn, ProfileBtn, ShoppingCartBtn} from "./custom-button/btn-cfg";
 import {CustomButton} from "./custom-button/custom-button";
-import {ReservedArea} from "../pages/reserved-area";
-import {RegisterPage} from "../pages/register-page";
 
 class CustomNavbar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            loginEmail: "",
-            loginPassword: "",
-            showRegister: false
+            isLogged: false
         }
-        this.handleRegister = this.handleRegister.bind(this)
     }
 
-    handleRegister() {
-        this.setState(prev => ({
-            showRegister: !prev.showRegister
-        }))
+    componentDidMount() {
+        if(window.sessionStorage.getItem("currentUser") !== null) {
+            this.setState({isLogged: true})
+        }
     }
 
     render() {
@@ -44,9 +39,14 @@ class CustomNavbar extends React.Component {
                         </Dropdown>
                     </Nav>
                     <Nav className="flex flex-row-reverse">
-                        <Link to={"/login"} className={"ml-2"}>
-                            <CustomButton buttoncfg={ProfileBtn}/>
-                        </Link>
+                        {this.state.isLogged ?
+                            <Link to={"/profile"} className={"ml-2"}>
+                                <CustomButton buttoncfg={ProfileBtn}/>
+                            </Link> :
+                            <Link to={"/login"} className={"ml-2"}>
+                                <CustomButton buttoncfg={ProfileBtn}/>
+                            </Link>
+                        }
                         <Link to={"/myCart"}>
                             <Nav.Item>
                                 <CustomButton buttoncfg={ShoppingCartBtn}/>
