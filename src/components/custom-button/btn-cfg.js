@@ -9,7 +9,7 @@ import {
     faArrowAltCircleLeft,
     faBook,
     faCheckCircle, faTimesCircle, faUser,
-    faSignOutAlt, faCartPlus, faShoppingCart, faUserCircle
+    faSignOutAlt, faCartPlus, faShoppingCart, faUserCircle, faBan
 } from "@fortawesome/free-solid-svg-icons";
 
 const SaveBtn = {
@@ -21,6 +21,12 @@ const SaveBtn = {
 
 const EditBtn = {
     customCssClass : 'secondary',
+    text : 'Edit',
+    icon : faEdit,
+}
+
+const HollowEditBtn = {
+    customCssClass : 'outline-primary',
     text : 'Edit',
     icon : faEdit,
 }
@@ -121,6 +127,12 @@ const ProfileBtn = {
     icon: faUserCircle
 }
 
+const CancelBtn = {
+    customCssClass: 'secondary',
+    text: 'Cancel',
+    icon: faBan
+}
+
 export {
     SaveBtn,
     EditBtn,
@@ -139,7 +151,9 @@ export {
     AddToCartBtn,
     RegisterBtn,
     ShoppingCartBtn,
-    ProfileBtn
+    ProfileBtn,
+    HollowEditBtn,
+    CancelBtn
 }
 /*
 const {
