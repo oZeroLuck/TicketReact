@@ -65,6 +65,11 @@ class Homepage extends React.Component {
         this.setState({message: null})
     }
 
+    goThere() {
+        console.log(this.props.history)
+        this.props.history.push('/myCart')
+    }
+
     render() {
         if (this.state.loading) {
             return <LoadingSpinner/>
@@ -135,6 +140,7 @@ class Homepage extends React.Component {
                                     message={this.state.message}
                                     close={() => this.emptyMessage()}/>
                 </Container>
+                <button type={"button"} onClick={() => this.goThere()}>GoThere</button>
             </div>
         );
     }

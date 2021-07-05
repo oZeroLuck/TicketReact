@@ -9,7 +9,7 @@ import {
     faArrowAltCircleLeft,
     faBook,
     faCheckCircle, faTimesCircle, faUser,
-    faSignOutAlt, faCartPlus, faShoppingCart
+    faSignOutAlt, faCartPlus, faShoppingCart, faUserCircle
 } from "@fortawesome/free-solid-svg-icons";
 
 const SaveBtn = {
@@ -115,6 +115,12 @@ const ShoppingCartBtn = {
     icon: faShoppingCart
 }
 
+const ProfileBtn = {
+    customCssClass: 'warning',
+    text: null,
+    icon: faUserCircle
+}
+
 export {
     SaveBtn,
     EditBtn,
@@ -132,7 +138,8 @@ export {
     SignUpBtn,
     AddToCartBtn,
     RegisterBtn,
-    ShoppingCartBtn
+    ShoppingCartBtn,
+    ProfileBtn
 }
 /*
 const {

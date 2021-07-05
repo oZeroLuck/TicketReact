@@ -1,9 +1,8 @@
 import React from 'react'
 import {CustomButton} from "../components/custom-button/custom-button";
-import {RegisterBtn} from "../components/custom-button/btn-cfg";
-import {CustomSnackbar} from "../components/custom-snackbar";
-import Modal from "react-bootstrap/Modal";
+import {BackBtn, LoginBtn, RegisterBtn, SignUpBtn} from "../components/custom-button/btn-cfg";
 import Form from "react-bootstrap/Form";
+import {Card, Container} from "react-bootstrap";
 
 class RegisterPage extends React.Component {
     constructor(props) {
@@ -11,12 +10,23 @@ class RegisterPage extends React.Component {
         this.state = {
             email: "",
             password: "",
-            toast: false,
-            toastType: null,
-            toastMessage: null
+            firstName: "",
+            lastName: ""
         }
 
         this.handleClose = this.handleClose.bind(this)
+    }
+
+    handleFirstNameInput(input) {
+        this.setState({
+            firstName: input
+        })
+    }
+
+    handleLastNameInput(input) {
+        this.setState({
+            lastName: input
+        })
     }
 
     handleEmailInput(input) {
@@ -62,6 +72,61 @@ class RegisterPage extends React.Component {
 
     render() {
         return(
+            <Container fluid={"sm"} className={"align-content-center mt-5"}>
+                <Card className={"text-center"}
+                      bg={"light"}
+                      style={{width: "50%", margin: "auto"}}
+                >
+                    <Card.Body>
+                        <h1><strong>Register</strong></h1>
+                        <hr/>
+                        <Container fluid={"sm"} style={{width: "70%"}}>
+                            <Form className={"mb-2"}>
+                                <Form.Control className={"mb-2 mt-2"}
+                                              type="text"
+                                              placeholder="First Name"
+                                              value={this.state.firstName}
+                                              onChange={(event) => this.handleFirstNameInput(event.target.value)}
+                                />
+                                <Form.Control className={"mb-2 mt-2"}
+                                              type="text"
+                                              placeholder="Last Name"
+                                              value={this.state.lastName}
+                                              onChange={(event) => this.handleLastNameInput(event.target.value)}
+                                />
+                                <Form.Control className={"mb-2 mt-2"}
+                                              type="text"
+                                              placeholder="E-Mail"
+                                              value={this.state.email}
+                                              onChange={(event) => this.handleFormEmail(event.target.value)}
+                                />
+                                <Form.Control className={"mb-2"}
+                                              type="password"
+                                              placeholder="Password"
+                                              value={this.state.password}
+                                              onChange={(event) => this.handleFormPassword(event.target.value)}
+                                />
+                                <div className={"d-flex flex-row-reverse"}>
+                                    <CustomButton buttoncfg={SignUpBtn}
+                                                  onPress={() => this.props.register()}/>
+                                    <div className={"ml-2"}/>
+                                    <CustomButton buttoncfg={BackBtn}
+                                                  onPress={() => this.props.back()}/>
+                                </div>
+                            </Form>
+                        </Container>
+                        <hr/>
+                        <button onClick={() => this.debug()}>Debug</button>
+                    </Card.Body>
+                </Card>
+            </Container>
+        )
+    }
+}
+
+export {RegisterPage}
+
+/*
             <div>
                 <Modal show={this.props.show} onHide={() => this.handleClose()}>
                     <Modal.Header closeButton>
@@ -95,8 +160,4 @@ class RegisterPage extends React.Component {
                                 type={this.state.toastType}
                                 close={() => this.flushMessage} />
             </div>
-        )
-    }
-}
-
-export {RegisterPage}
+ */

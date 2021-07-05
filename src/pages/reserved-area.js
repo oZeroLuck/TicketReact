@@ -1,17 +1,19 @@
 import React from 'react'
-import {Button, Container, NavDropdown} from "react-bootstrap";
+import {Card, Container, NavDropdown} from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import {CustomButton} from "../components/custom-button/custom-button";
-import {LoginBtn, LogoutBtn} from "../components/custom-button/btn-cfg";
+import {LoginBtn, LogoutBtn, RegisterBtn, SignUpBtn} from "../components/custom-button/btn-cfg";
 import {UserService} from "../services/user-service";
-import {Link, Redirect, withRouter} from "react-router-dom";
+import {Link} from "react-router-dom";
+import './pages.css'
+import {RegisterPage} from "./register-page";
 
 class ReservedArea extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            isLogged: false,
+            loginMode: true,
             formEmail: "",
             formPassword: "",
             error: false,
@@ -20,6 +22,8 @@ class ReservedArea extends React.Component {
         }
         this.userService = new UserService()
         this.setUser = this.setUser.bind(this)
+        this.setMode = this.setMode.bind(this)
+        this.handleRegister = this.handleRegister.bind(this)
     }
 
     componentDidMount() {
@@ -31,15 +35,6 @@ class ReservedArea extends React.Component {
         }
         console.log("Current state: " + this.state.isLogged)
     }
-
-    logout() {
-        console.log('Logout Works')
-        window.sessionStorage.removeItem("currentUser")
-        this.setState({
-            isLogged: false
-        })
-        console.log(window.sessionStorage.getItem("currentUser"))
-    };
 
     handleFormEmail(input) {
         this.setState({
@@ -71,8 +66,6 @@ class ReservedArea extends React.Component {
     login() {
         this.userService.login()
             .then(users => users.data.map(loginInfo => {
-                console.log(loginInfo.email)
-                console.log(loginInfo.password)
             if (loginInfo.email === this.state.formEmail && loginInfo.password === this.state.formPassword) {
                 this.setUser(loginInfo.id);
                 return true;
@@ -93,17 +86,32 @@ class ReservedArea extends React.Component {
     }
 
     setUser(id) {
+        console.log("Setting user...")
         this.userService.getUser(id)
             .then(user => {
                 window.sessionStorage.setItem("currentUser", JSON.stringify(user.data))
                 this.handleLogged()
+                console.log("Pushing mycart")
+                this.props.history.push('/myCart')
             })
     }
 
     handleLogged() {
         this.setState(prev => ({
-            isLogged: !prev.isLogged,
-            redirect: "/homepage"
+            formEmail: "",
+            formPassword: ""
+        }))
+    }
+
+    handleRegister(newUser) {
+        console.log("Registered :")
+        console.log(newUser)
+    }
+
+    setMode() {
+        console.log("Setting login mode")
+        this.setState(prev => ({
+            loginMode: !prev.loginMode
         }))
     }
 
@@ -113,43 +121,49 @@ class ReservedArea extends React.Component {
     }
 
     render() {
-        if (this.state.isLogged) {
+        if (this.state.loginMode) {
             return(
-                <div>
-                    <Link to="/reserved/profile">
-                        <NavDropdown.Item>Profile</NavDropdown.Item>
-                    </Link>
-                    <NavDropdown.Item>
-                        <CustomButton buttoncfg={LogoutBtn} onPress={() => this.logout()}/>
-                    </NavDropdown.Item>
-                </div>
+                <Container fluid={"sm"} className={"align-content-center mt-5"}>
+                    <Card className={"text-center"}
+                          bg={"light"}
+                          style={{width: "50%", margin: "auto"}}
+                    >
+                        <Card.Body>
+                            <h1><strong>Login</strong></h1>
+                            <hr/>
+                            <Container fluid={"sm"} style={{width: "70%"}}>
+                                <Form className={"mb-2"}>
+                                    <Form.Control className={"mb-2 mt-2"}
+                                                  type="text"
+                                                  placeholder="E-Mail"
+                                                  value={this.state.formEmail}
+                                                  onChange={(event) => this.handleFormEmail(event.target.value)}
+                                    />
+                                    <Form.Control className={"mb-1"}
+                                                  type="password"
+                                                  placeholder="Password"
+                                                  value={this.state.formPassword}
+                                                  onChange={(event) => this.handleFormPassword(event.target.value)}
+                                    />
+                                    <div className={"d-flex flex-row-reverse"}>
+                                        <CustomButton buttoncfg={LoginBtn} onPress={() => this.handleLogin()}/>
+                                    </div>
+                                </Form>
+                            </Container>
+                            <hr/>
+                            <p>Don't have an account?</p>
+                            <CustomButton buttoncfg={RegisterBtn} onPress={() => this.setMode()}/>
+                            <hr/>
+                            <button onClick={() => this.debug()}>Debug</button>
+                        </Card.Body>
+                    </Card>
+                </Container>
+            )
+        } else {
+            return (
+                <RegisterPage back={() => this.setMode} register={() => this.handleRegister} />
             )
         }
-        return(
-            <Container>
-                <Redirect to="/homepage"/>
-                <strong>Login</strong>
-                <Form className={"mb-2"}>
-                    <Form.Control className={"mb-2 mt-2"}
-                                  type="text"
-                                  placeholder="E-Mail"
-                                  value={this.state.formEmail}
-                                  onChange={(event) => this.handleFormEmail(event.target.value)}
-                    />
-                    <Form.Control className={"mb-1"}
-                                  type="password"
-                                  placeholder="Password"
-                                  value={this.state.formPassword}
-                                  onChange={(event) => this.handleFormPassword(event.target.value)}
-                    />
-                    <div className={"d-flex flex-row-reverse"}>
-                        <CustomButton buttoncfg={LoginBtn} onPress={() => this.handleLogin()}/>
-                    </div>
-                </Form>
-                <hr/>
-                <button onClick={() => this.debug()}>Debug</button>
-            </Container>
-        )
     }
 }
 

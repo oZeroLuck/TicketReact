@@ -7,6 +7,8 @@ import {Footer} from "./components/footer";
 import {MyCartPage} from "./pages/my-cart-page";
 import {CustomNavbar} from "./components/custom-navbar";
 import React from 'react'
+import {ReservedArea} from "./pages/reserved-area";
+import {RegisterPage} from "./pages/register-page";
 
 class App extends React.Component {
     constructor(props) {
@@ -48,14 +50,14 @@ class App extends React.Component {
                         <Route exact path="/">
                             <Redirect to="/homepage"/>
                         </Route>
+                        <Route path="/login" component={ReservedArea}/>
+                        <Route path="/register" component={RegisterPage}/>
                         <Route path="/homepage" component={Homepage}/>
                         <Route path="/event/:type/:id" component={EventPage}/>
                         <Route path="/myCart" component={MyCartPage}/>
                     </Switch>
                 </BrowserRouter>
                 <Footer/>
-                <button type={"button"} onClick={() => this.debug()}>Debug</button>
-                <button type={"button"} onClick={() => this.debugFlush()}>Flush</button>
             </div>
         );
     }

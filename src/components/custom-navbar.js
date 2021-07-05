@@ -1,7 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import {Container, Dropdown, Nav, Navbar, NavDropdown} from "react-bootstrap";
-import {HomeBtn, LogoutBtn, ShoppingCartBtn, SignUpBtn} from "./custom-button/btn-cfg";
+import {HomeBtn, LoginBtn, LogoutBtn, ProfileBtn, ShoppingCartBtn, SignUpBtn} from "./custom-button/btn-cfg";
 import {CustomButton} from "./custom-button/custom-button";
 import {ReservedArea} from "../pages/reserved-area";
 import {RegisterPage} from "../pages/register-page";
@@ -44,18 +44,9 @@ class CustomNavbar extends React.Component {
                         </Dropdown>
                     </Nav>
                     <Nav className="flex flex-row-reverse">
-                        <NavDropdown className={"mr-3"} id="navDrop" title="Reserved Area">
-                                <div>
-                                    <ReservedArea/>
-                                    <hr/>
-                                    <Container>
-                                        <p>Don't have an account?</p>
-                                        <div className={"d-flex flex-row-reverse"}>
-                                            <CustomButton buttoncfg={SignUpBtn} onPress={() => this.handleRegister()}/>
-                                        </div>
-                                    </Container>
-                                </div>
-                        </NavDropdown>
+                        <Link to={"/login"} className={"ml-2"}>
+                            <CustomButton buttoncfg={ProfileBtn}/>
+                        </Link>
                         <Link to={"/myCart"}>
                             <Nav.Item>
                                 <CustomButton buttoncfg={ShoppingCartBtn}/>
@@ -63,50 +54,9 @@ class CustomNavbar extends React.Component {
                         </Link>
                     </Nav>
                 </Navbar.Collapse>
-                <RegisterPage show={this.state.showRegister} close={this.handleRegister}/>
             </Navbar>
         );
     }
 }
 
 export {CustomNavbar}
-
-/*
-    constructor(props) {
-        super(props);
-        this.state = {
-            isLogged: false
-        }
-        this.userService = new UserService()
-        this.setRegister = this.setRegister.bind(this)
-        this.login = this.login.bind(this)
-    }
-
-    componentDidMount() {
-        console.log(window.sessionStorage.getItem("user"))
-        if(window.sessionStorage.getItem("user") !== null) {
-            this.setState({isLogged: true})
-        }
-    }
-
-    login(userInfo) {
-        this.userService.login(userInfo).then(response => {console.log(response)})
-    }
-
-    setRegister() {
-        console.log("Called setModal")
-        this.setState((previous) => {
-            return (
-                {showRegister: !previous.showRegister}
-            )
-        })
-    }
-
-    fakeLogin(input) {
-        window.sessionStorage.setItem("user", input)
-        this.setState(prev => ({
-            isLogged: !prev.isLogged
-        }))
-        console.log(window.sessionStorage.getItem("user"))
-    }
- */
