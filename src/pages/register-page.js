@@ -1,17 +1,21 @@
 import React from 'react'
 import {CustomButton} from "../components/custom-button/custom-button";
-import {BackBtn, LoginBtn, RegisterBtn, SignUpBtn} from "../components/custom-button/btn-cfg";
+import {BackBtn, SignUpBtn} from "../components/custom-button/btn-cfg";
 import Form from "react-bootstrap/Form";
 import {Card, Container} from "react-bootstrap";
+import {CustomSnackbar} from "../components/custom-snackbar";
 
 class RegisterPage extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {
             email: "",
             password: "",
             firstName: "",
-            lastName: ""
+            lastName: "",
+            showSnack: false,
+            snackMessage: ""
         }
 
         this.handleClose = this.handleClose.bind(this)
@@ -41,33 +45,54 @@ class RegisterPage extends React.Component {
         })
     }
 
-    handleClose() {
-        this.props.close()
-        this.setState({
-            email: "",
-            password: ""
-        })
+    checkFields() {
+        if (this.state.firstName.trim() === "") {
+            return false
+        }
+        if(this.state.lastName.trim() === "") {
+            return false
+        }
+        if(this.state.email.trim() === "") {
+            return false
+        }
+        if(this.state.password.trim() === "") {
+            return false
+        }
+        return true
     }
 
-    toastMe() {
-        if (this.state.email === "" || this.state.password === "") {
-            this.setState({toast: true, toastMessage: "email or password empty", toastType: "danger"},
-                () => {
-                    setTimeout(() => this.setState({toast: false}), 3000)
-                })
+    handleRegister() {
+        if (this.checkFields()) {
+            const userData = {
+                firstName: this.state.firstName,
+                lastName: this.state.lastName,
+                email: this.state.email,
+                password: this.state.password
+            }
+            this.props.register(userData)
         } else {
-            this.setState({toast: true, toastMessage: this.state.email + "\n" + this.state.password, toastType: null},
-                () => {
-                    console.log(this.state.toast)
-                    setTimeout(() => this.setState({toast: false}), 3000)
-                })
-            this.handleClose()
+            this.setState({showSnack: true, snackMessage: "Obligatory fields empty"}, () =>
+            setTimeout(() => this.setState(prev => ({showSnack: !prev.showSnack})), 3000))
         }
     }
 
+    handleClose() {
+        this.setState({
+            email: "",
+            password: "",
+            fistName: "",
+            lastName: ""
+        })
+        this.props.back()
+    }
+
     flushMessage() {
-        console.log(this.state.toast)
-        this.setState({toastMessage: null, toastType: null})
+        this.setState({snackMessage: null})
+    }
+
+    debug() {
+        console.log("Register page state: ")
+        console.log(this.state)
     }
 
     render() {
@@ -98,20 +123,20 @@ class RegisterPage extends React.Component {
                                               type="text"
                                               placeholder="E-Mail"
                                               value={this.state.email}
-                                              onChange={(event) => this.handleFormEmail(event.target.value)}
+                                              onChange={(event) => this.handleEmailInput(event.target.value)}
                                 />
                                 <Form.Control className={"mb-2"}
                                               type="password"
                                               placeholder="Password"
                                               value={this.state.password}
-                                              onChange={(event) => this.handleFormPassword(event.target.value)}
+                                              onChange={(event) => this.handlePasswordInput(event.target.value)}
                                 />
                                 <div className={"d-flex flex-row-reverse"}>
                                     <CustomButton buttoncfg={SignUpBtn}
-                                                  onPress={() => this.props.register()}/>
+                                                  onPress={() => this.handleRegister()}/>
                                     <div className={"ml-2"}/>
                                     <CustomButton buttoncfg={BackBtn}
-                                                  onPress={() => this.props.back()}/>
+                                                  onPress={() => this.handleClose()}/>
                                 </div>
                             </Form>
                         </Container>
@@ -119,45 +144,11 @@ class RegisterPage extends React.Component {
                         <button onClick={() => this.debug()}>Debug</button>
                     </Card.Body>
                 </Card>
+                <CustomSnackbar show={this.state.showSnack} message={this.state.snackMessage}
+                                type={"danger"} close={() => this.flushMessage()}/>
             </Container>
         )
     }
 }
 
 export {RegisterPage}
-
-/*
-            <div>
-                <Modal show={this.props.show} onHide={() => this.handleClose()}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Register</Modal.Title>
-                    </Modal.Header>
-                    <div className={"container-fluid"}>
-                        <Modal.Body>
-                            <Form>
-                                <Form.Group>
-                                    <Form.Label>Email</Form.Label>
-                                    <Form.Control type="text" value={this.state.email}
-                                                  placeholder="Email"
-                                                  onChange={(event) => this.handleEmailInput(event.target.value)}/>
-                                </Form.Group>
-                                <Form.Group>
-                                    <Form.Label>Password</Form.Label>
-                                    <Form.Control type="password" value={this.state.password}
-                                                  placeholder="Password"
-                                                  onChange={(event) => this.handlePasswordInput(event.target.value)}/>
-
-                                </Form.Group>
-                            </Form>
-                            <div className={"d-flex flex-row-reverse"}>
-                                <CustomButton buttoncfg={RegisterBtn} onPress={() => this.toastMe()}/>
-                            </div>
-                        </Modal.Body>
-                    </div>
-                </Modal>
-                <CustomSnackbar show={this.state.toast}
-                                message={this.state.toastMessage}
-                                type={this.state.toastType}
-                                close={() => this.flushMessage} />
-            </div>
- */

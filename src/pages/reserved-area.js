@@ -1,10 +1,9 @@
 import React from 'react'
-import {Card, Container, NavDropdown} from "react-bootstrap";
+import {Card, Container} from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import {CustomButton} from "../components/custom-button/custom-button";
-import {LoginBtn, LogoutBtn, RegisterBtn, SignUpBtn} from "../components/custom-button/btn-cfg";
+import {LoginBtn, RegisterBtn} from "../components/custom-button/btn-cfg";
 import {UserService} from "../services/user-service";
-import {Link} from "react-router-dom";
 import './pages.css'
 import {RegisterPage} from "./register-page";
 
@@ -90,22 +89,20 @@ class ReservedArea extends React.Component {
         this.userService.getUser(id)
             .then(user => {
                 window.sessionStorage.setItem("currentUser", JSON.stringify(user.data))
-                this.handleLogged()
                 console.log("Pushing mycart")
-                this.props.history.push('/myCart')
+                if(user.role === "customer") {
+                    this.props.history.goBack()
+                } else {
+                    this.props.push("/admin/homepage")
+                }
             })
-    }
-
-    handleLogged() {
-        this.setState(prev => ({
-            formEmail: "",
-            formPassword: ""
-        }))
     }
 
     handleRegister(newUser) {
         console.log("Registered :")
         console.log(newUser)
+        this.userService.registerUser(newUser)
+        this.setMode()
     }
 
     setMode() {
@@ -161,7 +158,7 @@ class ReservedArea extends React.Component {
             )
         } else {
             return (
-                <RegisterPage back={() => this.setMode} register={() => this.handleRegister} />
+                <RegisterPage back={() => this.setMode()} register={this.handleRegister} />
             )
         }
     }
