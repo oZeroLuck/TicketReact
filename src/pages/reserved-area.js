@@ -93,7 +93,7 @@ class ReservedArea extends React.Component {
                 if(user.role === "customer") {
                     this.props.history.goBack()
                 } else {
-                    this.props.push("/admin/homepage")
+                    this.props.history.push("/admin/homepage")
                 }
             })
     }
