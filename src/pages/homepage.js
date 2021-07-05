@@ -6,7 +6,6 @@ import "./pages.css"
 import axios from "axios";
 import {LoadingSpinner} from "../components/loading-spinner";
 import {Link} from "react-router-dom";
-import {RegisterPage} from "./register-page";
 import {ErrorPage} from "./error-page";
 
 class Homepage extends React.Component {
@@ -86,7 +85,6 @@ class Homepage extends React.Component {
         return (
             <div>
                 <Container fluid key="Homepage">
-                    <RegisterPage show={this.state.showRegister} close={() => this.setRegister()}/>
                         <Row className={"justify-content-center pt-2 pb-2"} style={{backgroundColor: "#ffc107"}}>
                             {this.state.isLogged ? <h1>Welcome {this.state.currentUser.firstName}</h1> :
                                 <h1>Welcome</h1>
