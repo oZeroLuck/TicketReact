@@ -7,26 +7,26 @@ TODO LIST!
 
   Make the correct DTO assumptions!
 
-- Change NavBar component to be fully customizable with a cfg object;
+- Change NavBar component to be fully customizable with a cfg object; -On hold
 
-- Create the register page; Done!
+- Create the register page; X
 
 - Create the admin page;
 
 - Import the custom table;
 
-- Change the carousel fetch and transform view method; Done!
+- Change the carousel fetch and transform view method;
 
 - Add event type check for better performances;
 
-- Add profile page;
+- Add profile page; X
 
-- Add payment page;
+- Add payment page; X
 
-- Add login checks;
+- Add login checks; Partial
 
 ------ * Extra * ------
 
-- Create the 404 page; Done!
+- Create the 404 page; X
 
-- Make custom css classes;
+- Make custom css classes; Partial
