@@ -7,9 +7,9 @@ TODO LIST!
 
   Make the correct DTO assumptions!
 
-- Change NavBar component to be fully customizable with a cfg object;
+- Change NavBar component to be fully customizable with a cfg object; -On hold
 
-- Create the register page;
+- Create the register page; X
 
 - Create the admin page;
 
@@ -19,14 +19,14 @@ TODO LIST!
 
 - Add event type check for better performances;
 
-- Add profile page;
+- Add profile page; X
 
-- Add payment page;
+- Add payment page; X
 
-- Add login checks;
+- Add login checks; Partial
 
 ------ * Extra * ------
 
-- Create the 404 page;
+- Create the 404 page; X
 
-- Make custom css classes;
+- Make custom css classes; Partial
