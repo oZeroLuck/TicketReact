@@ -70,6 +70,7 @@ class RegisterPage extends React.Component {
                 password: this.state.password
             }
             this.props.register(userData)
+            this.handleClose()
         } else {
             this.setState({showSnack: true, snackMessage: "Obligatory fields empty"}, () =>
             setTimeout(() => this.setState(prev => ({showSnack: !prev.showSnack})), 3000))
