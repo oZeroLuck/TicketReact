@@ -9,7 +9,7 @@ import {
     faArrowAltCircleLeft,
     faBook,
     faCheckCircle, faTimesCircle, faUser,
-    faSignOutAlt, faCartPlus, faShoppingCart, faUserCircle, faBan
+    faSignOutAlt, faCartPlus, faShoppingCart, faUserCircle, faBan, faInfoCircle
 } from "@fortawesome/free-solid-svg-icons";
 
 const SaveBtn = {
@@ -133,6 +133,12 @@ const CancelBtn = {
     icon: faBan
 }
 
+const InfoBtn = {
+    customCssClass: 'info',
+    text: 'Info',
+    icon: faInfoCircle
+}
+
 export {
     SaveBtn,
     EditBtn,
@@ -153,7 +159,8 @@ export {
     ShoppingCartBtn,
     ProfileBtn,
     HollowEditBtn,
-    CancelBtn
+    CancelBtn,
+    InfoBtn
 }
 /*
 const {
