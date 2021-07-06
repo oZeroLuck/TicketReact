@@ -3,7 +3,7 @@
     {
       "id": 1,
       "email": "hank.wimbleton@mail.com",
-      "password": "ihateclowns",
+      "password": "test",
       "userId": 1
     },
     {
@@ -29,6 +29,12 @@
       "email": "Test",
       "password": "Test",
       "userId": 5
+    },
+    {
+      "id": 6,
+      "email": "Test2",
+      "password": "Test2",
+      "userId": 6
     }
   ],
   "users": [
@@ -37,7 +43,7 @@
       "firstName": "Hank",
       "lastName": "Wimbleton",
       "email": "hank.wimbleton@mail.com",
-      "password": "ihateclowns",
+      "password": "test",
       "role": "admin"
     },
     {
@@ -70,6 +76,14 @@
       "lastName": "Test",
       "email": "Test",
       "password": "Test",
+      "role": "customer"
+    },
+    {
+      "id": 6,
+      "firstName": "Test2",
+      "lastName": "Test2",
+      "email": "Test2",
+      "password": "Test2",
       "role": "customer"
     }
   ],
@@ -153,6 +167,40 @@
       "type": "film",
       "link": "https://www.filmposters.com/images/posters/12447.jpg",
       "desc": "description 2"
+    }
+  ],
+  "event": [
+    {
+      "id": 1,
+      "featured": true,
+      "type": "Film",
+      "title": "Frankenstein 3D",
+      "link": "https://www.filmposters.com/images/posters/2363.jpg",
+      "desc": "Get frightened by the monster!",
+      "cardDesc": "Placeholder",
+      "dates": [
+        {
+          "date": "08/07/2021", "hours": "21:00"
+        }],
+      "locationId": 1,
+      "soldTicketId": 1
+    }
+  ],
+  "location": [
+    {
+      "id": 1,
+      "name": "Somewhere in the Universe",
+      "backRowMax": 150,
+      "middleRowMax": 150,
+      "frontRowMax": 150
+    }
+  ],
+  "soldTicket": [
+    {
+      "id": 1,
+      "backRow": 0,
+      "middleRow": 0,
+      "frontRow": 0
     }
   ],
   "cart": [
