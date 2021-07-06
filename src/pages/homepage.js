@@ -140,7 +140,7 @@ class Homepage extends React.Component {
                                     message={this.state.message}
                                     close={() => this.emptyMessage()}/>
                 </Container>
-                <button type={"button"} onClick={() => this.goThere()}>GoThere</button>
+                {/*<button type={"button"} onClick={() => this.goThere()}>GoThere</button>*/}
             </div>
         );
     }
