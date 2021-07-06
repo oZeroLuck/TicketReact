@@ -25,15 +25,15 @@ class ProfilePage extends React.Component {
             errorMsg: null,
             showSnack: false,
             snackMessage: null,
-            snackMode: 'success'
+            snackMode: 'success',
+            currentUser: JSON.parse(window.sessionStorage.getItem("currentUser"))
         }
-        this.currentUser = JSON.parse(window.sessionStorage.getItem("currentUser"))
         this.flushMessage = this.flushMessage.bind(this)
     }
 
     componentDidMount() {
-        if (this.currentUser !== null) {
-            this.userService.getUser(this.currentUser.id).then(user =>
+        if (this.state.currentUser !== null) {
+            this.userService.getUser(this.state.currentUser.id).then(user =>
                 this.setState({
                     currentFirstName: user.data.firstName,
                     currentLastName: user.data.lastName,
@@ -52,10 +52,10 @@ class ProfilePage extends React.Component {
         if(this.state.editMode) {
             cfg = HollowEditBtn
             this.setState({
-                currentFirstName: this.currentUser.firstName,
-                currentLastName: this.currentUser.lastName,
-                currentEmail: this.currentUser.email,
-                currentPassword: this.currentUser.password
+                currentFirstName: this.state.currentUser.firstName,
+                currentLastName: this.state.currentUser.lastName,
+                currentEmail: this.state.currentUser.email,
+                currentPassword: this.state.currentUser.password
             })
         } else {
             cfg = CancelBtn
@@ -89,10 +89,10 @@ class ProfilePage extends React.Component {
     }
 
     userDataEquals(newData) {
-        return !(this.currentUser.id !== newData.id ||
-            this.currentUser.firstName !== newData.firstName ||
-            this.currentUser.lastName !== newData.lastName ||
-            this.currentUser.email !== newData.email);
+        return !(this.state.currentUser.id !== newData.id ||
+            this.state.currentUser.firstName !== newData.firstName ||
+            this.state.currentUser.lastName !== newData.lastName ||
+            this.state.currentUser.email !== newData.email);
 
     }
 
@@ -100,11 +100,14 @@ class ProfilePage extends React.Component {
         console.log("Saved!")
         // Temporary Save to see if it works...
         const userData = {
-            id: this.currentUser.id,
+            id: this.state.currentUser.id,
             firstName: this.state.currentFirstName,
             lastName: this.state.currentLastName,
             email: this.state.currentEmail,
+            password: this.state.currentUser.password,
+            role: this.state.currentUser.role
         }
+        console.log(this.userService.updateUserInfo(userData))
         if (this.userDataEquals(userData)) {
             this.setState({
                 currentUser: userData,
@@ -120,7 +123,10 @@ class ProfilePage extends React.Component {
                 editCfg: HollowEditBtn,
                 snackMessage: "Changes saved!",
                 snackMode: 'success'
-            }, () => this.handleSnack())
+            }, () => {
+                this.handleSnack()
+                window.sessionStorage.setItem("currentUser", JSON.stringify(userData))
+            })
         }
     }
 
