@@ -1,7 +1,7 @@
 import React from "react";
 import {Button, Card, Col, Row, Table} from "react-bootstrap";
 import {CustomButton} from "../custom-button/custom-button";
-import '../component.css';
+import '../components.css';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
     faChevronCircleLeft,

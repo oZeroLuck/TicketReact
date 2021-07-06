@@ -7,6 +7,7 @@ import {UserService} from "../../services/user-service";
 import '../pages.css'
 import {RegisterPage} from "./register-page";
 import {CustomSnackbar} from "../../components/custom-snackbar";
+import {CustomNavbar} from "../../components/custom-navbar";
 
 class ReservedArea extends React.Component {
 
@@ -148,46 +149,49 @@ class ReservedArea extends React.Component {
         }
         if (this.state.loginMode) {
             return(
-                <Container fluid={"sm"} className={"align-content-center mt-5"}>
-                    <Card className={"text-center"}
-                          bg={"light"}
-                          style={{width: "50%", margin: "auto"}}
-                    >
-                        <Card.Body>
-                            <h1><strong>Login</strong></h1>
-                            <hr/>
-                            <Container fluid={"sm"} style={{width: "70%"}}>
-                                <Form className={"mb-2"}>
-                                    <Form.Control className={"mb-2 mt-2"}
-                                                  type="text"
-                                                  placeholder="E-Mail"
-                                                  value={this.state.formEmail}
-                                                  onChange={(event) => this.handleFormEmail(event.target.value)}
-                                    />
-                                    <Form.Control className={"mb-1"}
-                                                  type="password"
-                                                  placeholder="Password"
-                                                  value={this.state.formPassword}
-                                                  onChange={(event) => this.handleFormPassword(event.target.value)}
-                                    />
-                                    <div className={"d-flex flex-row-reverse"}>
-                                        <CustomButton buttoncfg={LoginBtn} onPress={() => this.handleLogin()}/>
-                                    </div>
-                                </Form>
-                            </Container>
-                            <hr/>
-                            <p>Don't have an account?</p>
-                            <CustomButton buttoncfg={RegisterBtn} onPress={() => this.setMode()}/>
-                            <hr/>
-                            <button onClick={() => this.debug()}>Debug</button>
-                        </Card.Body>
-                    </Card>
-                    <CustomSnackbar show={this.state.showSnack}
-                                    message={this.state.snackMessage}
-                                    type={this.state.snackMode}
-                                    close={() => this.flushMessage()}
-                    />
-                </Container>
+                <>
+                    <CustomNavbar/>
+                    <Container fluid={"sm"} className={"align-content-center mt-5"}>
+                        <Card className={"text-center"}
+                              bg={"light"}
+                              style={{width: "50%", margin: "auto"}}
+                        >
+                            <Card.Body>
+                                <h1><strong>Login</strong></h1>
+                                <hr/>
+                                <Container fluid={"sm"} style={{width: "70%"}}>
+                                    <Form className={"mb-2"}>
+                                        <Form.Control className={"mb-2 mt-2"}
+                                                      type="text"
+                                                      placeholder="E-Mail"
+                                                      value={this.state.formEmail}
+                                                      onChange={(event) => this.handleFormEmail(event.target.value)}
+                                        />
+                                        <Form.Control className={"mb-1"}
+                                                      type="password"
+                                                      placeholder="Password"
+                                                      value={this.state.formPassword}
+                                                      onChange={(event) => this.handleFormPassword(event.target.value)}
+                                        />
+                                        <div className={"d-flex flex-row-reverse"}>
+                                            <CustomButton buttoncfg={LoginBtn} onPress={() => this.handleLogin()}/>
+                                        </div>
+                                    </Form>
+                                </Container>
+                                <hr/>
+                                <p>Don't have an account?</p>
+                                <CustomButton buttoncfg={RegisterBtn} onPress={() => this.setMode()}/>
+                                <hr/>
+                                <button onClick={() => this.debug()}>Debug</button>
+                            </Card.Body>
+                        </Card>
+                        <CustomSnackbar show={this.state.showSnack}
+                                        message={this.state.snackMessage}
+                                        type={this.state.snackMode}
+                                        close={() => this.flushMessage()}
+                        />
+                    </Container>
+                </>
             )
         } else {
             return (

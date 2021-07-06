@@ -3,6 +3,8 @@ import {Link} from "react-router-dom";
 import {Dropdown, Nav, Navbar} from "react-bootstrap";
 import {HomeBtn, ProfileBtn, ShoppingCartBtn} from "./custom-button/btn-cfg";
 import {CustomButton} from "./custom-button/custom-button";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faUserCircle} from "@fortawesome/free-solid-svg-icons";
 
 class CustomNavbar extends React.Component {
     constructor(props) {
@@ -40,9 +42,16 @@ class CustomNavbar extends React.Component {
                     </Nav>
                     <Nav className="flex flex-row-reverse">
                         {this.state.isLogged ?
-                            <Link to={"/profile"} className={"ml-2"}>
-                                <CustomButton buttoncfg={ProfileBtn}/>
-                            </Link> :
+                            <Dropdown className={"ml-2"}>
+                                <Dropdown.Toggle variant={'warning'}>
+                                    <FontAwesomeIcon icon={faUserCircle}/>
+                                </Dropdown.Toggle>
+                                <Dropdown.Menu className={"mr-xl-5"} align={"right"}>
+                                    <Dropdown.Item as={Link} to={"/profile"}>
+                                        Profile
+                                    </Dropdown.Item>
+                                </Dropdown.Menu>
+                            </Dropdown> :
                             <Link to={"/login"} className={"ml-2"}>
                                 <CustomButton buttoncfg={ProfileBtn}/>
                             </Link>

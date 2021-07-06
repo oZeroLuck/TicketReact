@@ -3,10 +3,11 @@ import {Card, Col, Container, Row} from "react-bootstrap";
 import {LoadingSpinner} from "../components/loading-spinner";
 import Form from "react-bootstrap/Form";
 import {CustomButton} from "../components/custom-button/custom-button";
-import {CancelBtn, HollowEditBtn, SaveBtn} from "../components/custom-button/btn-cfg";
+import {CancelBtn, HollowEditBtn, LogoutBtn, SaveBtn} from "../components/custom-button/btn-cfg";
 import {UserService} from "../services/user-service";
 import {ErrorPage} from "./error-page";
 import {CustomSnackbar} from "../components/custom-snackbar";
+import {CustomNavbar} from "../components/custom-navbar";
 
 class ProfilePage extends React.Component {
 
@@ -123,6 +124,11 @@ class ProfilePage extends React.Component {
         }
     }
 
+    logout() {
+        window.sessionStorage.clear()
+        this.props.history.push("/homepage")
+    }
+
     handleSnack() {
         console.log("HandlingSnack")
         this.setState(prev => ({
@@ -151,6 +157,7 @@ class ProfilePage extends React.Component {
         }
         return(
             <div className="h-100">
+                <CustomNavbar/>
                 <Container fluid={"sm"} className={"align-content-center mt-3"}>
                         <Card>
                             <Card.Header className={"text-center"}>
@@ -204,14 +211,21 @@ class ProfilePage extends React.Component {
                                 </Container>
                             </Card.Body>
                             <Card.Footer>
-                                <div className={"d-flex flex-row-reverse"}>
-                                    <CustomButton buttoncfg={this.state.editCfg} onPress={() => this.handleEdit()}/>
-                                    {this.state.editMode ?
-                                        <div className={"mr-2"}>
-                                            <CustomButton buttoncfg={SaveBtn} onPress={() => this.save()}/>
-                                        </div> : null
-                                    }
-                                </div>
+                                <Row className={"ml-2 mr-2"}>
+                                    <Col>
+                                        <CustomButton buttoncfg={LogoutBtn} onPress={() => this.logout()}/>
+                                    </Col>
+                                    <Col>
+                                        <div className={"d-flex flex-row-reverse"}>
+                                            <CustomButton buttoncfg={this.state.editCfg} onPress={() => this.handleEdit()}/>
+                                            {this.state.editMode ?
+                                                <div className={"mr-2"}>
+                                                    <CustomButton buttoncfg={SaveBtn} onPress={() => this.save()}/>
+                                                </div> : null
+                                            }
+                                        </div>
+                                    </Col>
+                                </Row>
                             </Card.Footer>
                         </Card>
                 </Container>

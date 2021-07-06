@@ -7,6 +7,7 @@ import axios from "axios";
 import {LoadingSpinner} from "../components/loading-spinner";
 import {Link} from "react-router-dom";
 import {ErrorPage} from "./error-page";
+import {CustomNavbar} from "../components/custom-navbar";
 
 class Homepage extends React.Component {
     constructor(props) {
@@ -84,6 +85,7 @@ class Homepage extends React.Component {
         }
         return (
             <div>
+                <CustomNavbar/>
                 <Container fluid key="Homepage">
                         <Row className={"justify-content-center pt-2 pb-2"} style={{backgroundColor: "#ffc107"}}>
                             {this.state.isLogged ? <h1>Welcome {this.state.currentUser.firstName}</h1> :

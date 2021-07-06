@@ -35,6 +35,7 @@ class MyCartPage extends React.Component {
 
         return(
             <div>
+                <CustomNavbar/>
                 <h1 className={"text-center mt-5"}>My Cart</h1>
                 <Container fluid>
                     {this.state.loading ?

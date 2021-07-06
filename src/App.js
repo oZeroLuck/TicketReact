@@ -9,22 +9,24 @@ import {CustomNavbar} from "./components/custom-navbar";
 import React from 'react'
 import {ReservedArea} from "./pages/reserved-area/reserved-area";
 import {RegisterPage} from "./pages/reserved-area/register-page";
-import {AdminHomepage} from "./pages/admin-homepage";
+import {AdminHomepage} from "./pages/admin/admin-homepage";
 import {ProfilePage} from "./pages/profile-page";
 
 class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            isLogged: false,
             route: "/homepage"
         }
         this.handleLogged = this.handleLogged.bind(this)
+        this.logout = this.handleLogged.bind(this)
     }
 
     componentDidMount() {
         const currentUser = window.sessionStorage.getItem("currentUser")
         if(currentUser !== null && currentUser.role === "admin") {
-            this.setState({route: "/admin/homepage"})
+            this.setState({isLogged: true, route: "/profile"})
         }
     }
 
@@ -48,9 +50,8 @@ class App extends React.Component {
 
     render() {
         return (
-            <div style={{backgroundColor: "transparent"}}>
+            <div>
                 <BrowserRouter>
-                    <CustomNavbar setLogged={() => this.handleLogged()}/>
                     <Switch>
                         <Route exact path="/">
                             <Redirect to={this.state.route}/>
@@ -64,9 +65,9 @@ class App extends React.Component {
                         <Route path="/profile" component={ProfilePage}/>
                     </Switch>
                 </BrowserRouter>
-                <Footer/>
                 <button onClick={() => this.debug()}>Debug</button>
                 <button onClick={() => this.debugFlush()}>Flush</button>
+                <Footer/>
             </div>
         );
     }

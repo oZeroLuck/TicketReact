@@ -1,5 +1,10 @@
 /* Custom css for components ONLY */
 
+th:hover {
+    background-color: #61dafb;
+    cursor: pointer;
+}
+
 .anchor-me {
     position: fixed;
     left: 50%;
