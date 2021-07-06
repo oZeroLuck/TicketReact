@@ -6,6 +6,7 @@ import {LoginBtn, RegisterBtn} from "../components/custom-button/btn-cfg";
 import {UserService} from "../services/user-service";
 import './pages.css'
 import {RegisterPage} from "./register-page";
+import {CustomSnackbar} from "../components/custom-snackbar";
 
 class ReservedArea extends React.Component {
 
@@ -15,36 +16,36 @@ class ReservedArea extends React.Component {
             loginMode: true,
             formEmail: "",
             formPassword: "",
-            error: false,
-            errorMsg: null,
-            redirect: null
+            redirect: null,
+            showSnack: false,
+            snackMessage: null,
+            snackMode: 'success',
+            isLogged: false
         }
         this.userService = new UserService()
         this.setUser = this.setUser.bind(this)
         this.setMode = this.setMode.bind(this)
         this.handleRegister = this.handleRegister.bind(this)
+        this.flushMessage = this.flushMessage.bind(this)
     }
 
     componentDidMount() {
-        console.log("Hello, I'm reserved area!")
-        console.log("Current sessionStorage: " + window.sessionStorage.getItem("currentUser"))
-        console.log("The !== null is: " + (window.sessionStorage.getItem("currentUser") !== null))
         if (window.sessionStorage.getItem("currentUser") !== null) {
             this.setState({isLogged: true})
         }
-        console.log("Current state: " + this.state.isLogged)
     }
 
+    // Login Methods
     handleFormEmail(input) {
         this.setState({
             formEmail: input
-        }, () => console.log("Email input: " + this.state.formEmail))
+        })
     }
 
     handleFormPassword(input) {
         this.setState({
             formPassword: input
-        }, () => console.log("Password input: " + this.state.formPassword))
+        })
     }
 
     handleLogin() {
@@ -70,17 +71,23 @@ class ReservedArea extends React.Component {
                 return true;
             } else {
                 this.setState({
-                        error: true,
-                        errorMsg: "Error: email or password aren't valid!"
-                    })
+                        showSnack: true,
+                        snackMessage: "Error: email or password aren't valid!",
+                        snackMode: "danger"
+                    }, () => setTimeout(() => this.setState(prev => ({
+                    showSnack: !prev.showSnack,
+                })), 3000))
                 return true;
             }
         }))
             .catch(error => {
                 this.setState({
-                    error: true,
-                    errorMsg: error.message
-                })
+                    showSnack: true,
+                    snackMessage: error.message,
+                    snackMode: "danger"
+                }, () => setTimeout(() => this.setState(prev => ({
+                    showSnack: !prev.showSnack,
+                })), 3000))
             })
     }
 
@@ -98,26 +105,54 @@ class ReservedArea extends React.Component {
             })
     }
 
+    // Register Methods
+
     handleRegister(newUser) {
         console.log("Registered :")
         console.log(newUser)
-        this.userService.registerUser(newUser)
-        this.setMode()
+        this.userService.registerUser(newUser).then(result => {
+            const mode = result.error ? 'danger' : 'success'
+            this.setState({
+                showSnack: true,
+                snackMessage: result.message,
+                snackMode: mode
+            }, () => setTimeout(() => this.setState(prev => ({
+                showSnack: !prev.showSnack,
+            })), 3000))
+        })
     }
 
+
+    // Snack message flush after closing
+    flushMessage() {
+        this.setState({
+            snackMessage: null
+        })
+    }
+
+    // Login / Register Switcher
     setMode() {
         console.log("Setting login mode")
         this.setState(prev => ({
-            loginMode: !prev.loginMode
+            loginMode: !prev.loginMode,
+            formEmail: "",
+            formPassword: "",
         }))
     }
 
+    // Show state button
     debug() {
         console.log(this.state)
-        this.setState({error: false, errorMsg: null})
     }
 
     render() {
+        if (this.state.isLogged) {
+            return (
+                <div>
+                    <h1>You're already logged!</h1>
+                </div>
+            )
+        }
         if (this.state.loginMode) {
             return(
                 <Container fluid={"sm"} className={"align-content-center mt-5"}>
@@ -154,6 +189,11 @@ class ReservedArea extends React.Component {
                             <button onClick={() => this.debug()}>Debug</button>
                         </Card.Body>
                     </Card>
+                    <CustomSnackbar show={this.state.showSnack}
+                                    message={this.state.snackMessage}
+                                    type={this.state.snackMode}
+                                    close={() => this.flushMessage()}
+                    />
                 </Container>
             )
         } else {
