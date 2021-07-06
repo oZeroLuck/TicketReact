@@ -1,5 +1,5 @@
 import React from "react";
-import {Button, Card, Col, Row, Table} from "react-bootstrap";
+import {Button, Card, Col, Container, Row, Table} from "react-bootstrap";
 import {CustomButton} from "../custom-button/custom-button";
 import '../components.css';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -36,7 +36,6 @@ class CustomTable extends React.Component {
     }
 
     orderData(column) {
-        console.log("I'm ordering data")
         let data = this.state.orderedData;
         let orderType = this.state.orderType;
         if (column === this.state.orderKey && !this.firstTime) {
@@ -150,90 +149,91 @@ class CustomTable extends React.Component {
             }
 
             return (
-                <Card>
-                    <Card.Header>
-                        <Row>
-                            <Col>
-                                <form>
-                                    <input type={"text"} name={"searchItem"}
-                                           value={this.state.searchTerm} onChange={event => this.searchItem(event.target.value)}
-                                    />
-                                </form>
-                            </Col>
-                            <Col>
-                                <select onChange={event => this.handleSelectChange(event.target.value)}>
-                                    {this.searchColumns.map(column => (
-                                        <option key={"searchKey" + column}>{column}</option>
-                                    ))}
-                                </select>
-                            </Col>
-                            <Col>
-                                <select onChange={event => this.handlePageNumberChange(event.target.value)}>
-                                    {this.props.tableCfg.pagination.itemPerPageOption.map(pageNumber => (
-                                        <option key={"NoOfPages" + pageNumber}>{pageNumber}</option>
-                                    ))}
-                                </select>
-                            </Col>
-                        </Row>
-                    </Card.Header>
-                    <Card.Body>
-                        <Table responsive>
-                            <thead>
-                                <tr>
-                                    {this.props.tableCfg.headers.map(header => (
-                                    <th key={header.key} onClick={() => this.orderData(header.key)}>
-                                        {header.label}
-                                        {this.state.order ? (
-                                            <FontAwesomeIcon icon={faSortAlphaUp}/>
-                                        ) : (
-                                            <FontAwesomeIcon icon={faSortAlphaDown}/>
-                                        )}
-                                    </th>
-                                    ))}
-                                    <th key={"Actions"}>
-                                        Actions
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            {this.state.currentPage.map(data => (
-                                    <tr key={data.id}>
-                                        {this.props.tableCfg.headers.map(header => (
-                                        <td key={header.key + data.id}>{data[header.key]}</td>
+                <Container>
+                    <Card>
+                        <Card.Header>
+                            <Row>
+                                <Col>
+                                    <form>
+                                        <input type={"text"} name={"searchItem"}
+                                               value={this.state.searchTerm} onChange={event => this.searchItem(event.target.value)}
+                                        />
+                                    </form>
+                                </Col>
+                                <Col>
+                                    <select onChange={event => this.handleSelectChange(event.target.value)}>
+                                        {this.searchColumns.map(column => (
+                                            <option key={"searchKey" + column}>{column}</option>
                                         ))}
-                                        <td key={"Actions" + data.id}>
-                                            <Row>
-                                                {this.props.tableCfg.buttons.map(button => (
-                                                    <Col id={data.id + button.text}>
-                                                        <CustomButton buttoncfg={button}
-                                                                      onPress={() => this.parentCallback(data.id, button.text)}/>
-                                                    </Col>
-                                                ))}
-                                            </Row>
-                                        </td>
+                                    </select>
+                                </Col>
+                                <Col>
+                                    <select onChange={event => this.handlePageNumberChange(event.target.value)}>
+                                        {this.props.tableCfg.pagination.itemPerPageOption.map(pageNumber => (
+                                            <option key={"NoOfPages" + pageNumber}>{pageNumber}</option>
+                                        ))}
+                                    </select>
+                                </Col>
+                            </Row>
+                        </Card.Header>
+                        <Card.Body>
+                            <Table striped bordered responsive>
+                                <thead>
+                                    <tr>
+                                        {this.props.tableCfg.headers.map(header => (
+                                        <th key={header.key} onClick={() => this.orderData(header.key)}>
+                                            {header.label}
+                                            {this.state.order ? (
+                                                <FontAwesomeIcon icon={faSortAlphaUp}/>
+                                            ) : (
+                                                <FontAwesomeIcon icon={faSortAlphaDown}/>
+                                            )}
+                                        </th>
+                                        ))}
+                                        <th key={"Actions"} className={"text-center"} style={{width: "fit-content"}}>
+                                            Actions
+                                        </th>
                                     </tr>
-                            ))}
-                            </tbody>
-                        </Table>
-                    </Card.Body>
-                    <Card.Footer>
-                        <Row>
-                            <Col>
-                                <FontAwesomeIcon icon={faChevronCircleLeft} onClick={() =>
-                                    this.setPage(this.state.currentPageNumber - 1)}/>
-                            </Col>
-                            <Col>
-                                <Row>
+                                </thead>
+                                <tbody>
+                                {this.state.currentPage.map(data => (
+                                        <tr key={data.id}>
+                                            {this.props.tableCfg.headers.map(header => (
+                                            <td key={header.key + data.id}>{data[header.key]}</td>
+                                            ))}
+                                            <td key={"Actions" + data.id} className={"d-flex flex-row-reverse"}>
+                                                    {this.props.tableCfg.buttons.map(button => (
+                                                        <div className={"ml-2"}>
+                                                            <CustomButton
+                                                                          buttoncfg={button}
+                                                                          onPress={() => this.parentCallback(data.id, button.text)}/>
+                                                        </div>
+                                                    ))}
+                                            </td>
+                                        </tr>
+                                ))}
+                                </tbody>
+                            </Table>
+                        </Card.Body>
+                        <Card.Footer className={"justify-content-center"}>
+                            <Row>
+                                <Col>
+                                    <FontAwesomeIcon
+                                        style={{margin: "auto"}}
+                                        icon={faChevronCircleLeft} onClick={() =>
+                                        this.setPage(this.state.currentPageNumber - 1)}/>
+                                </Col>
+                                <Col className={"align-content-center"}>
                                     {pageSelectors}
-                                </Row>
-                            </Col>
-                            <Col>
-                                <FontAwesomeIcon icon={faChevronCircleRight} onClick={() =>
-                                    this.setPage(this.state.currentPageNumber + 1)}/>
-                            </Col>
-                        </Row>
-                    </Card.Footer>
-                </Card>
+                                </Col>
+                                <Col>
+                                    <FontAwesomeIcon icon={faChevronCircleRight} onClick={() =>
+                                        this.setPage(this.state.currentPageNumber + 1)}/>
+                                </Col>
+                            </Row>
+                        </Card.Footer>
+                    </Card>
+                </Container>
             );
         }
     }
