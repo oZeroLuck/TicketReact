@@ -16,7 +16,18 @@ class UserService {
         return axios.get("http://localhost:8080/login")
     }
 
+    updateUserInfo(userInfo) {
+        return axios.put("http://localhost:8080/users/" + userInfo.id, userInfo).then(
+            _ => this.putLogin(userInfo)
+        )
+    }
+
 // From here on, I'll simulate the back-end
+
+    putLogin(userInfo) {
+        const loginInfo = new LoginInfo(userInfo)
+        return axios.put("http://localhost:8080/login/" + userInfo.id, loginInfo)
+    }
 
     postUser(user) {
         return axios.post("http://localhost:8080/users", user)
