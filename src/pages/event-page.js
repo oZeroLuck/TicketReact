@@ -64,7 +64,6 @@ class EventPage extends React.Component {
 
         return (
             <div style={{backgroundColor: "#c9c9c9"}}>
-                <CustomNavbar/>
                 <Container fluid>
                     <Row style={{backgroundColor: "black"}}>
                         <Container>
