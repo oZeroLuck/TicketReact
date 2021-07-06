@@ -1,12 +1,12 @@
 import React from 'react'
 import {Card, Container} from "react-bootstrap";
 import Form from "react-bootstrap/Form";
-import {CustomButton} from "../components/custom-button/custom-button";
-import {LoginBtn, RegisterBtn} from "../components/custom-button/btn-cfg";
-import {UserService} from "../services/user-service";
-import './pages.css'
+import {CustomButton} from "../../components/custom-button/custom-button";
+import {LoginBtn, RegisterBtn} from "../../components/custom-button/btn-cfg";
+import {UserService} from "../../services/user-service";
+import '../pages.css'
 import {RegisterPage} from "./register-page";
-import {CustomSnackbar} from "../components/custom-snackbar";
+import {CustomSnackbar} from "../../components/custom-snackbar";
 
 class ReservedArea extends React.Component {
 
@@ -25,7 +25,7 @@ class ReservedArea extends React.Component {
         this.userService = new UserService()
         this.setUser = this.setUser.bind(this)
         this.setMode = this.setMode.bind(this)
-        this.handleRegister = this.handleRegister.bind(this)
+        this.setSnack = this.setSnack.bind(this)
         this.flushMessage = this.flushMessage.bind(this)
     }
 
@@ -105,29 +105,22 @@ class ReservedArea extends React.Component {
             })
     }
 
-    // Register Methods
-
-    handleRegister(newUser) {
-        console.log("Registered :")
-        console.log(newUser)
-        this.userService.registerUser(newUser).then(result => {
-            const mode = result.error ? 'danger' : 'success'
-            this.setState({
-                showSnack: true,
-                snackMessage: result.message,
-                snackMode: mode
-            }, () => setTimeout(() => this.setState(prev => ({
-                showSnack: !prev.showSnack,
-            })), 3000))
-        })
-    }
-
-
     // Snack message flush after closing
     flushMessage() {
         this.setState({
             snackMessage: null
         })
+    }
+
+    // Snack data Setting
+    setSnack(snackData) {
+        this.setState({
+            showSnack: snackData.showSnack,
+            snackMessage: snackData.snackMessage,
+            snackMode: snackData.snackMode
+        }, () => setTimeout(() => this.setState(prev => ({
+            showSnack: !prev.showSnack,
+        })), 3000))
     }
 
     // Login / Register Switcher
@@ -198,7 +191,16 @@ class ReservedArea extends React.Component {
             )
         } else {
             return (
-                <RegisterPage back={() => this.setMode()} register={this.handleRegister} />
+                <>
+                    <RegisterPage back={() => this.setMode()}
+                                  setSnack={this.setSnack}
+                    />
+                    <CustomSnackbar show={this.state.showSnack}
+                                    message={this.state.snackMessage}
+                                    type={this.state.snackMode}
+                                    close={() => this.flushMessage()}
+                    />
+                </>
             )
         }
     }

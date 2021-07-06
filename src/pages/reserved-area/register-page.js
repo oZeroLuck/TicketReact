@@ -1,9 +1,10 @@
 import React from 'react'
-import {CustomButton} from "../components/custom-button/custom-button";
-import {BackBtn, SignUpBtn} from "../components/custom-button/btn-cfg";
+import {CustomButton} from "../../components/custom-button/custom-button";
+import {BackBtn, SignUpBtn} from "../../components/custom-button/btn-cfg";
 import Form from "react-bootstrap/Form";
 import {Card, Container} from "react-bootstrap";
-import {CustomSnackbar} from "../components/custom-snackbar";
+import {CustomSnackbar} from "../../components/custom-snackbar";
+import {UserService} from "../../services/user-service";
 
 class RegisterPage extends React.Component {
 
@@ -18,6 +19,7 @@ class RegisterPage extends React.Component {
             snackMessage: ""
         }
 
+        this.userService = new UserService()
         this.handleClose = this.handleClose.bind(this)
     }
 
@@ -55,12 +57,11 @@ class RegisterPage extends React.Component {
         if(this.state.email.trim() === "") {
             return false
         }
-        if(this.state.password.trim() === "") {
-            return false
-        }
-        return true
+        return this.state.password.trim() !== "";
+
     }
 
+    // Check fields
     handleRegister() {
         if (this.checkFields()) {
             const userData = {
@@ -69,14 +70,34 @@ class RegisterPage extends React.Component {
                 email: this.state.email,
                 password: this.state.password
             }
-            this.props.register(userData)
-            this.handleClose()
+            this.register(userData)
         } else {
-            this.setState({showSnack: true, snackMessage: "Obligatory fields empty"}, () =>
-            setTimeout(() => this.setState(prev => ({showSnack: !prev.showSnack})), 3000))
+            const snackMessage = {
+                showSnack: true,
+                snackMessage: "Obligatory fields empty",
+                snackMode: "warning"
+            }
+            this.props.setSnack(snackMessage)
         }
     }
 
+
+    register(newUser) {
+        this.userService.registerUser(newUser).then(result => {
+            const snackMode = result.error ? 'danger' : 'success'
+            const snackData = {
+                showSnack: true,
+                snackMessage: result.message,
+                snackMode: snackMode
+            }
+            this.props.setSnack(snackData)
+            if(!result.error) {
+                this.handleClose()
+            }
+        })
+    }
+
+    // Reset all fields before switching
     handleClose() {
         this.setState({
             email: "",
@@ -87,12 +108,8 @@ class RegisterPage extends React.Component {
         this.props.back()
     }
 
-    flushMessage() {
-        this.setState({snackMessage: null})
-    }
-
+    // Show state button
     debug() {
-        console.log("Register page state: ")
         console.log(this.state)
     }
 
@@ -145,8 +162,6 @@ class RegisterPage extends React.Component {
                         <button onClick={() => this.debug()}>Debug</button>
                     </Card.Body>
                 </Card>
-                <CustomSnackbar show={this.state.showSnack} message={this.state.snackMessage}
-                                type={"danger"} close={() => this.flushMessage()}/>
             </Container>
         )
     }
