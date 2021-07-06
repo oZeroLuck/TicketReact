@@ -24,8 +24,8 @@ class UserService {
 
     postLogin(userInfo) {
         return axios.post("http://localhost:8080/login", userInfo)
-            .then(success => {
-                return {error: false, message: "Successfully created"}
+            .then(_ => {
+                return {error: false, message: "Successfully registered"}
             })
             .catch(error => {
                 return {error: true, message: error.message}
@@ -34,15 +34,35 @@ class UserService {
 
     registerUser(user) {
         const newCustomer = new Customer(user)
-        return this.postUser(newCustomer)
-            .then(success => {
-                const loginInfo = new LoginInfo(success.data)
-                return this.postLogin(loginInfo)
+        return this.checkUser(newCustomer).then(result => {
+                if (result.message) {
+                    return {error: true, message: result.message}
+                } else if(result) {
+                    return {error: true, message: "Email already registered"}
+                } else {
+                    return this.postUser(newCustomer)
+                        .then(success => {
+                                const loginInfo = new LoginInfo(success.data)
+                                return this.postLogin(loginInfo)
+                            }
+                        ).catch(error => {
+                            return {error: true, message: error.message}
+                        })
+                }
             }
-        ).catch(error => {
-            return {error: true, message: error.message}
-        })
+        )
+    }
 
+    checkUser(userInfo) {
+        return this.login().then(res => {
+            let error = false
+            res.data.map(
+                loginInfo => {
+                    if (loginInfo.email === userInfo.email) {
+                        error = true
+                    }})
+                return error
+        }).catch(_ => { return {message: "Something went wrong"}})
     }
 
 }
