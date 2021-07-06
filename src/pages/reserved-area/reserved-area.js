@@ -98,7 +98,7 @@ class ReservedArea extends React.Component {
             .then(user => {
                 window.sessionStorage.setItem("currentUser", JSON.stringify(user.data))
                 console.log("Pushing mycart")
-                if(user.role === "customer") {
+                if(user.data.role === "customer") {
                     this.props.history.goBack()
                 } else {
                     this.props.history.push("/admin/homepage")
