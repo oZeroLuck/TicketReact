@@ -7,8 +7,8 @@ import {Footer} from "./components/footer";
 import {MyCartPage} from "./pages/my-cart-page";
 import {CustomNavbar} from "./components/custom-navbar";
 import React from 'react'
-import {ReservedArea} from "./pages/reserved-area";
-import {RegisterPage} from "./pages/register-page";
+import {ReservedArea} from "./pages/reserved-area/reserved-area";
+import {RegisterPage} from "./pages/reserved-area/register-page";
 import {AdminHomepage} from "./pages/admin-homepage";
 import {ProfilePage} from "./pages/profile-page";
 
