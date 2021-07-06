@@ -65,8 +65,8 @@ class App extends React.Component {
                         <Route path="/profile" component={ProfilePage}/>
                     </Switch>
                 </BrowserRouter>
-                <button onClick={() => this.debug()}>Debug</button>
-                <button onClick={() => this.debugFlush()}>Flush</button>
+                {/*<button onClick={() => this.debug()}>Debug</button>
+                    <button onClick={() => this.debugFlush()}>Flush</button>*/}
                 <Footer/>
             </div>
         );
