@@ -1,6 +1,6 @@
 import {
     EditBtn,
-    DeleteBtn,
+    DeleteBtn, InfoBtn,
 } from '../custom-button/btn-cfg'
 
 class UserTbCfg {
@@ -14,4 +14,15 @@ class UserTbCfg {
     buttons = [EditBtn, DeleteBtn];
 }
 
-export {UserTbCfg};
+const EventTbCfg = {
+    headers: [
+        { key: 'type', label: 'Type' },
+        { key: 'title', label: 'Title' },
+    ],
+    order: {defaultColumn: 'type', orderType: 'ascending'},
+    search: {columns: ['type', 'title']},
+    pagination: {itemPerPage: 5, itemPerPageOption: [5, 10, 15, 20]},
+    buttons: [InfoBtn, EditBtn]
+}
+
+export {UserTbCfg, EventTbCfg};
