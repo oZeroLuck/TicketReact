@@ -178,10 +178,8 @@
       "link": "https://www.filmposters.com/images/posters/2363.jpg",
       "desc": "Get frightened by the monster!",
       "cardDesc": "Placeholder",
-      "dates": [
-        {
-          "date": "08/07/2021", "hours": "21:00"
-        }],
+      "date": "08/07/2021",
+      "hours": "21:00",
       "locationId": 1,
       "soldTicketId": 1
     }
@@ -190,15 +188,29 @@
     {
       "id": 1,
       "name": "Somewhere in the Universe",
-      "backRowMax": 150,
-      "middleRowMax": 150,
-      "frontRowMax": 150
+      "seats": [
+        {
+          "name": "backRow",
+          "label": "Back Row",
+          "max": 150
+        },
+        {
+          "name": "middleRow",
+          "label": "Middle Row",
+          "max": 150
+        },
+        {
+          "name": "frontRow",
+          "label": "Front Row",
+          "max": 150
+        }
+      ]
     }
   ],
   "soldTicket": [
     {
       "id": 1,
-      "backRow": 0,
+      "backRow": 140,
       "middleRow": 0,
       "frontRow": 0
     }
