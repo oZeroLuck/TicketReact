@@ -60,15 +60,13 @@ class CustomTable extends React.Component {
     }
 
     handleSelectChange(input) {
-        console.log("The searched column key has changed :" + input)
         this.setState({
             dataSource: this.state.dataSource,
             searchedColumn: input
-        },() => console.log(this.state));
+        });
     }
 
     searchItem(input) {
-        console.log("Keylogging search :" + input)
         const searchTerm = input;
         let data = this.dataSource.filter(
             (d) => {return d[this.state.searchedColumn].toLowerCase().includes(searchTerm.toLowerCase())}
@@ -83,7 +81,6 @@ class CustomTable extends React.Component {
     }
 
     handlePageNumberChange(input) {
-        console.log("Page size has changed :" + input)
         this.setState({
             pagedList: [],
             itemPerPage: input
@@ -91,7 +88,6 @@ class CustomTable extends React.Component {
     }
 
     paginate() {
-        console.log("Paginating by: " + this.state.itemPerPage)
         let pages = [];
         const allData = this.state.orderedData;
         const numberOfPages = Math.ceil(allData.length / this.state.itemPerPage);
@@ -107,10 +103,6 @@ class CustomTable extends React.Component {
             }
             pages.push(page);
         }
-        console.log("New pages")
-        console.log(pages)
-        console.log("Current Page")
-        console.log(pages[0])
         this.setState({
             currentPage: pages[0],
             pagedList: pages,
@@ -120,7 +112,6 @@ class CustomTable extends React.Component {
     }
 
     setPage(number) {
-        console.log("The page has been choosen to be :" + number)
         if (number >= 0 && number < this.state.pagedList.length) {
             const currentPage = this.state.pagedList[number]
             this.setState({
@@ -133,7 +124,6 @@ class CustomTable extends React.Component {
     }
 
     parentCallback(itemId, buttonType) {
-        console.log("I have been clicked! :" +  itemId + " " + buttonType)
         this.props.parentCallback(itemId, buttonType)
     }
 
@@ -215,22 +205,24 @@ class CustomTable extends React.Component {
                                 </tbody>
                             </Table>
                         </Card.Body>
-                        <Card.Footer className={"justify-content-center"}>
-                            <Row>
-                                <Col>
-                                    <FontAwesomeIcon
-                                        style={{margin: "auto"}}
-                                        icon={faChevronCircleLeft} onClick={() =>
-                                        this.setPage(this.state.currentPageNumber - 1)}/>
-                                </Col>
-                                <Col className={"align-content-center"}>
-                                    {pageSelectors}
-                                </Col>
-                                <Col>
-                                    <FontAwesomeIcon icon={faChevronCircleRight} onClick={() =>
-                                        this.setPage(this.state.currentPageNumber + 1)}/>
-                                </Col>
-                            </Row>
+                        <Card.Footer>
+                            <Container fluid>
+                                <Row>
+                                    <Col>
+                                        <FontAwesomeIcon
+                                            style={{margin: "auto"}}
+                                            icon={faChevronCircleLeft} onClick={() =>
+                                            this.setPage(this.state.currentPageNumber - 1)}/>
+                                    </Col>
+                                    <Col className={"align-content-center"}>
+                                        {pageSelectors}
+                                    </Col>
+                                    <Col className={"d-flex flex-row-reverse"}>
+                                        <FontAwesomeIcon icon={faChevronCircleRight} onClick={() =>
+                                            this.setPage(this.state.currentPageNumber + 1)}/>
+                                    </Col>
+                                </Row>
+                            </Container>
                         </Card.Footer>
                     </Card>
                 </Container>
