@@ -1,11 +1,9 @@
 import {Container, Row} from "react-bootstrap";
-import {CustomNavbar} from "../components/custom-navbar";
 import React from "react";
 
 function ErrorPage(props) {
         return (
             <>
-                <CustomNavbar/>
                 <Container fluid={"lg"}>
                     <Row className={"justify-content-center mb-4"}>
                         <img src={"https://media.giphy.com/media/nVTa8D8zJUc2A/giphy.gif"}
