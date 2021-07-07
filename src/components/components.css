@@ -70,3 +70,16 @@ th:hover {
     right: 30%;
     top: 30%;
 }
+
+.small-img {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: auto;
+    height: 100%;
+    max-height: 20rem;
+}
+
+.modal-90w {
+    max-width: 70%!important;
+}
