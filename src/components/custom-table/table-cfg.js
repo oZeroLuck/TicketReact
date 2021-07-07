@@ -18,6 +18,8 @@ const EventTbCfg = {
     headers: [
         { key: 'type', label: 'Type' },
         { key: 'title', label: 'Title' },
+        { key: 'date', label: 'Date'},
+        { key: 'hours', label: 'Hours'}
     ],
     order: {defaultColumn: 'type', orderType: 'ascending'},
     search: {columns: ['type', 'title']},
