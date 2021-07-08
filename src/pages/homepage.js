@@ -3,15 +3,16 @@ import {CustomSnackbar} from "../components/custom-snackbar";
 import {Card, Carousel, Col, Container, Row} from "react-bootstrap";
 import "../components/components.css"
 import "./pages.css"
-import axios from "axios";
 import {LoadingSpinner} from "../components/loading-spinner";
 import {Link} from "react-router-dom";
 import {ErrorPage} from "./error-page";
 import {CustomNavbar} from "../components/custom-navbar";
+import {EventService} from "../services/event-service";
 
 class Homepage extends React.Component {
     constructor(props) {
         super(props);
+        this.eventService = new EventService()
         this.state = {
             showSnack: false,
             message: "",
@@ -34,18 +35,17 @@ class Homepage extends React.Component {
             this.setState({isLogged: true, currentUser: JSON.parse(currentUser)},
                 () => console.log(this.state.currentUser))
         }
-        axios.get('http://localhost:8080/featured', {timeout: 10000}).then(result => {
+        console.log("Hello, these are the featured ones!")
+        this.eventService.getFeatured().then(response => {
+            let toRet = []
+            toRet.push(response.data.slice(0, 5))
+            toRet.push(response.data.slice(5, 10))
             this.setState({
                 loading: false,
-                images: result.data
-            }, () => console.log(this.state.images))
-        }).catch(error => {
-            this.setState({
-                loading: false,
-                error: true,
-                errorMsg: error.message
+                images: toRet
             })
         })
+
     }
 
     // Use this function to test a component hook functionality
@@ -115,11 +115,19 @@ class Homepage extends React.Component {
                                                                 <Card.Img variant={"top"} as={"img"}
                                                                           src={event.link}
                                                                           alt={event.desc}
-                                                                          title={event.desc}
+                                                                          title={"Book now!"}
                                                                 />
-                                                                <Card.Body>
+                                                                <Card.Header className={"text-center"}>
+                                                                    <Card.Title>
+                                                                        {event.title}
+                                                                    </Card.Title>
+                                                                </Card.Header>
+                                                                <Card.Body className={"p-0"}>
                                                                     <Card.Text>
-                                                                        {event.desc}
+                                                                        <p className={"ml-2"}>{event.cardDesc}</p>
+                                                                        <hr/>
+                                                                        <p className={"text-center"}>{event.date}</p>
+                                                                        <p className={"text-center"}>{event.hours}</p>
                                                                     </Card.Text>
                                                                 </Card.Body>
                                                             </Card>
