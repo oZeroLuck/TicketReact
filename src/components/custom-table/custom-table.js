@@ -152,6 +152,7 @@ class CustomTable extends React.Component {
                             active={this.state.currentPageNumber === index}
                             onClick={() => this.setPage(index)}>{index}</Button>
                 )
+                // TODO: handle big number of pages
             }
 
             return (
