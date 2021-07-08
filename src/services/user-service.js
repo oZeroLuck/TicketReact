@@ -1,6 +1,7 @@
 import axios from 'axios'
 import {Customer} from "./entities/customer";
 import {LoginInfo} from "./entities/loginInfo";
+import {Cart} from "./entities/cart";
 
 class UserService {
 
@@ -20,6 +21,22 @@ class UserService {
         return axios.put("http://localhost:8080/users/" + userInfo.id, userInfo).then(
             _ => this.putLogin(userInfo)
         )
+    }
+
+    updateCart(id) {
+
+    }
+
+    postCart(userId) {
+        return axios.post('http://localhost:8080/cart', null)
+    }
+
+    getCart(id) {
+        return axios.get('http://localhost:8080/cart/' + id)
+    }
+
+    putCart(newCart) {
+        return axios.put('http://localhost:8080/cart/' + newCart.id, new Cart(newCart))
     }
 
 // From here on, I'll simulate the back-end
