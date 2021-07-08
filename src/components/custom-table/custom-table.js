@@ -1,5 +1,5 @@
 import React from "react";
-import {Button, Card, Col, Container, Row, Table} from "react-bootstrap";
+import {Button, ButtonGroup, Card, Col, Container, Row, Table} from "react-bootstrap";
 import {CustomButton} from "../custom-button/custom-button";
 import '../components.css';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -16,10 +16,9 @@ class CustomTable extends React.Component {
         super(props);
         this.dataSource = props.dataSource;
         this.firstTime = true;
-        this.searchColumns = props.tableCfg.search.columns;
         this.state = {
             searchTerm: '',
-            searchedColumn: this.searchColumns[0],
+            searchedColumn: props.tableCfg.search[0].column,
             orderKey: props.tableCfg.order.defaultColumn,
             orderType: props.tableCfg.order.orderType === 'ascending',
             orderedData: props.dataSource,
@@ -53,6 +52,7 @@ class CustomTable extends React.Component {
                 return 0;
             });
         }
+        console.log(data)
         this.setState({
             orderKey: column,
             orderType: orderType,
@@ -62,23 +62,32 @@ class CustomTable extends React.Component {
 
     handleSelectChange(input) {
         this.setState({
-            dataSource: this.props.dataSource,
-            searchedColumn: input
-        });
+            orderedData: this.props.dataSource,
+            searchedColumn: input,
+            searchTerm: ''
+        }, () => this.searchItem(''));
     }
 
     searchItem(input) {
-        console.log(this.dataSource)
-        let data = this.dataSource.filter(
-            d => d[this.state.searchedColumn].toLowerCase().includes(input.toLowerCase())
-        );
+        console.log("Searching for :" + input)
+        console.log(this.state.orderedData)
+        console.log(input)
+        let data
+        if (input === '') {
+            data = this.props.dataSource
+        } else {
+            data = this.dataSource.filter(
+                d => d[this.state.searchedColumn].toLowerCase().includes(input.toLowerCase())
+            );
+        }
+        console.log(data)
         this.firstTime = true;
         this.setState({
             searchTerm: this.searchTerm,
             orderKey: this.props.tableCfg.order.orderKey,
             orderType: this.props.tableCfg.order.orderType === 'ascending',
             orderedData: data
-        });
+        }, () => this.orderData(this.props.tableCfg.order.defaultColumn));
     }
 
     handlePageNumberChange(input) {
@@ -91,6 +100,7 @@ class CustomTable extends React.Component {
     paginate() {
         let pages = [];
         const allData = this.state.orderedData;
+        console.log(allData)
         const numberOfPages = Math.ceil(allData.length / this.state.itemPerPage);
         const entryPerPage = this.state.itemPerPage
         for (let i = 0; i < numberOfPages; i++) {
@@ -137,7 +147,11 @@ class CustomTable extends React.Component {
         } else {
             const pageSelectors = []
             for (const [index] of this.state.pagedList.entries()) {
-                pageSelectors.push(<Button variant='success' onClick={() => this.setPage(index)}>{index}</Button>)
+                pageSelectors.push(
+                    <Button variant='success'
+                            active={this.state.currentPageNumber === index}
+                            onClick={() => this.setPage(index)}>{index}</Button>
+                )
             }
 
             return (
@@ -160,8 +174,8 @@ class CustomTable extends React.Component {
                                             <Row noGutters>
                                             <Col>
                                                 <Form.Control as={"select"} onChange={event => this.handleSelectChange(event.target.value)}>
-                                                    {this.searchColumns.map(column => (
-                                                        <option key={"searchKey" + column}>{column}</option>
+                                                    {this.props.tableCfg.search.map(column => (
+                                                        <option key={"searchKey" + column.column} value={column.column}>{column.label}</option>
                                                     ))}
                                                 </Form.Control>
                                             </Col>
@@ -179,41 +193,53 @@ class CustomTable extends React.Component {
                             </Container>
                         </Card.Header>
                         <Card.Body>
-                            <Table striped bordered responsive>
-                                <thead>
-                                    <tr>
-                                        {this.props.tableCfg.headers.map(header => (
-                                        <th onClick={() => this.orderData(header.key)}>
-                                            {header.label}
-                                            {this.state.order ?
-                                                <FontAwesomeIcon icon={faSortAlphaUp}/>
-                                             :
-                                                <FontAwesomeIcon icon={faSortAlphaDown}/>
-                                            }
-                                        </th>
-                                        ))}
-                                        <th key={"Actions"} className={"text-center"} style={{width: "fit-content"}}>
-                                            Actions
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                {this.state.currentPage.map(data => (
-                                        <tr key={data.id}>
+                            {this.state.orderedData.length === 0 ?
+                                <Container>
+                                    <Row>
+                                        <p>Nothing was found </p>
+                                    </Row>
+                                </Container> :
+                                <Table striped bordered responsive>
+                                    <thead>
+                                        <tr>
                                             {this.props.tableCfg.headers.map(header => (
-                                            <td key={header.key + data.id}>{data[header.key]}</td>
+                                            <th onClick={() => this.orderData(header.key)}>
+                                                {header.label}
+                                                {this.state.orderType ?
+                                                    <FontAwesomeIcon icon={faSortAlphaDown}
+                                                                     className={"ml-2"}
+                                                    />
+                                                 :
+                                                    <FontAwesomeIcon icon={faSortAlphaUp}
+                                                                     className={"ml-2"}
+                                                    />
+                                                }
+                                            </th>
                                             ))}
-                                            <td key={"Actions" + data.id} className={"d-flex justify-content-center"}>
-                                                    {this.props.tableCfg.buttons.map(button => (
-                                                            <CustomButton
-                                                                          buttoncfg={button}
-                                                                          onPress={() => this.parentCallback(data.id, button.text)}/>
-                                                    ))}
-                                            </td>
+                                            <th key={"Actions"} className={"text-center"} style={{width: "fit-content"}}>
+                                                Actions
+                                            </th>
                                         </tr>
-                                ))}
-                                </tbody>
-                            </Table>
+                                    </thead>
+                                    <tbody>
+                                    {this.state.currentPage === undefined ? null :
+                                    this.state.currentPage.map(data => (
+                                            <tr key={data.id}>
+                                                {this.props.tableCfg.headers.map(header => (
+                                                <td key={header.key + data.id}>{data[header.key]}</td>
+                                                ))}
+                                                <td key={"Actions" + data.id} className={"d-flex justify-content-center"}>
+                                                        {this.props.tableCfg.buttons.map(button => (
+                                                                <CustomButton
+                                                                              buttoncfg={button}
+                                                                              onPress={() => this.parentCallback(data.id, button.text)}/>
+                                                        ))}
+                                                </td>
+                                            </tr>
+                                    ))}
+                                    </tbody>
+                                </Table>
+                            }
                         </Card.Body>
                         <Card.Footer>
                             {pageSelectors.length > 1 ?
@@ -227,7 +253,9 @@ class CustomTable extends React.Component {
                                                 this.setPage(this.state.currentPageNumber - 1)}/>
                                         </Col>
                                         <Col className={"align-content-center"}>
-                                            {pageSelectors}
+                                            <ButtonGroup>
+                                                {pageSelectors}
+                                            </ButtonGroup>
                                         </Col>
                                         <Col className={"d-flex flex-row-reverse"}>
                                             <FontAwesomeIcon

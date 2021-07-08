@@ -1,7 +1,4 @@
-import {
-    EditBtn,
-    DeleteBtn, InfoBtn,
-} from '../custom-button/btn-cfg'
+import {InfoBtn} from '../custom-button/btn-cfg'
 
 const EventTbCfg = {
     headers: [
@@ -12,7 +9,12 @@ const EventTbCfg = {
         { key: 'locationName', label: 'Location'}
     ],
     order: {defaultColumn: 'type', orderType: 'ascending'},
-    search: {columns: ['type', 'title']},
+    // The first search object will be the default column
+    search: [
+        {column: 'type', label:'Event Type'},
+        {column: 'title', label: 'Title'},
+        {column: 'locationName', label: 'Location'}
+        ],
     pagination: {itemPerPage: 5, itemPerPageOption: [5, 10, 15, 20]},
     buttons: [InfoBtn]
 }
