@@ -87,88 +87,6 @@
       "role": "customer"
     }
   ],
-  "featured": [
-    [
-      {
-        "id": 1,
-        "type": "film",
-        "link": "https://www.filmposters.com/images/posters/2363.jpg",
-        "desc": "description 1"
-      },
-      {
-        "id": 2,
-        "type": "film",
-        "link": "https://www.filmposters.com/images/posters/12447.jpg",
-        "desc": "description 2"
-      },
-      {
-        "id": 3,
-        "type": "film",
-        "link": "https://www.filmposters.com/images/posters/7144.jpg",
-        "desc": "description 3"
-      },
-      {
-        "id": 4,
-        "type": "film",
-        "link": "https://www.filmposters.com/images/posters/19272.jpg",
-        "desc": "description 4"
-      },
-      {
-        "id": 5,
-        "type": "film",
-        "link": "https://www.filmposters.com/images/posters/21101.jpg",
-        "desc": "description 5"
-      }
-    ],
-    [
-      {
-        "id": 6,
-        "type": "film",
-        "link": "https://www.filmposters.com/images/posters/21908.jpg",
-        "desc": "description 6"
-      },
-      {
-        "id": 7,
-        "type": "film",
-        "link": "https://www.filmposters.com/images/posters/7299.jpg",
-        "desc": "description 7"
-      },
-      {
-        "id": 8,
-        "type": "film",
-        "link": "https://www.filmposters.com/images/posters/7716.jpg",
-        "desc": "description 8"
-      },
-      {
-        "id": 9,
-        "type": "film",
-        "link": "https://www.filmposters.com/images/posters/595.jpg",
-        "desc": "description 9"
-      },
-      {
-        "id": 10,
-        "type": "film",
-        "link": "https://www.filmposters.com/images/posters/10400.jpg",
-        "desc": "description 10"
-      }
-    ]
-  ],
-  "film": [
-    {
-      "id": 1,
-      "title": "Some title 1",
-      "type": "film",
-      "link": "https://www.filmposters.com/images/posters/2363.jpg",
-      "desc": "Etiam sem purus, semper vitae cursus vitae, vestibulum mattis tortor. Nunc laoreet fringilla fringilla. Vestibulum scelerisque orci sed erat pulvinar, vel placerat leo scelerisque. Ut eros lorem, vestibulum blandit dui vitae, venenatis tincidunt purus. Fusce auctor interdum mattis. Phasellus molestie consectetur semper. Donec pulvinar orci nunc, molestie auctor leo pretium quis. Nam pharetra mattis varius. Donec ut vulputate velit, et lobortis nulla. Quisque libero ante, commodo sed magna id, pellentesque consectetur massa. Maecenas tristique mi non nunc rhoncus, ac ultricies eros condimentum. Suspendisse ullamcorper mollis quam, sit amet ultricies risus eleifend nec.\n\nPraesent laoreet sodales ipsum in mattis. Curabitur eget varius tellus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur non semper felis, vitae laoreet ligula. Phasellus ac mi eget nunc tempus viverra nec vel est. Fusce nisi est, cursus id ante ac, placerat cursus libero. Vivamus eget venenatis massa.\n\nAenean commodo elit ut felis dapibus consectetur. Nam ultrices nisi eu augue ultrices interdum. Suspendisse efficitur nibh in quam pretium, eget fermentum turpis dictum. Donec est tortor, tincidunt sed est ac, scelerisque placerat turpis. Pellentesque diam velit, iaculis eu massa vitae, sollicitudin vehicula nisi. Cras laoreet elit pharetra auctor blandit. Nam pretium tempor sapien, eget viverra purus sollicitudin eget."
-    },
-    {
-      "id": 2,
-      "title": "Some title 2",
-      "type": "film",
-      "link": "https://www.filmposters.com/images/posters/12447.jpg",
-      "desc": "description 2"
-    }
-  ],
   "event": [
     {
       "id": 1,
@@ -177,9 +95,10 @@
       "title": "Frankenstein 3D",
       "link": "https://www.filmposters.com/images/posters/2363.jpg",
       "desc": "Get frightened by the monster!",
-      "cardDesc": "Placeholder",
+      "cardDesc": "Horror beast!",
       "date": "08/07/2021",
       "hours": "21:00",
+      "ticketCost": "10€",
       "locationName": "Some Theater",
       "locationId": 1,
       "soldTicketId": 1
@@ -191,9 +110,10 @@
       "title": "Apocalypse Now",
       "link": "https://www.filmposters.com/images/posters/12447.jpg",
       "desc": "description 2",
-      "cardDesc": "Placeholder",
+      "cardDesc": "Apo now",
       "date": "08/07/2021",
       "hours": "21:00",
+      "ticketCost": "10€",
       "locationName": "Some Theater",
       "locationId": 2,
       "soldTicketId": 2
@@ -202,12 +122,13 @@
       "id": 3,
       "featured": true,
       "type": "Film",
-      "title": "Frankenstein 3D",
-      "link": "https://www.filmposters.com/images/posters/2363.jpg",
-      "desc": "Get frightened by the monster!",
-      "cardDesc": "Placeholder",
-      "date": "08/07/2021",
-      "hours": "21:00",
+      "title": "Conand The Destroyed",
+      "link": "https://www.filmposters.com/images/posters/7144.jpg",
+      "desc": "The most powerful legend of all is back in a new adventure!",
+      "cardDesc": "Book your tickets now!",
+      "date": "28/07/2021",
+      "hours": "13:00",
+      "ticketCost": "10€",
       "locationName": "Some Theater",
       "locationId": 3,
       "soldTicketId": 3
@@ -215,28 +136,30 @@
     {
       "id": 4,
       "featured": true,
-      "type": "Film",
-      "title": "Frankenstein 3D",
-      "link": "https://www.filmposters.com/images/posters/2363.jpg",
-      "desc": "Get frightened by the monster!",
-      "cardDesc": "Placeholder",
-      "date": "08/07/2021",
-      "hours": "21:00",
-      "locationName": "Some Theater",
+      "type": "Sport",
+      "title": "Sport Event",
+      "link": "https://i.pinimg.com/736x/a9/b1/77/a9b1779e2a9d3a1afc96292fb132134e.jpg",
+      "desc": "Sport event description!",
+      "cardDesc": "Sport? Sport!",
+      "date": "14/01/2022",
+      "hours": "All day",
+      "ticketCost": "10€",
+      "locationName": "Some Park",
       "locationId": 4,
       "soldTicketId": 4
     },
     {
       "id": 5,
       "featured": true,
-      "type": "Film",
-      "title": "Frankenstein 3D",
-      "link": "https://www.filmposters.com/images/posters/2363.jpg",
-      "desc": "Get frightened by the monster!",
-      "cardDesc": "Placeholder",
-      "date": "08/07/2021",
-      "hours": "21:00",
-      "locationName": "Some Theater",
+      "type": "Sport",
+      "title": "Cricket Tournament",
+      "link": "https://d1csarkz8obe9u.cloudfront.net/posterpreviews/cricket-sport-event-poster-flyer-design-template-6a9194d5b82c616bfef80e4686de3966_screen.jpg?ts=1561390310",
+      "desc": "Cricket description wohooo!",
+      "cardDesc": "Cricket? Criket!",
+      "date": "20/12/2021",
+      "hours": "14:00",
+      "ticketCost": "10€",
+      "locationName": "Some Arena",
       "locationId": 5,
       "soldTicketId": 5
     },
@@ -244,12 +167,13 @@
       "id": 6,
       "featured": true,
       "type": "Film",
-      "title": "Frankenstein 3D",
-      "link": "https://www.filmposters.com/images/posters/2363.jpg",
-      "desc": "Get frightened by the monster!",
-      "cardDesc": "Placeholder",
-      "date": "08/07/2021",
+      "title": "Kill Bill",
+      "link": "https://www.filmposters.com/images/posters/21101.jpg",
+      "desc": "This summer, revisit Kill Bill, now in 8k!",
+      "cardDesc": "Revisit Kill Bill, now in 8k!",
+      "date": "28/08/2021",
       "hours": "21:00",
+      "ticketCost": "10€",
       "locationName": "Some Theater",
       "locationId": 6,
       "soldTicketId": 6
@@ -258,12 +182,13 @@
       "id": 7,
       "featured": true,
       "type": "Film",
-      "title": "Frankenstein 3D",
-      "link": "https://www.filmposters.com/images/posters/2363.jpg",
-      "desc": "Get frightened by the monster!",
-      "cardDesc": "Placeholder",
+      "title": "The Birds",
+      "link": "https://www.filmposters.com/images/posters/7716.jpg",
+      "desc": "A great classic by Alfred Hitchcock",
+      "cardDesc": "Hitchcocks birds?",
       "date": "08/07/2021",
       "hours": "21:00",
+      "ticketCost": "10€",
       "locationName": "Some Theater",
       "locationId": 7,
       "soldTicketId": 7
@@ -271,13 +196,88 @@
     {
       "id": 8,
       "featured": true,
-      "type": "Film",
-      "title": "Frankenstein 3D",
-      "link": "https://www.filmposters.com/images/posters/2363.jpg",
-      "desc": "Get frightened by the monster!",
+      "type": "Comics",
+      "title": "Comicon 2011",
+      "link": "https://i.pinimg.com/originals/ae/63/dd/ae63dd27fc5e19cadd3a8c39ed48ade8.jpg",
+      "desc": "Comicon!",
+      "cardDesc": "Comicon",
+      "date": "21/24/2011",
+      "hours": "7:00 - 24:00",
+      "ticketCost": "10€",
+      "locationName": "Some Conventions Area",
+      "locationId": 8,
+      "soldTicketId": 8
+    },
+    {
+      "id": 9,
+      "featured": true,
+      "type": "Comics",
+      "title": "Free comic book day Festival",
+      "link": "https://i.pinimg.com/originals/b9/37/ee/b937ee02139bb633e7acb03b716e7fc8.jpg",
+      "desc": "A day of family fun with free comics",
       "cardDesc": "Placeholder",
+      "date": "5/05/2021",
+      "hours": "10:00 - 16:00",
+      "ticketCost": "10€",
+      "locationName": "Some Place",
+      "locationId": 8,
+      "soldTicketId": 8
+    },{
+      "id": 10,
+      "featured": true,
+      "type": "Concert",
+      "title": "Music Fest 2019",
+      "link": "https://d1csarkz8obe9u.cloudfront.net/posterpreviews/modern-glossy-music-event-poster-design-template-84d38a706368baec17981e71a5e5810d_screen.jpg?ts=1566606586",
+      "desc": "The best DJ fest you'll ever participate in!",
+      "cardDesc": "The best DJ fest you'll ever participate in!",
+      "date": "26/06/2019",
+      "hours": "20:00",
+      "ticketCost": "10€",
+      "locationName": "Some Arena",
+      "locationId": 8,
+      "soldTicketId": 8
+    },
+    {
+      "id": 11,
+      "featured": false,
+      "type": "Concert",
+      "title": "Future Music",
+      "link": "https://i.pinimg.com/474x/0c/d0/e9/0cd0e97afc75bd36f27cae8791169da7.jpg",
+      "desc": "Jam to the sick beats of James Holden, Rawing George, Armin Wan Buuren and Solwax!",
+      "cardDesc": "The future of music awaits you!",
       "date": "08/07/2021",
       "hours": "21:00",
+      "ticketCost": "10€",
+      "locationName": "Some Arena",
+      "locationId": 8,
+      "soldTicketId": 8
+    },
+    {
+      "id": 12,
+      "featured": false,
+      "type": "Concert",
+      "title": "Live Music Fridays",
+      "link": "https://www.adobe.com/express/learn/blog/media_1a60f112653567e59a3fd34b882559aaeb21fe790.png?width=2000&format=webply&optimize=medium",
+      "desc": "Live music fridays featuring The Crab Walkers!",
+      "cardDesc": "Featuring THE CRAB WALKERS",
+      "date": "18/07/2021",
+      "hours": "19:00",
+      "ticketCost": "10€",
+      "locationName": "Some Pub",
+      "locationId": 8,
+      "soldTicketId": 8
+    },
+    {
+      "id": 13,
+      "featured": false,
+      "type": "Gaming",
+      "title": "Gaming Expo",
+      "link": "https://i.pinimg.com/originals/3e/b9/00/3eb90068061856b0998c51d517ce3f34.jpg",
+      "desc": "Something something",
+      "cardDesc": "Placeholder Gaming",
+      "date": "08/07/2021",
+      "hours": "21:00",
+      "ticketCost": "10€",
       "locationName": "Some Theater",
       "locationId": 8,
       "soldTicketId": 8
