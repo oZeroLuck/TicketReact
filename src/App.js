@@ -28,6 +28,7 @@ class App extends React.Component {
         if(currentUser !== null && currentUser.role === "admin") {
             this.setState({isLogged: true, route: "/profile"})
         }
+        window.sessionStorage.setItem("currentCart", JSON.stringify([]))
     }
 
     handleLogged() {
@@ -39,6 +40,7 @@ class App extends React.Component {
     debug() {
         console.log("Session Storage: ")
         console.log(window.sessionStorage.getItem("currentUser"))
+        console.log(window.sessionStorage.getItem("currentCart"))
         console.log("State")
         console.log(this.state)
     }
@@ -65,8 +67,8 @@ class App extends React.Component {
                         <Route path="/profile" component={ProfilePage}/>
                     </Switch>
                 </BrowserRouter>
-                {/*<button onClick={() => this.debug()}>Debug</button>
-                    <button onClick={() => this.debugFlush()}>Flush</button>*/}
+                    <button onClick={() => this.debug()}>Debug</button>
+                    <button onClick={() => this.debugFlush()}>Flush</button>
                 <Footer/>
             </div>
         );
