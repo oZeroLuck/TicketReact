@@ -9,7 +9,7 @@ import {
     faArrowAltCircleLeft,
     faBook,
     faCheckCircle, faTimesCircle, faUser,
-    faSignOutAlt, faCartPlus, faShoppingCart, faUserCircle, faBan, faInfoCircle
+    faSignOutAlt, faCartPlus, faShoppingCart, faUserCircle, faBan, faInfoCircle, faMoneyBillWave
 } from "@fortawesome/free-solid-svg-icons";
 
 const SaveBtn = {
@@ -145,6 +145,12 @@ const AdministrationBtn = {
     icon: null
 }
 
+const PayButton = {
+    customCssClass: 'success',
+    text: 'CheckOut',
+    icon: faMoneyBillWave
+}
+
 export {
     SaveBtn,
     EditBtn,
@@ -167,7 +173,8 @@ export {
     HollowEditBtn,
     CancelBtn,
     InfoBtn,
-    AdministrationBtn
+    AdministrationBtn,
+    PayButton
 }
 /*
 const {
