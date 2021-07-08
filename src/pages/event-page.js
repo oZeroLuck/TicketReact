@@ -59,12 +59,12 @@ class EventPage extends React.Component {
     addToCart(seat) {
         console.log(this.state)
         const ticket = {
-            eventId: this.state.event.id,
+            event: this.state.event,
             seat: seat
         }
         let newCart = JSON.parse(window.sessionStorage.getItem("currentCart"))
         console.log(newCart)
-        newCart.push(ticket)
+        newCart.tickets.push(ticket)
         window.sessionStorage.setItem("currentCart", JSON.stringify(newCart))
         if (window.sessionStorage.getItem("currentUser") !== null) {
             console.log("save this to db")
