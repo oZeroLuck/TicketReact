@@ -57,7 +57,7 @@ class App extends React.Component {
                         <Route exact path="/">
                             <Redirect to={this.state.route}/>
                         </Route>
-                        <Route path="/login" component={ReservedArea}/>
+                        <Route path="/login/:register?" component={ReservedArea}/>
                         <Route path="/register" component={RegisterPage}/>
                         <Route path="/homepage" component={Homepage}/>
                         <Route path="/event/:type/:id" component={EventPage}/>
