@@ -24,6 +24,7 @@ class ReservedArea extends React.Component {
             isLogged: false
         }
         this.userService = new UserService()
+        this.cartService = new CartService()
         this.setUser = this.setUser.bind(this)
         this.setMode = this.setMode.bind(this)
         this.setSnack = this.setSnack.bind(this)
@@ -31,6 +32,9 @@ class ReservedArea extends React.Component {
     }
 
     componentDidMount() {
+        if (this.props.match.params.register !== undefined) {
+            this.setMode()
+        }
         if (window.sessionStorage.getItem("currentUser") !== null) {
             this.setState({isLogged: true})
         }
@@ -92,13 +96,20 @@ class ReservedArea extends React.Component {
             })
     }
 
+    setCart(userId) {
+        const cart = window.sessionStorage.getItem("currentCart")
+        this.cartService.postCart(userId, cart).then(success =>
+            console.log("hey")
+        )
+    }
+
     setUser(id) {
         console.log("Setting user...")
         this.userService.getUser(id)
             .then(user => {
                 window.sessionStorage.setItem("currentUser", JSON.stringify(user.data))
-                console.log("Pushing mycart")
                 if(user.data.role === "customer") {
+                    this.setCart(user.data.id)
                     this.props.history.goBack()
                 } else {
                     this.props.history.push("/admin/homepage")
@@ -196,6 +207,7 @@ class ReservedArea extends React.Component {
         } else {
             return (
                 <>
+                    <CustomNavbar/>
                     <RegisterPage back={() => this.setMode()}
                                   setSnack={this.setSnack}
                     />
