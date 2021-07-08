@@ -70,10 +70,14 @@ th:hover {
 }
 
 .total {
-    position: sticky!important;
-    right: 30%;
-    top: 30%;
+    position: sticky !important;
+    top: 15%;
+    bottom: 10%;
+    margin-right: auto;
+    margin-left: auto;
+    width: fit-content;
 }
+
 
 .small-img {
     display: flex;
