@@ -1,11 +1,11 @@
 import React from 'react'
 import {TicketService} from "../services/ticket-service";
-import {Card, Col, Container, ListGroup, Row} from "react-bootstrap";
+import {Card, Col, Container, ListGroup, Modal, Row} from "react-bootstrap";
 import {LoadingSpinner} from "../components/loading-spinner";
 import {CustomNavbar} from "../components/custom-navbar";
 import {ErrorPage} from "./error-page";
 import {TicketComponent} from "../components/ticket-list/ticket-component";
-import {DeleteBtn, PayButton} from "../components/custom-button/btn-cfg";
+import {DeleteBtn, LoginBtn, PayButton, SignUpBtn} from "../components/custom-button/btn-cfg";
 import {CustomButton} from "../components/custom-button/custom-button";
 
 class MyCartPage extends React.Component {
@@ -18,9 +18,10 @@ class MyCartPage extends React.Component {
             error: false,
             errorMsg: null,
             isLogged: false,
-            total: 0
+            total: 0,
+            show: false
         }
-        this.cart = [1, 2, 3, 4]
+        this.checkPayment = this.checkPayment.bind(this)
     }
 
     componentDidMount() {
@@ -40,6 +41,28 @@ class MyCartPage extends React.Component {
         this.setState({
             total: parseInt(total) + "€"
         })
+    }
+
+    checkPayment() {
+        if (this.state.isLogged) {
+            console.log("Hello, you are logged")
+        } else {
+            this.handleModal()
+        }
+    }
+
+    handleModal() {
+        this.setState(prev => ({
+            show: !prev.show
+        }))
+    }
+
+    redirectTo(place) {
+        if (place.toLowerCase() === 'login') {
+            this.props.history.push("/login")
+        } else {
+            this.props.history.push("/login/register")
+        }
     }
 
     receipt() {
@@ -65,7 +88,6 @@ class MyCartPage extends React.Component {
     }
 
     render() {
-
         if (this.state.error) {
             return <ErrorPage errCode={this.state.errorMsg}/>
         }
@@ -92,7 +114,7 @@ class MyCartPage extends React.Component {
                                         </Row>
                                     )})}
                                 </Col>
-                                <Col style={{backgroundColor: "#c9c9c9"}}>
+                                <Col style={{backgroundColor: "#c9c9c9"}} className={"pb-4"}>
                                     <Card className={"total mt-3"} style={{minWidth: "80%"}}>
                                         <Card.Header>
                                             <Card.Title>Receipt (PH)</Card.Title>
@@ -115,7 +137,9 @@ class MyCartPage extends React.Component {
                                             </ListGroup.Item>
                                         </ListGroup>
                                         <Card.Footer className={"d-flex flex-row-reverse"}>
-                                            <CustomButton buttoncfg={PayButton}>Pay</CustomButton>
+                                            <CustomButton buttoncfg={PayButton}
+                                                          onPress={() => this.checkPayment()}
+                                            />
                                         </Card.Footer>
                                     </Card>
                                 </Col>
@@ -142,6 +166,36 @@ class MyCartPage extends React.Component {
 
                     }
                 </Container>
+                <Modal show={this.state.show} onHide={() => this.handleModal()} centered>
+                    <Modal.Header closeButton>
+                        <Modal.Title style={{fontSize: "xx-large"}} className={"text-centered"}>
+                            You're almost done!
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Container fluid>
+                            <Col className={"text-center"}>
+                                <Row style={{fontSize: "x-large"}}>
+                                    <Col>
+                                        To complete your order you have to
+                                        <CustomButton buttoncfg={LoginBtn}
+                                                      onPress={() => this.redirectTo(LoginBtn.text)}
+                                        />
+                                    </Col>
+                                </Row>
+                                <br/>
+                                <Row style={{fontSize: "x-large"}} className={"mb-2"}>
+                                    <Col>
+                                        If you don't have an account, please
+                                        <CustomButton buttoncfg={SignUpBtn}
+                                                      onPress={() => this.redirectTo(SignUpBtn.text)}
+                                        />
+                                    </Col>
+                                </Row>
+                            </Col>
+                        </Container>
+                    </Modal.Body>
+                </Modal>
             </div>
         )
     }
