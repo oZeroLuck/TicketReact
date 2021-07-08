@@ -2,6 +2,7 @@ import {Card, Col, Container, Modal, ProgressBar, Row} from "react-bootstrap";
 import {ErrorPage} from "../pages/error-page";
 import React from "react";
 import "./components.css"
+import {InfoPercentages} from "./info-percentages";
 
 function InfoModalComponent(props) {
     const data = props.data
@@ -46,37 +47,13 @@ function InfoModalComponent(props) {
                                 <Card body className={"p-0"}>
                                     <Row style={{margin: "0 0"}}>
                                         <Col className={"text-center"}>
-                                            <h3>Tickets Number</h3>
+                                            <h3>Tickets Numbers</h3>
                                         </Col>
                                     </Row>
                                     {data.location.seats.map(seat => {
                                         return (
                                             <Row>
-                                                <Card className={"w-100 mb-1 m-2"}>
-                                                    <Card.Body style={{padding: "0.25rem 1rem"}}>
-                                                        <Container fluid>
-                                                            <Row>
-                                                                <Col>
-                                                                    <strong>{seat.label}</strong>
-                                                                </Col>
-                                                                <Col className={"d-flex flex-row-reverse text-center"}>
-                                                                    Remaining: {(seat.max - data.soldTicket[seat.name]) + '/' + seat.max}
-                                                                </Col>
-
-                                                            </Row>
-                                                            <Row>
-                                                                <Container fluid style={{padding: "0 0"}}>
-                                                                    <Card>
-                                                                        <Card.Body style={{padding: "1rem 1rem"}}>
-                                                                            <ProgressBar striped
-                                                                                         now={Math.ceil(100 - data.soldTicket[seat.name] * 100 / seat.max)}/>
-                                                                        </Card.Body>
-                                                                    </Card>
-                                                                </Container>
-                                                            </Row>
-                                                        </Container>
-                                                    </Card.Body>
-                                                </Card>
+                                                <InfoPercentages seat={seat} data={data}/>
                                             </Row>
                                         )
                                     })}
