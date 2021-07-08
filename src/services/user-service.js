@@ -1,16 +1,11 @@
 import axios from 'axios'
 import {Customer} from "./entities/customer";
 import {LoginInfo} from "./entities/loginInfo";
-import {Cart} from "./entities/cart";
 
 class UserService {
 
     getUser(id) {
         return axios.get("http://localhost:8080/users/" + id)
-    }
-
-    getUsers() {
-        return axios.get("http://localhost:8080/users")
     }
 
     login() {
@@ -23,20 +18,8 @@ class UserService {
         )
     }
 
-    updateCart(id) {
+    receipt() {
 
-    }
-
-    postCart(userId) {
-        return axios.post('http://localhost:8080/cart', null)
-    }
-
-    getCart(id) {
-        return axios.get('http://localhost:8080/cart/' + id)
-    }
-
-    putCart(newCart) {
-        return axios.put('http://localhost:8080/cart/' + newCart.id, new Cart(newCart))
     }
 
 // From here on, I'll simulate the back-end
@@ -92,6 +75,8 @@ class UserService {
                 return error
         }).catch(_ => { return {message: "Something went wrong"}})
     }
+
+    // Cart managing (It's supposed to be back end)
 
 }
 
