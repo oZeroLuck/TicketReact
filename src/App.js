@@ -5,7 +5,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {EventPage} from "./pages/event-page";
 import {Footer} from "./components/footer";
 import {MyCartPage} from "./pages/my-cart-page";
-import {CustomNavbar} from "./components/custom-navbar";
 import React from 'react'
 import {ReservedArea} from "./pages/reserved-area/reserved-area";
 import {RegisterPage} from "./pages/reserved-area/register-page";
@@ -28,7 +27,7 @@ class App extends React.Component {
         if(currentUser !== null && currentUser.role === "admin") {
             this.setState({isLogged: true, route: "/profile"})
         }
-        window.sessionStorage.setItem("currentCart", JSON.stringify([]))
+        window.sessionStorage.setItem("currentCart", JSON.stringify({current: true, tickets: []}))
     }
 
     handleLogged() {
@@ -69,7 +68,9 @@ class App extends React.Component {
                 </BrowserRouter>
                     <button onClick={() => this.debug()}>Debug</button>
                     <button onClick={() => this.debugFlush()}>Flush</button>
-                <Footer/>
+                <footer>
+                    <Footer/>
+                </footer>
             </div>
         );
     }
