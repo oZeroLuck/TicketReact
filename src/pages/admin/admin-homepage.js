@@ -31,17 +31,25 @@ class AdminHomepage extends React.Component {
 
     }
 
+    getImage(id) {
+        const event = this.state.dataSource.find(ev => ev.id === id)
+        console.log("image link :" + event.link)
+        return event.link
+    }
+
     handleClicked(itemId, buttonType){
-        console.log("Fetching location...")
+        console.log("Fetching location..." + itemId)
         if (buttonType.trim().toLowerCase() === "info") {
             this.setState({isLoadingLocation: true}, () =>
                 this.eventService.getLocation(itemId)
                     .then(response => {
                         this.ticketSercive.getSold(itemId)
                             .then(tickets => {
+                                const path = this.getImage(itemId)
                                 this.setState({
                                     isLoadingLocation:false,
                                     modalData: {
+                                        imagePath: path,
                                         location: response.data,
                                         soldTicket: tickets.data,
                                         error: false,
@@ -52,6 +60,7 @@ class AdminHomepage extends React.Component {
                                 this.setState({
                                     isLoadingLocation:false,
                                     modalData: {
+                                        imagePath: null,
                                         location: null,
                                         soldTicket: null,
                                         error: true,
@@ -92,13 +101,13 @@ class AdminHomepage extends React.Component {
             </>
         }
         return (
-            <div>
+            <div style={{height: "100%"}} className={"mb-5"}>
                 {this.state.modalData ?
                     <InfoModalComponent show={this.state.showMdl}
                                         close={this.handleModal}
                                         data={this.state.modalData}/> : null}
                 <CustomNavbar/>
-                <h1 className={"text-center mt-5"}>Events list</h1>
+                <h1 className={"text-center mt-5 mb-5"}>Events list</h1>
                 <Container>
                     {this.state.isLoadingLocation ? <LoadingSpinner/> : null}
                     <CustomTable dataSource={this.state.dataSource}

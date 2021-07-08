@@ -23,20 +23,22 @@ function InfoModalComponent(props) {
         )}
     return (
         <Modal centered show={props.show}
+               onEnter={() => console.log(props.data)}
                onHide={() => props.close()}
                dialogClassName={"modal-90w"}
         >
             <Modal.Header closeButton>
                 <Modal.Title>
-                    Title
+                    Event sale Info
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Container>
                     <Row>
                         <Col className={"p-0 mr-4"} style={{display: "flex"}}>
-                            <img src={"https://www.filmposters.com/images/posters/2363.jpg"}
+                            <img src={data.imagePath}
                                  className={"small-img"}
+                                 alt={"image"}
                             />
                         </Col>
                         <Col>

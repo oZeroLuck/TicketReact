@@ -5,6 +5,10 @@ th:hover {
     cursor: pointer;
 }
 
+.hover-eff:hover {
+    cursor: pointer;
+}
+
 .anchor-me {
     position: fixed;
     left: 50%;

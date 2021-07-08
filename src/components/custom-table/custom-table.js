@@ -9,6 +9,7 @@ import {
     faSortAlphaDown,
     faSortAlphaUp
 } from "@fortawesome/free-solid-svg-icons";
+import Form from "react-bootstrap/Form";
 
 class CustomTable extends React.Component {
     constructor(props) {
@@ -61,15 +62,15 @@ class CustomTable extends React.Component {
 
     handleSelectChange(input) {
         this.setState({
-            dataSource: this.state.dataSource,
+            dataSource: this.props.dataSource,
             searchedColumn: input
         });
     }
 
     searchItem(input) {
-        const searchTerm = input;
+        console.log(this.dataSource)
         let data = this.dataSource.filter(
-            (d) => {return d[this.state.searchedColumn].toLowerCase().includes(searchTerm.toLowerCase())}
+            d => d[this.state.searchedColumn].toLowerCase().includes(input.toLowerCase())
         );
         this.firstTime = true;
         this.setState({
@@ -124,6 +125,7 @@ class CustomTable extends React.Component {
     }
 
     parentCallback(itemId, buttonType) {
+        console.log("Item id: " + itemId)
         this.props.parentCallback(itemId, buttonType)
     }
 
@@ -142,42 +144,52 @@ class CustomTable extends React.Component {
                 <Container>
                     <Card>
                         <Card.Header>
-                            <Row>
-                                <Col>
-                                    <form>
-                                        <input type={"text"} name={"searchItem"}
-                                               value={this.state.searchTerm} onChange={event => this.searchItem(event.target.value)}
-                                        />
-                                    </form>
-                                </Col>
-                                <Col>
-                                    <select onChange={event => this.handleSelectChange(event.target.value)}>
-                                        {this.searchColumns.map(column => (
-                                            <option key={"searchKey" + column}>{column}</option>
-                                        ))}
-                                    </select>
-                                </Col>
-                                <Col>
-                                    <select onChange={event => this.handlePageNumberChange(event.target.value)}>
-                                        {this.props.tableCfg.pagination.itemPerPageOption.map(pageNumber => (
-                                            <option key={"NoOfPages" + pageNumber}>{pageNumber}</option>
-                                        ))}
-                                    </select>
-                                </Col>
-                            </Row>
+                            <Container fluid>
+                                <Row>
+                                    <Col lg={8}/>
+                                    <Col>
+                                        <Form>
+                                            <Row noGutters>
+                                                <Col>
+                                                    <Form.Control type={"text"} name={"searchItem"}
+                                                                  placeholder={"Type to search"}
+                                                           value={this.state.searchTerm} onChange={(event) => this.searchItem(event.target.value)}
+                                                    />
+                                                </Col>
+                                            </Row>
+                                            <Row noGutters>
+                                            <Col>
+                                                <Form.Control as={"select"} onChange={event => this.handleSelectChange(event.target.value)}>
+                                                    {this.searchColumns.map(column => (
+                                                        <option key={"searchKey" + column}>{column}</option>
+                                                    ))}
+                                                </Form.Control>
+                                            </Col>
+                                                    <Col sm={3}>
+                                                        <Form.Control as={"select"} onChange={event => this.handlePageNumberChange(event.target.value)}>
+                                                            {this.props.tableCfg.pagination.itemPerPageOption.map(pageNumber => (
+                                                                <option key={"NoOfPages" + pageNumber}>{pageNumber}</option>
+                                                            ))}
+                                                        </Form.Control>
+                                                    </Col>
+                                            </Row>
+                                        </Form>
+                                    </Col>
+                                </Row>
+                            </Container>
                         </Card.Header>
                         <Card.Body>
                             <Table striped bordered responsive>
                                 <thead>
                                     <tr>
                                         {this.props.tableCfg.headers.map(header => (
-                                        <th key={header.key} onClick={() => this.orderData(header.key)}>
+                                        <th onClick={() => this.orderData(header.key)}>
                                             {header.label}
-                                            {this.state.order ? (
+                                            {this.state.order ?
                                                 <FontAwesomeIcon icon={faSortAlphaUp}/>
-                                            ) : (
+                                             :
                                                 <FontAwesomeIcon icon={faSortAlphaDown}/>
-                                            )}
+                                            }
                                         </th>
                                         ))}
                                         <th key={"Actions"} className={"text-center"} style={{width: "fit-content"}}>
@@ -191,13 +203,11 @@ class CustomTable extends React.Component {
                                             {this.props.tableCfg.headers.map(header => (
                                             <td key={header.key + data.id}>{data[header.key]}</td>
                                             ))}
-                                            <td key={"Actions" + data.id} className={"d-flex flex-row-reverse"}>
+                                            <td key={"Actions" + data.id} className={"d-flex justify-content-center"}>
                                                     {this.props.tableCfg.buttons.map(button => (
-                                                        <div className={"ml-2"}>
                                                             <CustomButton
                                                                           buttoncfg={button}
                                                                           onPress={() => this.parentCallback(data.id, button.text)}/>
-                                                        </div>
                                                     ))}
                                             </td>
                                         </tr>
@@ -206,23 +216,28 @@ class CustomTable extends React.Component {
                             </Table>
                         </Card.Body>
                         <Card.Footer>
-                            <Container fluid>
-                                <Row>
-                                    <Col>
-                                        <FontAwesomeIcon
-                                            style={{margin: "auto"}}
-                                            icon={faChevronCircleLeft} onClick={() =>
-                                            this.setPage(this.state.currentPageNumber - 1)}/>
-                                    </Col>
-                                    <Col className={"align-content-center"}>
-                                        {pageSelectors}
-                                    </Col>
-                                    <Col className={"d-flex flex-row-reverse"}>
-                                        <FontAwesomeIcon icon={faChevronCircleRight} onClick={() =>
-                                            this.setPage(this.state.currentPageNumber + 1)}/>
-                                    </Col>
-                                </Row>
-                            </Container>
+                            {pageSelectors.length > 1 ?
+                                <Container fluid>
+                                    <Row>
+                                        <Col>
+                                            <FontAwesomeIcon
+                                                className={"hover-eff"}
+                                                style={{margin: "auto"}}
+                                                icon={faChevronCircleLeft} onClick={() =>
+                                                this.setPage(this.state.currentPageNumber - 1)}/>
+                                        </Col>
+                                        <Col className={"align-content-center"}>
+                                            {pageSelectors}
+                                        </Col>
+                                        <Col className={"d-flex flex-row-reverse"}>
+                                            <FontAwesomeIcon
+                                                className={"hover-eff"}
+                                                icon={faChevronCircleRight} onClick={() =>
+                                                this.setPage(this.state.currentPageNumber + 1)}/>
+                                        </Col>
+                                    </Row>
+                                </Container> : null
+                            }
                         </Card.Footer>
                     </Card>
                 </Container>
