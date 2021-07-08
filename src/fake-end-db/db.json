@@ -180,8 +180,107 @@
       "cardDesc": "Placeholder",
       "date": "08/07/2021",
       "hours": "21:00",
+      "locationName": "Some Theater",
       "locationId": 1,
       "soldTicketId": 1
+    },
+    {
+      "id": 2,
+      "featured": true,
+      "type": "Film",
+      "title": "Apocalypse Now",
+      "link": "https://www.filmposters.com/images/posters/12447.jpg",
+      "desc": "description 2",
+      "cardDesc": "Placeholder",
+      "date": "08/07/2021",
+      "hours": "21:00",
+      "locationName": "Some Theater",
+      "locationId": 2,
+      "soldTicketId": 2
+    },
+    {
+      "id": 3,
+      "featured": true,
+      "type": "Film",
+      "title": "Frankenstein 3D",
+      "link": "https://www.filmposters.com/images/posters/2363.jpg",
+      "desc": "Get frightened by the monster!",
+      "cardDesc": "Placeholder",
+      "date": "08/07/2021",
+      "hours": "21:00",
+      "locationName": "Some Theater",
+      "locationId": 3,
+      "soldTicketId": 3
+    },
+    {
+      "id": 4,
+      "featured": true,
+      "type": "Film",
+      "title": "Frankenstein 3D",
+      "link": "https://www.filmposters.com/images/posters/2363.jpg",
+      "desc": "Get frightened by the monster!",
+      "cardDesc": "Placeholder",
+      "date": "08/07/2021",
+      "hours": "21:00",
+      "locationName": "Some Theater",
+      "locationId": 4,
+      "soldTicketId": 4
+    },
+    {
+      "id": 5,
+      "featured": true,
+      "type": "Film",
+      "title": "Frankenstein 3D",
+      "link": "https://www.filmposters.com/images/posters/2363.jpg",
+      "desc": "Get frightened by the monster!",
+      "cardDesc": "Placeholder",
+      "date": "08/07/2021",
+      "hours": "21:00",
+      "locationName": "Some Theater",
+      "locationId": 5,
+      "soldTicketId": 5
+    },
+    {
+      "id": 6,
+      "featured": true,
+      "type": "Film",
+      "title": "Frankenstein 3D",
+      "link": "https://www.filmposters.com/images/posters/2363.jpg",
+      "desc": "Get frightened by the monster!",
+      "cardDesc": "Placeholder",
+      "date": "08/07/2021",
+      "hours": "21:00",
+      "locationName": "Some Theater",
+      "locationId": 6,
+      "soldTicketId": 6
+    },
+    {
+      "id": 7,
+      "featured": true,
+      "type": "Film",
+      "title": "Frankenstein 3D",
+      "link": "https://www.filmposters.com/images/posters/2363.jpg",
+      "desc": "Get frightened by the monster!",
+      "cardDesc": "Placeholder",
+      "date": "08/07/2021",
+      "hours": "21:00",
+      "locationName": "Some Theater",
+      "locationId": 7,
+      "soldTicketId": 7
+    },
+    {
+      "id": 8,
+      "featured": true,
+      "type": "Film",
+      "title": "Frankenstein 3D",
+      "link": "https://www.filmposters.com/images/posters/2363.jpg",
+      "desc": "Get frightened by the monster!",
+      "cardDesc": "Placeholder",
+      "date": "08/07/2021",
+      "hours": "21:00",
+      "locationName": "Some Theater",
+      "locationId": 8,
+      "soldTicketId": 8
     }
   ],
   "location": [
@@ -205,13 +304,203 @@
           "max": 150
         }
       ]
+    },
+    {
+      "id": 2,
+      "name": "Somewhere in the Universe",
+      "seats": [
+        {
+          "name": "backRow",
+          "label": "Back Row",
+          "max": 150
+        },
+        {
+          "name": "middleRow",
+          "label": "Middle Row",
+          "max": 150
+        },
+        {
+          "name": "frontRow",
+          "label": "Front Row",
+          "max": 150
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Somewhere in the Universe",
+      "seats": [
+        {
+          "name": "backRow",
+          "label": "Back Row",
+          "max": 150
+        },
+        {
+          "name": "middleRow",
+          "label": "Middle Row",
+          "max": 150
+        },
+        {
+          "name": "frontRow",
+          "label": "Front Row",
+          "max": 150
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Somewhere in the Universe",
+      "seats": [
+        {
+          "name": "backRow",
+          "label": "Back Row",
+          "max": 150
+        },
+        {
+          "name": "middleRow",
+          "label": "Middle Row",
+          "max": 150
+        },
+        {
+          "name": "frontRow",
+          "label": "Front Row",
+          "max": 150
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Somewhere in the Universe",
+      "seats": [
+        {
+          "name": "backRow",
+          "label": "Back Row",
+          "max": 150
+        },
+        {
+          "name": "middleRow",
+          "label": "Middle Row",
+          "max": 150
+        },
+        {
+          "name": "frontRow",
+          "label": "Front Row",
+          "max": 150
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Somewhere in the Universe",
+      "seats": [
+        {
+          "name": "backRow",
+          "label": "Back Row",
+          "max": 150
+        },
+        {
+          "name": "middleRow",
+          "label": "Middle Row",
+          "max": 150
+        },
+        {
+          "name": "frontRow",
+          "label": "Front Row",
+          "max": 150
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Somewhere in the Universe",
+      "seats": [
+        {
+          "name": "backRow",
+          "label": "Back Row",
+          "max": 150
+        },
+        {
+          "name": "middleRow",
+          "label": "Middle Row",
+          "max": 150
+        },
+        {
+          "name": "frontRow",
+          "label": "Front Row",
+          "max": 150
+        }
+      ]
+    },{
+      "id": 8,
+      "name": "Somewhere in the Universe",
+      "seats": [
+        {
+          "name": "backRow",
+          "label": "Back Row",
+          "max": 150
+        },
+        {
+          "name": "middleRow",
+          "label": "Middle Row",
+          "max": 150
+        },
+        {
+          "name": "frontRow",
+          "label": "Front Row",
+          "max": 150
+        }
+      ]
     }
+
+
   ],
   "soldTicket": [
     {
       "id": 1,
       "backRow": 140,
       "middleRow": 0,
+      "frontRow": 0
+    },
+    {
+      "id": 2,
+      "backRow": 140,
+      "middleRow": 0,
+      "frontRow": 0
+    },
+    {
+      "id": 3,
+      "backRow": 140,
+      "middleRow": 0,
+      "frontRow": 0
+    },
+    {
+      "id": 4,
+      "backRow": 140,
+      "middleRow": 0,
+      "frontRow": 0
+    },
+    {
+      "id": 5,
+      "backRow": 140,
+      "middleRow": 0,
+      "frontRow": 0
+    },
+    {
+      "id": 6,
+      "backRow": 140,
+      "middleRow": 0,
+      "frontRow": 0
+    },
+    {
+      "id": 7,
+      "backRow": 140,
+      "middleRow": 0,
+      "frontRow": 0
+    },
+    {
+      "id": 8,
+      "backRow": 140,
+      "middleRow": 30,
       "frontRow": 0
     }
   ],
