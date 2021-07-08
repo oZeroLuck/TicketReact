@@ -1,7 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import {Dropdown, Nav, Navbar} from "react-bootstrap";
-import {HomeBtn, ProfileBtn, ShoppingCartBtn} from "./custom-button/btn-cfg";
+import {AdministrationBtn, HomeBtn, ProfileBtn, ShoppingCartBtn} from "./custom-button/btn-cfg";
 import {CustomButton} from "./custom-button/custom-button";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faUserCircle} from "@fortawesome/free-solid-svg-icons";
@@ -10,13 +10,15 @@ class CustomNavbar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLogged: false
+            isLogged: false,
+            isAdmin: null
         }
     }
 
     componentDidMount() {
-        if(window.sessionStorage.getItem("currentUser") !== null) {
-            this.setState({isLogged: true})
+        const user = JSON.parse(window.sessionStorage.getItem("currentUser"))
+        if(user !== null) {
+            this.setState({isLogged: true, isAdmin: user.role === "admin"})
         }
     }
 
@@ -56,11 +58,16 @@ class CustomNavbar extends React.Component {
                                 <CustomButton buttoncfg={ProfileBtn}/>
                             </Link>
                         }
-                        <Link to={"/myCart"}>
-                            <Nav.Item>
-                                <CustomButton buttoncfg={ShoppingCartBtn}/>
-                            </Nav.Item>
-                        </Link>
+                        {this.state.isAdmin ?
+                            <Link to={"/admin/homepage"}>
+                                <CustomButton buttoncfg={AdministrationBtn}/>
+                            </Link> :
+                            <Link to={"/myCart"}>
+                                <Nav.Item>
+                                    <CustomButton buttoncfg={ShoppingCartBtn}/>
+                                </Nav.Item>
+                            </Link>
+                        }
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
