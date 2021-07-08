@@ -139,6 +139,12 @@ const InfoBtn = {
     icon: faInfoCircle
 }
 
+const AdministrationBtn = {
+    customCssClass: 'warning',
+    text: 'Administration',
+    icon: null
+}
+
 export {
     SaveBtn,
     EditBtn,
@@ -160,7 +166,8 @@ export {
     ProfileBtn,
     HollowEditBtn,
     CancelBtn,
-    InfoBtn
+    InfoBtn,
+    AdministrationBtn
 }
 /*
 const {
