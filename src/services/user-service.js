@@ -1,6 +1,7 @@
 import axios from 'axios'
 import {Customer} from "./entities/customer";
 import {LoginInfo} from "./entities/loginInfo";
+import {Receipt} from "./entities/receipt";
 
 class UserService {
 
@@ -18,8 +19,32 @@ class UserService {
         )
     }
 
-    receipt() {
+    getReceipt(id) {
+        return axios.get("http://localhost:8080/receipt/" + id)
+    }
 
+    postReceipt(receipt) {
+        return axios.post("http://localhost:8080/receipt", receipt, {timeout: 10000})
+    }
+
+    setReceipt(receipt) {
+        let flag = true
+        while(flag) {
+            const id = receipt.generateId()
+            this.getReceipt().catch(error => {
+                if (error.code === 404) {
+                    receipt.setId(id)
+                    flag = false
+                }
+            })
+        }
+        return receipt
+    }
+
+    generateReceipt(cart, userId) {
+        let receipt = new Receipt(cart, userId)
+        receipt = this.setReceipt(receipt)
+        return this.postReceipt(receipt)
     }
 
 // From here on, I'll simulate the back-end
