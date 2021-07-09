@@ -5,7 +5,7 @@ import {CustomButton} from "../../components/custom-button/custom-button";
 import {LoginBtn, RegisterBtn} from "../../components/custom-button/btn-cfg";
 import {UserService} from "../../services/user-service";
 import '../pages.css'
-import {RegisterPage} from "./register-page";
+import {RegisterForm} from "./register-form";
 import {CustomSnackbar} from "../../components/custom-snackbar";
 import {CustomNavbar} from "../../components/custom-navbar";
 
@@ -24,7 +24,6 @@ class ReservedArea extends React.Component {
             isLogged: false
         }
         this.userService = new UserService()
-        this.cartService = new CartService()
         this.setUser = this.setUser.bind(this)
         this.setMode = this.setMode.bind(this)
         this.setSnack = this.setSnack.bind(this)
@@ -32,9 +31,6 @@ class ReservedArea extends React.Component {
     }
 
     componentDidMount() {
-        if (this.props.match.params.register !== undefined) {
-            this.setMode()
-        }
         if (window.sessionStorage.getItem("currentUser") !== null) {
             this.setState({isLogged: true})
         }
@@ -96,20 +92,12 @@ class ReservedArea extends React.Component {
             })
     }
 
-    setCart(userId) {
-        const cart = window.sessionStorage.getItem("currentCart")
-        this.cartService.postCart(userId, cart).then(success =>
-            console.log("hey")
-        )
-    }
-
     setUser(id) {
         console.log("Setting user...")
         this.userService.getUser(id)
             .then(user => {
                 window.sessionStorage.setItem("currentUser", JSON.stringify(user.data))
                 if(user.data.role === "customer") {
-                    this.setCart(user.data.id)
                     this.props.history.goBack()
                 } else {
                     this.props.history.push("/admin/homepage")
@@ -208,7 +196,7 @@ class ReservedArea extends React.Component {
             return (
                 <>
                     <CustomNavbar/>
-                    <RegisterPage back={() => this.setMode()}
+                    <RegisterForm back={() => this.setMode()}
                                   setSnack={this.setSnack}
                     />
                     <CustomSnackbar show={this.state.showSnack}

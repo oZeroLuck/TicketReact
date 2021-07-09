@@ -6,7 +6,7 @@ import {Card, Container} from "react-bootstrap";
 import {CustomSnackbar} from "../../components/custom-snackbar";
 import {UserService} from "../../services/user-service";
 
-class RegisterPage extends React.Component {
+class RegisterForm extends React.Component {
 
     constructor(props) {
         super(props);
@@ -167,4 +167,4 @@ class RegisterPage extends React.Component {
     }
 }
 
-export {RegisterPage}
+export {RegisterForm}
