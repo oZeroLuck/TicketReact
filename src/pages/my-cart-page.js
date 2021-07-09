@@ -5,8 +5,10 @@ import {LoadingSpinner} from "../components/loading-spinner";
 import {CustomNavbar} from "../components/custom-navbar";
 import {ErrorPage} from "./error-page";
 import {TicketComponent} from "../components/ticket-list/ticket-component";
-import {DeleteBtn, LoginBtn, PayButton, SignUpBtn} from "../components/custom-button/btn-cfg";
+import {DeleteBtn, PayButton} from "../components/custom-button/btn-cfg";
 import {CustomButton} from "../components/custom-button/custom-button";
+import {UserService} from "../services/user-service";
+import {ReservedArea} from "./reserved-area/reserved-area";
 
 class MyCartPage extends React.Component {
     constructor(props) {
@@ -21,6 +23,7 @@ class MyCartPage extends React.Component {
             total: 0,
             show: false
         }
+        this.userService = new UserService()
         this.checkPayment = this.checkPayment.bind(this)
     }
 
@@ -45,7 +48,14 @@ class MyCartPage extends React.Component {
 
     checkPayment() {
         if (this.state.isLogged) {
-            console.log("Hello, you are logged")
+            const user = JSON.parse(window.sessionStorage.getItem("currentUser"))
+            this.userService.generateReceipt(this.state.cart.tickets, user.id)
+                .then(success => {
+                    console.log(success)
+                })
+                .catch(error => {
+                    console.log(error)
+                })
         } else {
             this.handleModal()
         }
@@ -117,7 +127,7 @@ class MyCartPage extends React.Component {
                                 <Col style={{backgroundColor: "#c9c9c9"}} className={"pb-4"}>
                                     <Card className={"total mt-3"} style={{minWidth: "80%"}}>
                                         <Card.Header>
-                                            <Card.Title>Receipt (PH)</Card.Title>
+                                            <Card.Title>Receipt</Card.Title>
                                         </Card.Header>
                                         <ListGroup>
                                             <ListGroup.Item>
@@ -174,25 +184,7 @@ class MyCartPage extends React.Component {
                     </Modal.Header>
                     <Modal.Body>
                         <Container fluid>
-                            <Col className={"text-center"}>
-                                <Row style={{fontSize: "x-large"}}>
-                                    <Col>
-                                        To complete your order you have to
-                                        <CustomButton buttoncfg={LoginBtn}
-                                                      onPress={() => this.redirectTo(LoginBtn.text)}
-                                        />
-                                    </Col>
-                                </Row>
-                                <br/>
-                                <Row style={{fontSize: "x-large"}} className={"mb-2"}>
-                                    <Col>
-                                        If you don't have an account, please
-                                        <CustomButton buttoncfg={SignUpBtn}
-                                                      onPress={() => this.redirectTo(SignUpBtn.text)}
-                                        />
-                                    </Col>
-                                </Row>
-                            </Col>
+                            <ReservedArea/>
                         </Container>
                     </Modal.Body>
                 </Modal>
