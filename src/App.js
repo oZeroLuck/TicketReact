@@ -7,7 +7,6 @@ import {Footer} from "./components/footer";
 import {MyCartPage} from "./pages/my-cart-page";
 import React from 'react'
 import {ReservedArea} from "./pages/reserved-area/reserved-area";
-import {RegisterPage} from "./pages/reserved-area/register-page";
 import {AdminHomepage} from "./pages/admin/admin-homepage";
 import {ProfilePage} from "./pages/profile-page";
 
@@ -27,7 +26,7 @@ class App extends React.Component {
         if(currentUser !== null && currentUser.role === "admin") {
             this.setState({isLogged: true, route: "/profile"})
         }
-        window.sessionStorage.setItem("currentCart", JSON.stringify({current: true, tickets: []}))
+        window.sessionStorage.setItem("currentCart", JSON.stringify({tickets: []}))
     }
 
     handleLogged() {
@@ -58,7 +57,6 @@ class App extends React.Component {
                             <Redirect to={this.state.route}/>
                         </Route>
                         <Route path="/login/:register?" component={ReservedArea}/>
-                        <Route path="/register" component={RegisterPage}/>
                         <Route path="/homepage" component={Homepage}/>
                         <Route path="/event/:type/:id" component={EventPage}/>
                         <Route path="/myCart" component={MyCartPage}/>
