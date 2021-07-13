@@ -1,8 +1,8 @@
 class Receipt {
-    constructor(cart, userId) {
+    constructor(ticketIds, userId) {
         this.id = null
         this.userId = userId
-        this.cart = cart.map(ticket => ticket.id)
+        this.cart = ticketIds
     }
 
     generateId() {
