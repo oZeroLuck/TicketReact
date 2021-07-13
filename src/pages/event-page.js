@@ -91,12 +91,21 @@ class EventPage extends React.Component {
     render() {
         if (this.state.loading) {
             return(
-                <LoadingSpinner/>
+                <div>
+                    <CustomNavbar/>
+                    <LoadingSpinner/>
+                </div>
+
             )
         }
 
         if (this.state.error) {
-            return <ErrorPage errCode={this.state.error}/>
+            return (
+                <div>
+                    <CustomNavbar/>
+                    <ErrorPage errCode={this.state.error}/>
+                </div>
+                )
         }
 
         return (
