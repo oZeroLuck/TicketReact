@@ -10,8 +10,11 @@ class CustomButton extends React.Component {
             <Button variant={this.props.buttoncfg.customCssClass}
                 onClick={this.props.onPress}>
                 {this.props.buttoncfg.icon ?
-                    <FontAwesomeIcon icon={this.props.buttoncfg.icon} className={"mr-2"}/> :
+                    <FontAwesomeIcon icon={this.props.buttoncfg.icon}/> :
                     null
+                }
+                {this.props.buttoncfg.icon || this.props.buttoncfg.text ?
+                    null : <div className={"mr-2"}/>
                 }
                 {this.props.buttoncfg.text ?
                     this.props.buttoncfg.text :
