@@ -42,7 +42,8 @@ class ProfilePage extends React.Component {
                     loading: false
                 })
             ).catch(error => this.setState({
-                errorMsg: error.message
+                errorMsg: error.message,
+                loading: false
             }))
         }
     }
@@ -132,6 +133,7 @@ class ProfilePage extends React.Component {
 
     logout() {
         window.sessionStorage.clear()
+        window.sessionStorage.setItem("currentCart", JSON.stringify({tickets: []}))
         this.props.history.push("/homepage")
     }
 
@@ -156,15 +158,22 @@ class ProfilePage extends React.Component {
 
     render() {
         if (this.state.loading) {
-            return <LoadingSpinner/>
+            return <div>
+                <CustomNavbar/>
+                <LoadingSpinner/>
+            </div>
         }
         if (this.state.errorMsg) {
-            return <ErrorPage errCode={this.state.errorMsg}/>
+            return <div>
+                <CustomNavbar/>
+                <ErrorPage errCode={this.state.errorMsg}/>
+            </div>
         }
         return(
             <div className="h-100">
                 <CustomNavbar/>
                 <Container fluid={"sm"} className={"align-content-center mt-3"}>
+                    <Row>
                         <Card>
                             <Card.Header className={"text-center"}>
                                 <Card.Title><h1>Profile</h1></Card.Title>
@@ -234,6 +243,10 @@ class ProfilePage extends React.Component {
                                 </Row>
                             </Card.Footer>
                         </Card>
+                    </Row>
+                    <Row>
+                        Receipt
+                    </Row>
                 </Container>
                 <CustomSnackbar message={this.state.snackMessage}
                                 show={this.state.showSnack}
