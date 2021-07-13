@@ -18,6 +18,23 @@ class EventService {
         return axios.get('http://localhost:8080/event/' + id, {timeout: 10000})
     }
 
+    getSold(id) {
+        return axios.get('http://localhost:8080/soldTicket/' + id)
+    }
+
+    putSold(newValue) {
+        return axios.put('http://localhost:8080/soldTicket/' + newValue.id, newValue)
+    }
+
+    subtract(ticketCount) {
+        ticketCount.forEach(order => {
+            this.getSold(order.ticket.id).then(res => {
+                res.data[order.ticket.seat.name] += parseInt(order.count)
+                this.putSold(res.data).then(success => console.log(success))
+            })
+        })
+    }
+
 }
 
 export {EventService}
