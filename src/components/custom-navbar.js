@@ -38,7 +38,7 @@ class CustomNavbar extends React.Component {
                             <Dropdown.Toggle variant="warning">Events</Dropdown.Toggle>
                             <Dropdown.Menu>
                                 <Dropdown.Header>Categories</Dropdown.Header>
-                                <Dropdown.Item as={Link} to="/film">Action</Dropdown.Item>
+                                <Dropdown.Item as={Link} to="/event/all">All</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
                     </Nav>
