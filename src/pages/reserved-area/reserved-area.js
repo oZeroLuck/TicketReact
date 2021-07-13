@@ -21,7 +21,8 @@ class ReservedArea extends React.Component {
             showSnack: false,
             snackMessage: null,
             snackMode: 'success',
-            isLogged: false
+            isLogged: false,
+            isModal: false
         }
         this.userService = new UserService()
         this.setUser = this.setUser.bind(this)
@@ -33,6 +34,9 @@ class ReservedArea extends React.Component {
     componentDidMount() {
         if (window.sessionStorage.getItem("currentUser") !== null) {
             this.setState({isLogged: true})
+        }
+        if (this.props.callBack !== undefined) {
+            this.setState({isModal: true})
         }
     }
 
@@ -75,9 +79,7 @@ class ReservedArea extends React.Component {
                         showSnack: true,
                         snackMessage: "Error: email or password aren't valid!",
                         snackMode: "danger"
-                    }, () => setTimeout(() => this.setState(prev => ({
-                    showSnack: !prev.showSnack,
-                })), 3000))
+                    }, () => this.closeSnack())
                 return true;
             }
         }))
@@ -86,21 +88,30 @@ class ReservedArea extends React.Component {
                     showSnack: true,
                     snackMessage: error.message,
                     snackMode: "danger"
-                }, () => setTimeout(() => this.setState(prev => ({
-                    showSnack: !prev.showSnack,
-                })), 3000))
+                }, () => this.closeSnack())
             })
     }
+
+    closeSnack() {
+        setTimeout(() => this.setState(prev => ({
+            showSnack: !prev.showSnack,
+        })), 3000)
+    }
+
 
     setUser(id) {
         console.log("Setting user...")
         this.userService.getUser(id)
             .then(user => {
                 window.sessionStorage.setItem("currentUser", JSON.stringify(user.data))
-                if(user.data.role === "customer") {
-                    this.props.history.goBack()
+                if (!this.state.isModal) {
+                    if (user.data.role === "customer") {
+                        this.props.history.goBack()
+                    } else {
+                        this.props.history.push("/admin/homepage")
+                    }
                 } else {
-                    this.props.history.push("/admin/homepage")
+                    this.props.callBack()
                 }
             })
     }
@@ -138,6 +149,66 @@ class ReservedArea extends React.Component {
         console.log(this.state)
     }
 
+    loginForm() {
+        return (
+            <Container fluid={"sm"} className={"align-content-center mt-5"}>
+                <Card className={"text-center"}
+                      bg={"light"}
+                      style={{width: "50%", margin: "auto"}}
+                >
+                    <Card.Body>
+                        <h1><strong>Login</strong></h1>
+                        <hr/>
+                        <Container fluid={"sm"} style={{width: "70%"}}>
+                            <Form className={"mb-2"}>
+                                <Form.Control className={"mb-2 mt-2"}
+                                              type="text"
+                                              placeholder="E-Mail"
+                                              value={this.state.formEmail}
+                                              onChange={(event) => this.handleFormEmail(event.target.value)}
+                                />
+                                <Form.Control className={"mb-1"}
+                                              type="password"
+                                              placeholder="Password"
+                                              value={this.state.formPassword}
+                                              onChange={(event) => this.handleFormPassword(event.target.value)}
+                                />
+                                <div className={"d-flex flex-row-reverse"}>
+                                    <CustomButton buttoncfg={LoginBtn} onPress={() => this.handleLogin()}/>
+                                </div>
+                            </Form>
+                        </Container>
+                        <hr/>
+                        <p>Don't have an account?</p>
+                        <CustomButton buttoncfg={RegisterBtn} onPress={() => this.setMode()}/>
+                        <hr/>
+                        <button onClick={() => this.debug()}>Debug</button>
+                    </Card.Body>
+                </Card>
+                <CustomSnackbar show={this.state.showSnack}
+                                message={this.state.snackMessage}
+                                type={this.state.snackMode}
+                                close={() => this.flushMessage()}
+                />
+            </Container>
+        )
+    }
+
+    registerForm() {
+        return (
+            <>
+                <RegisterForm back={this.setMode}
+                                  setSnack={this.setSnack}
+                />
+                <CustomSnackbar show={this.state.showSnack}
+                                message={this.state.snackMessage}
+                                type={this.state.snackMode}
+                                close={() => this.flushMessage()}
+                />
+            </>
+            )
+    }
+
     render() {
         if (this.state.isLogged) {
             return (
@@ -146,67 +217,12 @@ class ReservedArea extends React.Component {
                 </div>
             )
         }
-        if (this.state.loginMode) {
-            return(
-                <>
-                    <CustomNavbar/>
-                    <Container fluid={"sm"} className={"align-content-center mt-5"}>
-                        <Card className={"text-center"}
-                              bg={"light"}
-                              style={{width: "50%", margin: "auto"}}
-                        >
-                            <Card.Body>
-                                <h1><strong>Login</strong></h1>
-                                <hr/>
-                                <Container fluid={"sm"} style={{width: "70%"}}>
-                                    <Form className={"mb-2"}>
-                                        <Form.Control className={"mb-2 mt-2"}
-                                                      type="text"
-                                                      placeholder="E-Mail"
-                                                      value={this.state.formEmail}
-                                                      onChange={(event) => this.handleFormEmail(event.target.value)}
-                                        />
-                                        <Form.Control className={"mb-1"}
-                                                      type="password"
-                                                      placeholder="Password"
-                                                      value={this.state.formPassword}
-                                                      onChange={(event) => this.handleFormPassword(event.target.value)}
-                                        />
-                                        <div className={"d-flex flex-row-reverse"}>
-                                            <CustomButton buttoncfg={LoginBtn} onPress={() => this.handleLogin()}/>
-                                        </div>
-                                    </Form>
-                                </Container>
-                                <hr/>
-                                <p>Don't have an account?</p>
-                                <CustomButton buttoncfg={RegisterBtn} onPress={() => this.setMode()}/>
-                                <hr/>
-                                <button onClick={() => this.debug()}>Debug</button>
-                            </Card.Body>
-                        </Card>
-                        <CustomSnackbar show={this.state.showSnack}
-                                        message={this.state.snackMessage}
-                                        type={this.state.snackMode}
-                                        close={() => this.flushMessage()}
-                        />
-                    </Container>
-                </>
-            )
-        } else {
-            return (
-                <>
-                    <CustomNavbar/>
-                    <RegisterForm back={() => this.setMode()}
-                                  setSnack={this.setSnack}
-                    />
-                    <CustomSnackbar show={this.state.showSnack}
-                                    message={this.state.snackMessage}
-                                    type={this.state.snackMode}
-                                    close={() => this.flushMessage()}
-                    />
-                </>
-            )
-        }
+        return (
+            <>
+                {this.state.isModal ? null: <CustomNavbar/>}
+                {this.state.loginMode ? this.loginForm() : this.registerForm()}
+            </>
+        )
     }
 }
 
