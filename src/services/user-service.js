@@ -6,11 +6,11 @@ import {Receipt} from "./entities/receipt";
 class UserService {
 
     getUser(id) {
-        return axios.get("http://localhost:8080/users/" + id)
+        return axios.get("http://localhost:8080/users/" + id, {timeout: 10000})
     }
 
     login() {
-        return axios.get("http://localhost:8080/login")
+        return axios.get("http://localhost:8080/login", {timeout: 10000})
     }
 
     updateUserInfo(userInfo) {
@@ -20,30 +20,19 @@ class UserService {
     }
 
     getReceipt(id) {
-        return axios.get("http://localhost:8080/receipt/" + id)
+        return axios.get("http://localhost:8080/receipt/" + id, {timeout: 10000})
     }
 
     postReceipt(receipt) {
         return axios.post("http://localhost:8080/receipt", receipt, {timeout: 10000})
     }
 
-    setReceipt(receipt) {
-        let flag = true
-        while(flag) {
-            const id = receipt.generateId()
-            this.getReceipt().catch(error => {
-                if (error.code === 404) {
-                    receipt.setId(id)
-                    flag = false
-                }
-            })
-        }
-        return receipt
-    }
-
     generateReceipt(cart, userId) {
-        let receipt = new Receipt(cart, userId)
-        receipt = this.setReceipt(receipt)
+        console.log(cart)
+        let ids = []
+        cart.forEach(ticket => ids.push(ticket.event.id))
+        let receipt = new Receipt(ids, userId)
+        receipt.setId(receipt.generateId())
         return this.postReceipt(receipt)
     }
 
