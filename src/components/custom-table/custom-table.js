@@ -11,6 +11,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Form from "react-bootstrap/Form";
 
+// Pass an array of object in dataSource
+// Pass the configuration in tableCfg
+// Pass the function to handle button clicks in parentCallback, the object provided is of type (itemId, buttonLabel)
+
 class CustomTable extends React.Component {
     constructor(props) {
         super(props);
