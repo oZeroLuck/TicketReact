@@ -41,7 +41,7 @@ class MyCartPage extends React.Component {
             isLogged: currentUser !== null,
             loading: false
         }, () => {
-            if (this.state.cart.length > 1) {
+            if (this.state.cart.length > 0) {
                 this.calculateTotal()
                 this.countTickets()
             }
