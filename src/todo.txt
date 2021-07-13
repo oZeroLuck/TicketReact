@@ -11,11 +11,11 @@ TODO LIST!
 
 - Create the register page; X
 
-- Create the admin page;
+- Create the admin page; X
 
-- Import the custom table;
+- Import the custom table; X
 
-- Change the carousel fetch and transform view method;
+- Change the carousel fetch and transform view method; X
 
 - Add event type check for better performances;
 
@@ -23,7 +23,7 @@ TODO LIST!
 
 - Add payment page; X
 
-- Add login checks; Partial
+- Add login checks; X
 
 ------ * Extra * ------
 
