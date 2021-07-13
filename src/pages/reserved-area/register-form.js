@@ -3,7 +3,6 @@ import {CustomButton} from "../../components/custom-button/custom-button";
 import {BackBtn, SignUpBtn} from "../../components/custom-button/btn-cfg";
 import Form from "react-bootstrap/Form";
 import {Card, Container} from "react-bootstrap";
-import {CustomSnackbar} from "../../components/custom-snackbar";
 import {UserService} from "../../services/user-service";
 
 class RegisterForm extends React.Component {
@@ -104,8 +103,7 @@ class RegisterForm extends React.Component {
             password: "",
             fistName: "",
             lastName: ""
-        })
-        this.props.back()
+        }, () => this.props.back())
     }
 
     // Show state button
@@ -152,9 +150,9 @@ class RegisterForm extends React.Component {
                                 <div className={"d-flex flex-row-reverse"}>
                                     <CustomButton buttoncfg={SignUpBtn}
                                                   onPress={() => this.handleRegister()}/>
-                                    <div className={"ml-2"}/>
-                                    <CustomButton buttoncfg={BackBtn}
-                                                  onPress={() => this.handleClose()}/>
+                                            <div className={"ml-2"}/>
+                                                <CustomButton buttoncfg={BackBtn}
+                                                onPress={() => this.handleClose()}/>
                                 </div>
                             </Form>
                         </Container>
