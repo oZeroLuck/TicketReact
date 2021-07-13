@@ -9,7 +9,8 @@ function InfoModalComponent(props) {
     if (data.error) {
         return(
             <Modal centered show={props.show}
-                   onHide={() => props.close()}>
+                   onHide={() => props.close()}
+                   dialogClassName={"modal-90w"}>
                 <Modal.Header closeButton>
                     <Modal.Title>
                         Error
