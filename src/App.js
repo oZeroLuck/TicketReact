@@ -1,5 +1,5 @@
 import './App.css';
-import {BrowserRouter, Route, Switch, Redirect} from "react-router-dom";
+import {BrowserRouter, Route, Switch, Redirect, Link} from "react-router-dom";
 import {Homepage} from "./pages/homepage";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {EventPage} from "./pages/event-page";
@@ -9,43 +9,14 @@ import React from 'react'
 import {ReservedArea} from "./pages/reserved-area/reserved-area";
 import {AdminHomepage} from "./pages/admin/admin-homepage";
 import {ProfilePage} from "./pages/profile-page";
+import {ReceiptPage} from "./pages/receipt-page";
+import {OrderSuccessPage} from "./pages/order-success-page";
+import {EventListPage} from "./pages/event-list-page";
 
 class App extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isLogged: false,
-            route: "/homepage"
-        }
-        this.handleLogged = this.handleLogged.bind(this)
-        this.logout = this.handleLogged.bind(this)
-    }
 
     componentDidMount() {
-        const currentUser = window.sessionStorage.getItem("currentUser")
-        if(currentUser !== null && currentUser.role === "admin") {
-            this.setState({isLogged: true, route: "/profile"})
-        }
         window.sessionStorage.setItem("currentCart", JSON.stringify({tickets: []}))
-    }
-
-    handleLogged() {
-        this.setState(prev => ({
-            isLogged: !prev.isLogged
-        }))
-    }
-
-    debug() {
-        console.log("Session Storage: ")
-        console.log(window.sessionStorage.getItem("currentUser"))
-        console.log(window.sessionStorage.getItem("currentCart"))
-        console.log("State")
-        console.log(this.state)
-    }
-
-    debugFlush() {
-        console.log("Debug: flushed!")
-        window.sessionStorage.clear()
     }
 
     render() {
@@ -54,18 +25,19 @@ class App extends React.Component {
                 <BrowserRouter>
                     <Switch>
                         <Route exact path="/">
-                            <Redirect to={this.state.route}/>
+                            <Redirect to="/homepage"/>
                         </Route>
+                        <Route path="/event/all" component={EventListPage}/>
                         <Route path="/login/:register?" component={ReservedArea}/>
                         <Route path="/homepage" component={Homepage}/>
-                        <Route path="/event/:type/:id" component={EventPage}/>
+                        <Route path="/event/:id" component={EventPage}/>
                         <Route path="/myCart" component={MyCartPage}/>
                         <Route path="/admin/homepage" component={AdminHomepage}/>
                         <Route path="/profile" component={ProfilePage}/>
+                        <Route path="/receipt/:code" component={ReceiptPage}/>
+                        <Route path="/success/:code" component={OrderSuccessPage}/>
                     </Switch>
                 </BrowserRouter>
-                    <button onClick={() => this.debug()}>Debug</button>
-                    <button onClick={() => this.debugFlush()}>Flush</button>
                 <footer>
                     <Footer/>
                 </footer>
