@@ -1,0 +1,8 @@
+json-server:
+  image: vimagick/json-server
+  command: -H 0.0.0.0 -p 8080 -w db.json
+  ports:
+    - "8080:8080"
+  volumes:
+    - ./src/fake-end-db:/data
+  restart: always

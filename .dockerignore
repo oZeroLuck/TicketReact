@@ -1,0 +1,3 @@
+node_modules
+src/fake-end-db
+docker-compose.yml
