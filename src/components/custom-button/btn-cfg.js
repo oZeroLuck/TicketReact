@@ -151,6 +151,12 @@ const PayButton = {
     icon: faMoneyBillWave
 }
 
+const ReceiptButton = {
+    customCssClass: 'primary',
+    text: 'Receipt',
+    icon: null
+}
+
 export {
     SaveBtn,
     EditBtn,
@@ -174,7 +180,8 @@ export {
     CancelBtn,
     InfoBtn,
     AdministrationBtn,
-    PayButton
+    PayButton,
+    ReceiptButton
 }
 /*
 const {
