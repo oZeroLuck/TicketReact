@@ -107,7 +107,7 @@ class Homepage extends React.Component {
                                             {carouselItem.map((event) => {
                                                 return (
                                                     <Col key={event.id + event.type}>
-                                                        <Link to={"/event/" + event.type + "/" + event.id}
+                                                        <Link to={"/event/" + event.id}
                                                               style={{color: "black", textDecoration: "none"}}
                                                         >
                                                             <Card className={"zoom"} style={{height: "100%"}}
