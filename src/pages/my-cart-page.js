@@ -1,14 +1,15 @@
 import React from 'react'
 import {TicketService} from "../services/ticket-service";
-import {Card, Col, Container, ListGroup, Modal, Row} from "react-bootstrap";
+import {Col, Container, Modal, Row} from "react-bootstrap";
 import {LoadingSpinner} from "../components/loading-spinner";
 import {CustomNavbar} from "../components/custom-navbar";
 import {ErrorPage} from "./error-page";
 import {TicketComponent} from "../components/ticket-list/ticket-component";
-import {DeleteBtn, PayButton} from "../components/custom-button/btn-cfg";
-import {CustomButton} from "../components/custom-button/custom-button";
+import {DeleteBtn} from "../components/custom-button/btn-cfg";
 import {UserService} from "../services/user-service";
 import {ReservedArea} from "./reserved-area/reserved-area";
+import {EventService} from "../services/event-service";
+import {ReceiptComponent} from "../components/receipt-component";
 
 class MyCartPage extends React.Component {
     constructor(props) {
@@ -21,10 +22,15 @@ class MyCartPage extends React.Component {
             errorMsg: null,
             isLogged: false,
             total: 0,
-            show: false
+            show: false,
+            countedTickets: null
         }
         this.userService = new UserService()
+        this.eventService = new EventService()
         this.checkPayment = this.checkPayment.bind(this)
+        this.handleDelete = this.handleDelete.bind(this)
+        this.createPayment = this.createPayment.bind(this)
+        this.debug = this.debug.bind(this)
     }
 
     componentDidMount() {
@@ -34,7 +40,12 @@ class MyCartPage extends React.Component {
             cart: cart.tickets,
             isLogged: currentUser !== null,
             loading: false
-        }, () => this.calculateTotal())
+        }, () => {
+            if (this.state.cart.length > 1) {
+                this.calculateTotal()
+                this.countTickets()
+            }
+        })
     }
 
     calculateTotal() {
@@ -49,15 +60,86 @@ class MyCartPage extends React.Component {
     checkPayment() {
         if (this.state.isLogged) {
             const user = JSON.parse(window.sessionStorage.getItem("currentUser"))
-            this.userService.generateReceipt(this.state.cart.tickets, user.id)
-                .then(success => {
-                    console.log(success)
-                })
-                .catch(error => {
-                    console.log(error)
-                })
+            console.log("hi there")
+            this.generateReceipt(user.id)
         } else {
             this.handleModal()
+        }
+    }
+
+    generateReceipt(userId) {
+        this.userService.generateReceipt(this.state.cart, userId)
+            .then(success => {
+                window.sessionStorage.setItem("currentCart", JSON.stringify({tickets: []}))
+                this.eventService.subtract(this.state.countedTickets)
+                this.props.history.push("/success/" + success.data.id)
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+
+    countTickets() {
+        let count = []
+        const cart = this.state.cart
+        for (let i = 0; i < cart.length; i++) {
+            console.log(i)
+            const ticket = {
+                id: cart[i].event.id,
+                title: cart[i].event.title,
+                seat: cart[i].seat,
+                date: cart[i].event.date,
+                hours: cart[i].event.hours,
+                price: cart[i].event.ticketCost
+            }
+            if (count.length === 0) {
+                count.push({count: 1, ticket: ticket})
+            } else {
+                const position = this.checkPresence(count, ticket)
+                if (position !== null) {
+                    count[position].count += 1
+                } else {
+                    count.push({count: 1, ticket: ticket})
+                }
+            }
+        }
+        this.setState({
+            countedTickets: count
+        })
+    }
+
+    checkPresence(array, object) {
+        let i = 0
+        let obj = null
+        console.log(array)
+        for (i; i < array.length; i++) {
+            if (array[i].ticket.id === object.id && array[i].ticket.seat.name === object.seat.name) {
+                obj = i
+            }
+        }
+        return obj
+    }
+
+    createPayment() {
+        this.setState({
+            isLogged: true
+        }, () => {
+            this.handleModal()
+            this.checkPayment()
+        })
+    }
+
+    handleDelete(data, id) {
+        const ticket = {id: id, seat: data.name}
+        let index = 0
+        let ret = null
+        for (index; index < this.state.cart.length; index++) {
+            if (this.state.cart[index].ticket.id === ticket.id && this.state.cart[index].seat.name === ticket.seat.name) {
+                ret = index
+            }
+        }
+        if (ret !== null) {
+            this.state.cart.splice(ret, 1)
         }
     }
 
@@ -85,16 +167,23 @@ class MyCartPage extends React.Component {
                                 <strong>{ticket.event.title}</strong>
                             </Row>
                             <Row>
-                                <p>{ticket.event.date} - {ticket.event.hours}</p>
+                                <p className={"mb-0"}>Seat: {ticket.seat.label}</p>
+                            </Row>
+                            <Row>
+                                <p className={"mb-0"}>{ticket.event.date} - {ticket.event.hours}</p>
                             </Row>
                         </Col>
-                        <Col sm={3} className={"p-0"}>
-                            <strong>{ticket.event.ticketCost}</strong>
+                        <Col sm={3} className={"p-0 my-auto"}>
+                            <h3>{ticket.event.ticketCost}</h3>
                         </Col>
                     </Row>
                 )
             }
         ))
+    }
+
+    debug() {
+        console.log(this.state)
     }
 
     render() {
@@ -105,6 +194,7 @@ class MyCartPage extends React.Component {
         return (
             <div style={{minHeight: "100%"}}>
                 <CustomNavbar/>
+                <button onClick={this.debug}>Debug</button>
                 <h1 className={"text-center pt-5"}>My Cart</h1>
                 <Container fluid style={{backgroundColor: "#ededed"}} className={"mt-5"}>
                     {this.state.loading ?
@@ -113,45 +203,24 @@ class MyCartPage extends React.Component {
                             <Row className={"ml-5 mr-5"}>
                                 <Col sm={8}>
                                     {this.state.cart.map(ticket => {
-                                        console.log([ticket.seat])
                                         return (
                                         <Row>
                                             <TicketComponent data={ticket.event}
                                                              seats={[ticket.seat]}
                                                              button={DeleteBtn}
                                                              mode={true}
+                                                             id={ticket.event.id}
+                                                             handleClick={this.handleDelete}
                                             />
                                         </Row>
                                     )})}
                                 </Col>
                                 <Col style={{backgroundColor: "#c9c9c9"}} className={"pb-4"}>
-                                    <Card className={"total mt-3"} style={{minWidth: "80%"}}>
-                                        <Card.Header>
-                                            <Card.Title>Receipt</Card.Title>
-                                        </Card.Header>
-                                        <ListGroup>
-                                            <ListGroup.Item>
-                                                <Container fluid className={"ml-3"}>
-                                                    {this.receipt()}
-                                                </Container>
-                                            </ListGroup.Item>
-                                            <ListGroup.Item>
-                                                <Row className={"pl-3"}>
-                                                    <Col className={"d-flex flex-row-reverse mr-5"}>
-                                                        <h2>Total: </h2>
-                                                    </Col>
-                                                    <Col className={"d-flex flex-row-reverse mr-5"}>
-                                                        <h2>{this.state.total}</h2>
-                                                    </Col>
-                                                </Row>
-                                            </ListGroup.Item>
-                                        </ListGroup>
-                                        <Card.Footer className={"d-flex flex-row-reverse"}>
-                                            <CustomButton buttoncfg={PayButton}
-                                                          onPress={() => this.checkPayment()}
-                                            />
-                                        </Card.Footer>
-                                    </Card>
+                                    {this.state.countedTickets ?
+                                        <ReceiptComponent cart={this.state.countedTickets}
+                                                       callBack={this.checkPayment}/> :
+                                        <p>Loading</p>
+                                    }
                                 </Col>
                             </Row> :
                             <Container fluid className={"pt-lg-5 pb-lg-5"}>
@@ -184,7 +253,7 @@ class MyCartPage extends React.Component {
                     </Modal.Header>
                     <Modal.Body>
                         <Container fluid>
-                            <ReservedArea/>
+                            <ReservedArea callBack={() => this.createPayment()}/>
                         </Container>
                     </Modal.Body>
                 </Modal>
@@ -194,3 +263,32 @@ class MyCartPage extends React.Component {
 }
 
 export {MyCartPage}
+/*
+<Card className={"total mt-3"} style={{minWidth: "80%"}}>
+                                        <Card.Header>
+                                            <Card.Title>Receipt</Card.Title>
+                                        </Card.Header>
+                                        <ListGroup>
+                                            <ListGroup.Item>
+                                                <Container fluid className={"ml-3"}>
+                                                    {this.receipt()}
+                                                </Container>
+                                            </ListGroup.Item>
+                                            <ListGroup.Item>
+                                                <Row className={"pl-3"}>
+                                                    <Col className={"d-flex flex-row-reverse mr-5"}>
+                                                        <h2>Total: </h2>
+                                                    </Col>
+                                                    <Col className={"d-flex flex-row-reverse mr-5"}>
+                                                        <h2>{this.state.total}</h2>
+                                                    </Col>
+                                                </Row>
+                                            </ListGroup.Item>
+                                        </ListGroup>
+                                        <Card.Footer className={"d-flex flex-row-reverse"}>
+                                            <CustomButton buttoncfg={PayButton}
+                                                          onPress={() => this.checkPayment()}
+                                            />
+                                        </Card.Footer>
+                                    </Card>
+ */

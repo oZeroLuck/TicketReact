@@ -71,7 +71,7 @@ th:hover {
 
 .total {
     position: sticky !important;
-    top: 15%;
+    top: 0;
     bottom: 10%;
     margin-right: auto;
     margin-left: auto;
