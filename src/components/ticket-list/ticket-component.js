@@ -12,6 +12,9 @@ function TicketComponent(props) {
     const [seat, setSeat] = useState(props.seats[0].name)
 
     function handleClick() {
+        if (props.id !== undefined) {
+            props.handleClick((props.seats.find(o => o.name === seat)), props.id)
+        }
         props.handleClick((props.seats.find(o => o.name === seat)))
     }
 
